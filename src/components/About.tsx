@@ -7,7 +7,7 @@ export default function About() {
       title: 'Official Recognition',
       subtitle: 'Department of Tourism, U.T. Ladakh',
       description: 'Heritage Himalaya Trails is a specialized travel company officially registered with the Department of Tourism, U.T. Ladakh, India. Our commitment to authentic, responsible tourism is recognized and supported by local authorities.',
-      image: '/public/container.png', // Indian government tourism emblem
+      image: 'container.png', // Indian government tourism emblem
       imageAlt: 'Department of Tourism Badge',
       align: 'left',
       imageType: 'badge'
@@ -17,7 +17,7 @@ export default function About() {
       title: 'Ladakh "Little Tibet"',
       subtitle: 'Buddhist & Bön Heritage',
       description: 'We focus particularly on Ladakh, celebrated for its vibrant Buddhist and Bön heritage. Known as "Little Tibet," this region forms the heart of our extended cultural tours, offering deep insight into ancient traditions and mountain communities.',
-      image: '/public/Container (1).png', // Photo of monks with mountains
+      image: 'Container (1).png', // Photo of monks with mountains
       imageAlt: 'Buddhist monks in Ladakh',
       align: 'right',
       imageType: 'photo'
@@ -27,7 +27,7 @@ export default function About() {
       title: 'Immersive & Responsible',
       subtitle: 'Cultural Preservation & Connection',
       description: 'Our journeys are thoughtfully designed to preserve local culture and environment, while allowing visitors to engage authentically with the traditions and lifestyles of mountain communities. Every experience honors the land and its people.',
-      image: '/public/Container (2).png', // Group photo with local community
+      image: 'Container (2).png', // Group photo with local community
       imageAlt: 'Cultural community gathering',
       align: 'left',
       imageType: 'photo'
@@ -37,7 +37,7 @@ export default function About() {
       title: 'Passionate Leadership',
       subtitle: 'Dr. Sonam Wangchok',
       description: 'Led by Dr. Sonam Wangchok, our experienced and passionate team is committed to delivering authentic and meaningful travel experiences. Whether you\'re an individual traveler or part of a group, we offer opportunities to connect with indigenous cultures and stunning natural beauty.',
-      image: '/public/Container (3).png', // Dr. Wangchok speaking at event
+      image: 'Container (3).png', // Dr. Wangchok speaking at event
       imageAlt: 'Dr. Sonam Wangchok',
       align: 'right',
       imageType: 'photo'

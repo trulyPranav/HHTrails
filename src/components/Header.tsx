@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Menu, X } from 'lucide-react';
+import AuthModal from './AuthModal';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const navLinks = [
     { label: 'Home', path: '/' },
@@ -77,6 +79,7 @@ export default function Header() {
 
           {/* Secondary Button */}
           <button
+            onClick={() => setIsAuthModalOpen(true)}
             className="px-5 py-3 rounded transition-all duration-300"
             style={{
               border: `1px solid ${primaryColor}`,
@@ -156,6 +159,7 @@ export default function Header() {
               <ArrowRight className="w-4 h-4" />
             </button>
             <button
+              onClick={() => setIsAuthModalOpen(true)}
               className="px-5 py-3 rounded transition-all duration-300 w-full"
               style={{
                 border: `1px solid ${primaryColor}`,
@@ -178,6 +182,9 @@ export default function Header() {
           </div>
         </div>
       )}
+
+      {/* Auth Modal */}
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
     </header>
   );
 }

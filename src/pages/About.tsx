@@ -250,32 +250,61 @@ export default function About() {
     
 
       {/* Quote Section */}
-      <section className="px-6" style={{ backgroundColor: '#FFFFFF', paddingTop: '60px', paddingBottom: '60px' }}>
-        <div className="max-w-3xl mx-auto">
-          <div
-            className="text-center p-12 rounded-2xl"
-            style={{ backgroundColor: '#1C120C', borderRadius: '16px' }}
-          >
-            <blockquote className="mb-6">
-              <p
-                className="text-lg leading-relaxed"
-                style={{ color: '#FFFFFF', fontWeight: 400, lineHeight: '1.8' }}
-              >
-                "Every stone in Ladakh has a story, every prayer flag carries a blessing, and every mountain pass holds centuries of memory. My mission is to help travelers experience not just the landscape, but the living culture that gives it meaning."
-              </p>
-            </blockquote>
-            <footer>
-              <p
-                className="text-sm"
-                style={{ color: '#F4A321', fontWeight: 500 }}
-              >
-                — Dr. Sonam Wangchok
-              </p>
-            </footer>
-          </div>
+       <section 
+      className="px-6" 
+      style={{ 
+        backgroundColor: '#FFFFFF', 
+        paddingTop: '1px', 
+        paddingBottom: '40px' 
+      }}
+    >
+      <div 
+        className="mx-auto" 
+        style={{ 
+          maxWidth: '890px',
+          width: '100%'
+        }}
+      >
+        <div
+          className="p-12 rounded-2xl"
+          style={{ 
+            backgroundColor: '#1C120C',
+            paddingTop: '20px',
+            paddingBottom: '20px',
+            paddingLeft: '48px',
+            paddingRight: '48px'
+          }}
+        >
+          <blockquote className="mb-6">
+            <p
+              style={{ 
+                color: '#FFFFFF',
+                fontSize: '16px',
+                fontWeight: 400,
+                lineHeight: '1.5',
+                textAlign: 'left',
+                margin: 0
+              }}
+            >
+              "Every stone in Ladakh has a story, every prayer flag carries a blessing, and every mountain pass holds centuries of memory. My mission is to help travelers experience not just the landscape, but the living culture that gives it meaning."
+            </p>
+          </blockquote>
+          <footer>
+            <p
+              style={{ 
+                color: '#F4A321',
+                fontSize: '16px',
+                fontWeight: 400,
+                textAlign: 'left',
+                margin: 0
+              }}
+            >
+              — Dr. Sonam Wangchok
+            </p>
+          </footer>
         </div>
-      </section>
-
+      </div>
+    </section>
         <section
         style={{
           background: 'linear-gradient(135deg, #1A0F0A 0%, #2B1E17 100%)',

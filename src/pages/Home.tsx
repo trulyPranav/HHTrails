@@ -61,15 +61,18 @@ const Home = () => {
     <div className="flex-grow pt-[72px] min-h-screen bg-[#2B1E17]">
       {/* Hero Text */}
       <div className="max-w-4xl mx-auto text-center pt-24 px-6 font-berlin">
-        <p className="text-[#F4A321] font-semibold tracking-widest mb-4">
-          JULLEY !!
-        </p>
+        <div className="max-w-4xl mx-auto text-center pt-24 px-6">
+  <p className="font-berlin text-[#F4A321] text-lg tracking-widest mb-4">
+    JULLEY !!
+  </p>
 
-        <h1 className="text-white text-4xl md:text-5xl font-bold leading-tight">
-          AN INSIGHT INTO THE LEGACY
-          <br />
-          OF MOUNTAINS
-        </h1>
+  <h1 className="font-berlin text-white text-4xl md:text-5xl font-bold leading-tight">
+    AN INSIGHT INTO THE LEGACY
+    <br />
+    OF MOUNTAINS
+  </h1>
+</div>
+
       </div>
 
       {/* Panorama Swiper */}

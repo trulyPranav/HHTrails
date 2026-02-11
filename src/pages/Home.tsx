@@ -4,14 +4,14 @@ import 'swiper/css';
 
 // Images from public/assets/img folder
 const slides = [
-  { id: 1, image: '/public/img/Rectangle 41.png', alt: 'Slide 1' },
-  { id: 2, image: '/public/img/Rectangle 42.png', alt: 'Slide 2' },
-  { id: 3, image: '/public/img/Rectangle 43.png', alt: 'Slide 3' },
-  { id: 4, image: '/public/img/Rectangle 44.png', alt: 'Slide 4' },
-  { id: 5, image: '/public/img/Rectangle 45.png', alt: 'Slide 5' },
-  { id: 6, image: '/public/img/Rectangle 46.png', alt: 'Slide 6' },
-  { id: 7, image: '/public/img/Rectangle 47.png', alt: 'Slide 7' },
-  { id: 8, image: '/public/img/Rectangle 48.png', alt: 'Slide 8' },
+  { id: 1, image: 'img/Rectangle 41.png', alt: 'Slide 1' },
+  { id: 2, image: 'img/Rectangle 42.png', alt: 'Slide 2' },
+  { id: 3, image: 'img/Rectangle 43.png', alt: 'Slide 3' },
+  { id: 4, image: 'img/Rectangle 44.png', alt: 'Slide 4' },
+  { id: 5, image: 'img/Rectangle 45.png', alt: 'Slide 5' },
+  { id: 6, image: 'img/Rectangle 46.png', alt: 'Slide 6' },
+  { id: 7, image: 'img/Rectangle 47.png', alt: 'Slide 7' },
+  { id: 8, image: 'img/Rectangle 48.png', alt: 'Slide 8' },
 ];
 
 // 🔁 Duplicate slides to fake infinity
@@ -60,20 +60,18 @@ const Home = () => {
   return (
     <div className="flex-grow pt-[72px] min-h-screen bg-[#2B1E17]">
       {/* Hero Text */}
-      <div className="max-w-4xl mx-auto text-center pt-24 px-6 font-berlin">
-        <div className="max-w-4xl mx-auto text-center pt-24 px-6">
+    
+<div className="max-w-4xl mx-auto text-center pt-8 px-6 mb-8">
   <p className="font-berlin text-[#F4A321] text-lg tracking-widest mb-4">
     JULLEY !!
   </p>
 
-  <h1 className="font-berlin text-white text-4xl md:text-5xl font-bold leading-tight">
+  <h1 className="font-berlin text-white text-4xl md:text-5xl font-bold leading-tight mb-0">
     AN INSIGHT INTO THE LEGACY
     <br />
     OF MOUNTAINS
   </h1>
 </div>
-
-      </div>
 
       {/* Panorama Swiper */}
       <section className="panorama-section">
@@ -105,7 +103,7 @@ const Home = () => {
       </section>
 
       {/* Search Bar */}
-      <div className="mt-20 px-6">
+      <div className="mt-8 px-">
         <div className="max-w-5xl mx-auto bg-[#5C544A] rounded-2xl shadow-2xl p-4">
           <div className="flex flex-col md:flex-row items-stretch gap-3">
             

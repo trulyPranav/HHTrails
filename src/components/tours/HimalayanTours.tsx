@@ -2,18 +2,36 @@ const HimalayanTours = () => {
   const places = ["Ladakh", "Spiti", "Zanskar", "Himachal", "Sikkim"];
 
   return (
-    <div className="w-full py-12 text-center bg-[#281910] border-b">
+    <div className="w-full bg-[#281910] border-b text-center px-4 py-10 sm:py-12 lg:py-16">
 
-      <p className="font-sans text-sm mb-2 text-[#F3F4F1]">Himalayan Tours</p>
+      {/* Title */}
+      <p className="font-sans text-sm sm:text-base mb-3 text-[#F3F4F1]">
+        Himalayan Tours
+      </p>
 
-      <p className="font-sans max-w-2xl mx-auto text-sm leading-relaxed text-[#F3F4F1]">
+      {/* Description */}
+      <p className="
+        font-sans
+        max-w-xl sm:max-w-2xl lg:max-w-3xl
+        mx-auto
+        text-sm sm:text-base
+        leading-relaxed
+        text-[#F3F4F1]
+      ">
         Immerse yourself in ancient cultures, explore pristine mountain landscapes,
         and discover the authentic spirit of the Himalayas through carefully curated journeys
       </p>
 
-      <div className="flex justify-center gap-8 mt-5">
+      {/* Places */}
+      <div className="
+        flex
+        flex-wrap
+        justify-center
+        gap-4 sm:gap-6 lg:gap-8
+        mt-6
+      ">
         {places.map((place) => (
-          <div key={place} className="flex items-center gap-2 text-[#F3F4F1] text-sm">
+          <div key={place} className="flex items-center gap-2 text-[#F3F4F1] text-sm sm:text-base">
             <span className="w-2 h-2 bg-white rounded-full"></span>
             <span className="font-sans">{place}</span>
           </div>

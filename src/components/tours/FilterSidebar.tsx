@@ -30,14 +30,14 @@ const FilterSidebar = () => {
   return (
       <aside
         className="
+          self-start
           w-[320px]
           p-[26px]
           rounded-[10px]
           border-2
           bg-white
           space-y-6
-          m-6
-          ml-20
+          shrink-0
         "
       >
       {/* HEADER */}

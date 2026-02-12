@@ -7,7 +7,7 @@ interface TourCardProps {
 
 const TourCard = ({ image, title, duration, location }: TourCardProps) => {
   return (
-    <div className="bg-white rounded-xl shadow-sm overflow-hidden transition-shadow duration-300 hover:shadow-md">
+    <div className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-all duration-300 hover:-translate-y-1">
       {/* Image Placeholder */}
       <div className="relative h-[250px] overflow-hidden">
         <img

@@ -84,20 +84,22 @@ export default function Footer() {
               <li className="flex gap-3 text-sm text-[#5C5346]">
                 <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
                 <span>
-                  Thamel, Kathmandu<br />
-                  Nepal 44600
+                 Heritage Himalaya Trails<br/>Tsangspa House,<br/>
+                  Near GurudwaraSingh Sabha, 
+                  Nawshar, <br/>
+                 Leh 194101, Ladakh, India
                 </span>
               </li>
               <li className="flex gap-3 text-sm text-[#5C5346]">
                 <Phone className="w-4 h-4 mt-0.5 flex-shrink-0" />
                 <a href="tel:+9771234567890" className="hover:text-[#3D3226] transition-colors duration-200">
-                  +977 1-234-5678
+                  +9419218013 / 9622992881
                 </a>
               </li>
               <li className="flex gap-3 text-sm text-[#5C5346]">
                 <Mail className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                <a href="mailto:hello@heritagehimalaya.com" className="hover:text-[#3D3226] transition-colors duration-200">
-                  hello@heritagehimalaya.com
+                <a href="mailto:info.hhtrails@gmail.com" className="hover:text-[#3D3226] transition-colors duration-200">
+                 info.hhtrails@gmail.com
                 </a>
               </li>
             </ul>

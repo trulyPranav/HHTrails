@@ -1,5 +1,5 @@
 import TourCard from './TourCard';
-
+import { Compass, BookOpen, Gift, Heart, Shield, Award } from 'lucide-react';
 const upcomingTours = [
   {
     id: 1,
@@ -23,14 +23,46 @@ const upcomingTours = [
     location: 'Nubra Valley / Kargil',
   },
 ];
-
+const features = [
+  {
+    icon: Compass,
+    title: 'Sharing Experience',
+    description: 'We are driven by our passion, rooted in South Rewryt\'s aspiration to share his culture with others. Our deep knowledge of cultural heritage, vibrant arts and sacred landscapes of the Himalayas is acquired through decades of supervision and guidance.'
+  },
+  {
+    icon: BookOpen,
+    title: 'Enriching Knowledge',
+    description: 'Education is "travel\'s more than just the feeling of \'going\'" we always try to enrich travelers\' knowledge with storytelling of Himalayan heritage, recounting history, tradition wisdom, iconographies, mystic practices, local legends and discovering tangible sites.'
+  },
+  {
+    icon: Gift,
+    title: 'More Rewarding',
+    description: 'Hospitable Himalayan life always has something nice to offer which you might not have expected. We assure that traveling with H&T always expect the unexpected.'
+  },
+  {
+    icon: Heart,
+    title: 'Travel for a Cause',
+    description: 'When you travel with H&T, your journey becomes a force for good by uplifting every local supports encountered by village and mountain communities, sustaining Himalayan cultures, cherishing ancient traditions, serving teachers, and funds schools for generations to come.'
+  },
+  {
+    icon: Shield,
+    title: 'Ethical Hospitality',
+    description: 'We design your itinerary to match your interests, preference, schedule, and budget. Ensure it in a sense that combining experience, ethical journeys, respect for Himalayan eco-cultural delivery. Your satisfaction is our true goal!'
+  },
+  {
+    icon: Award,
+    title: 'Licensed & Certified',
+    description: 'As an officially registered company with the Department of Tourism, J&K, we meet all safety standards and operate regulatory requirements, giving you confidence and peace of mind in every journey.'
+  }
+];
 const UpcomingToursSection = () => {
   return (
+     <>
     <section className="w-full bg-[#f3f3f3] py-16">
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
         <div className="text-center mb-2">
-          <h2 className="font-berlin text-3xl font text-[#2b2b2b] mb-2">
+          <h2 className="font-berlin text-3xl font text-[#281910] mb-2">
             Upcoming Tours
           </h2>
           <p className="font-sans text-base tracking-tight font-normal text-[#4A5565]">
@@ -74,6 +106,56 @@ const UpcomingToursSection = () => {
         </div>
       </div>
     </section>
+    
+    <section className="w-full bg-gradient-to-b from-[#2b1408] via-[#281910] to-[#281910] py-20">
+        <div className="max-w-6xl mx-auto px-6">
+          {/* Top Center Icon */}
+          <div className="flex justify-center mb-4">
+            <div className="w-11 h-11 rounded-full bg-[#f4a62a] flex items-center justify-center shadow-[0_0_20px_rgba(244,166,42,0.4)]">
+              <Compass className="w-5 h-5 text-white" />
+            </div>
+          </div>
+
+          {/* Section Title */}
+          <h2 className="text-2xl font-semibold text-white text-center mb-3">
+            Why Travel With Us
+          </h2>
+
+          {/* Subtitle */}
+          <p className="text-sm text-gray-300 max-w-2xl mx-auto text-center mb-12 leading-relaxed">
+            We offer more than tours — we create transformative cultural experiences rooted in authenticity, expertise, and respect.
+          </p>
+
+          {/* Feature Card Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {features.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <div
+                  key={index}
+                  className="bg-[rgba(255,255,255,0.06)] border border-[rgba(255,255,255,0.08)] rounded-xl p-6 backdrop-blur-sm transition-all duration-300 hover:translate-y-[-3px] hover:bg-[rgba(255,255,255,0.08)]"
+                >
+                  {/* Icon Circle */}
+                  <div className="w-9 h-9 rounded-full bg-[#f4a62a] flex items-center justify-center mb-4">
+                    <Icon className="w-4 h-4 text-white" />
+                  </div>
+
+                  {/* Card Title */}
+                  <h3 className="text-sm font-semibold text-white mb-2">
+                    {feature.title}
+                  </h3>
+
+                  {/* Card Description */}
+                  <p className="text-xs text-gray-300 leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+     </>
   );
 };
 

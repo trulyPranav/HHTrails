@@ -61,12 +61,12 @@ const Home = () => {
   return (
     <div className="flex-grow pt-[72px] min-h-screen bg-[#2B1E17]">
       {/* Hero Text */}
-      <div className="max-w-4xl mx-auto text-center pt-8 px-6 mb-8">
-        <p className="font-berlin text-[#F4A321] text-lg tracking-widest mb-4">
+      <div className="max-w-4xl mx-auto text-center pt-8 px-6">
+        <p className="font-berlin text-[#F4A321] text-4xl mb-2">
           JULLEY !!
         </p>
 
-        <h1 className="font-berlin text-white text-4xl md:text-5xl font-bold leading-tight mb-0">
+        <h1 className="font-berlin text-white text-5xl font leading-snug mb-0">
           AN INSIGHT INTO THE LEGACY
           <br />
           OF MOUNTAINS
@@ -74,7 +74,7 @@ const Home = () => {
       </div>
 
       {/* Panorama Swiper */}
-      <section className="w-full py-16 md:py-24 relative z-10">
+      <section className="w-full relative z-10">
         <div className="w-full relative">
           <div className="panorama-mask overflow-x-clip relative z-[1] will-change-transform translate-z-0">
             <Swiper
@@ -94,7 +94,7 @@ const Home = () => {
                     src={slide.image}
                     alt={slide.alt}
                     draggable={false}
-                    className="w-full h-full object-cover aspect-[3/4] will-change-transform [backface-visibility:hidden] [perspective:1000px]"
+                    className="w-full h-full object-cover aspect-[2/3] will-change-transform [backface-visibility:hidden] [perspective:1000px]"
                   />
                 </SwiperSlide>
               ))}

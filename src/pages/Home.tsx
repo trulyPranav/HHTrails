@@ -31,7 +31,7 @@ const Home = () => {
 
     const swiper = swiperRef.current;
     let rafId: number | null = null;
-    const SPEED = 1; // px per frame
+    const SPEED = 5; // px per frame
 
     // Wait for swiper to be fully initialized
     setTimeout(() => {
@@ -61,12 +61,12 @@ const Home = () => {
   return (
     <div className="flex-grow pt-[72px] min-h-screen bg-[#2B1E17]">
       {/* Hero Text */}
-      <div className="max-w-4xl mx-auto text-center pt-8 px-6">
-        <p className="font-berlin text-[#F4A321] text-4xl mb-2">
+      <div className="max-w-4xl mx-auto text-center pt-8 px-6 mb-0">
+        <p className="font-berlin text-[#F4A321] text-3xl mb-2">
           JULLEY !!
         </p>
 
-        <h1 className="font-berlin text-white text-5xl font leading-snug mb-0">
+        <h1 className="font-berlin text-white text-4xl font leading-snug mb-0 tracking-wide">
           AN INSIGHT INTO THE LEGACY
           <br />
           OF MOUNTAINS
@@ -74,7 +74,7 @@ const Home = () => {
       </div>
 
       {/* Panorama Swiper */}
-      <section className="w-full relative z-10">
+      <section className="w-full relative z-10 -mt-16">
         <div className="w-full relative">
           <div className="panorama-mask overflow-x-clip relative z-[1] will-change-transform translate-z-0">
             <Swiper
@@ -82,7 +82,7 @@ const Home = () => {
               spaceBetween={40}
               allowTouchMove={false}
               loop={false}
-              speed={0}
+              speed={1}
               className="[&_.swiper-wrapper]:flex [&_.swiper-wrapper]:items-center [&_.swiper-wrapper]:justify-start [&_.swiper-wrapper]:!transition-timing-function-linear"
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
@@ -94,7 +94,7 @@ const Home = () => {
                     src={slide.image}
                     alt={slide.alt}
                     draggable={false}
-                    className="w-full h-full object-cover aspect-[2/3] will-change-transform [backface-visibility:hidden] [perspective:1000px]"
+                    className="w-full h-full object-cover aspect-[2.5/4] will-change-transform [backface-visibility:hidden] [perspective:1000px]"
                   />
                 </SwiperSlide>
               ))}
@@ -104,71 +104,71 @@ const Home = () => {
       </section>
 
       {/* Search Bar */}
-      <div className="mb-11 px-4">
-  <div className="max-w-4xl mx-auto bg-[#6A5F56] rounded-2xl shadow-xl p-3">
-    <div className="flex flex-col md:flex-row items-center gap-3">
+      <div className="mb-11 px-4 -mt-12">
+        <div className="max-w-4xl mx-auto bg-[#6A5F56] rounded-lg shadow-xl p-5">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
 
-      {/* Destination */}
-      <div className="flex-1 flex items-center gap-3 px-4 py-3 bg-white rounded-lg">
-        <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-        <div className="flex-1">
-          <p className="text-[10px] text-gray-400 leading-none mb-1">Destination</p>
-          <input
-            type="text"
-            placeholder="Search tours..."
-            className="w-full outline-none text-xs text-gray-700 placeholder:text-gray-400"
-          />
+            {/* Destination */}
+            <div className="flex items-center gap-3 px-4 py-3 bg-white rounded-lg">
+              <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <div className="flex-1">
+                <p className="text-[10px] text-gray-400 leading-none">Destination</p>
+                <input
+                  type="text"
+                  placeholder="Search tours..."
+                  className="w-full outline-none text-xs text-gray-700 placeholder:text-gray-400"
+                />
+              </div>
+            </div>
+
+            {/* From */}
+            <div className="flex items-center gap-3 px-4 py-3 bg-white rounded-lg">
+              <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <div className="flex-1">
+                <p className="text-[10px] text-gray-400 leading-none">From</p>
+                <input
+                  type="text"
+                  placeholder="27 - Nov - 2025"
+                  onFocus={(e) => (e.target.type = "date")}
+                  onBlur={(e) => !e.target.value && (e.target.type = "text")}
+                  className="w-full outline-none text-xs text-gray-700 placeholder:text-gray-400"
+                />
+              </div>
+            </div>
+
+            {/* Till */}
+            <div className="flex items-center gap-3 px-4 py-3 bg-white rounded-lg">
+              <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <div className="flex-1">
+                <p className="text-[10px] text-gray-400 leading-none">Till</p>
+                <input
+                  type="text"
+                  placeholder="30 - Nov - 2025"
+                  onFocus={(e) => (e.target.type = "date")}
+                  onBlur={(e) => !e.target.value && (e.target.type = "text")}
+                  className="w-full outline-none text-xs text-gray-700 placeholder:text-gray-400"
+                />
+              </div>
+            </div>
+
+            {/* Search Button */}
+            <button className="bg-[#F4A321] hover:bg-[#E09419] text-[#1F1F1F] text-sm font-medium px-4 py-3 rounded-lg flex items-center justify-center gap-2 transition-all duration-300">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              Search
+            </button>
+
+          </div>
         </div>
       </div>
-
-      {/* From */}
-      <div className="flex-1 flex items-center gap-3 px-4 py-3 bg-white rounded-lg">
-        <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg>
-        <div className="flex-1">
-          <p className="text-[10px] text-gray-400 leading-none mb-1">From</p>
-          <input
-            type="text"
-            placeholder="27 - Nov - 2025"
-            onFocus={(e) => (e.target.type = "date")}
-            onBlur={(e) => !e.target.value && (e.target.type = "text")}
-            className="w-full outline-none text-xs text-gray-700 placeholder:text-gray-400"
-          />
-        </div>
-      </div>
-
-      {/* Till */}
-      <div className="flex-1 flex items-center gap-3 px-4 py-3 bg-white rounded-lg">
-        <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg>
-        <div className="flex-1">
-          <p className="text-[10px] text-gray-400 leading-none mb-1">Till</p>
-          <input
-            type="text"
-            placeholder="30 - Nov - 2025"
-            onFocus={(e) => (e.target.type = "date")}
-            onBlur={(e) => !e.target.value && (e.target.type = "text")}
-            className="w-full outline-none text-xs text-gray-700 placeholder:text-gray-400"
-          />
-        </div>
-      </div>
-
-      {/* Search Button */}
-      <button className="bg-[#F4A321] hover:bg-[#E09419] text-[#1F1F1F] text-sm font-medium px-16 py-5 rounded-lg flex items-center gap-2 transition-all duration-300">
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-        Search
-      </button>
-
-    </div>
-  </div>
-</div>
 
       {/* Top Experiences Section */}
       <section className="w-full bg-[#f5f5f5] py-16">

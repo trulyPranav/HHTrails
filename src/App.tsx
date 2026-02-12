@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
+import Tours from './pages/Tours';
 import GoogleCallback from './pages/GoogleCallback';
 import AuthModal from './components/AuthModal'; 
 
@@ -19,11 +20,12 @@ function App() {
           {/* Pass function to Header */}
           <Header onAuthClick={() => setIsAuthOpen(true)} />
 
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/google/callback" element={<GoogleCallback />} />
-          </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/tours" element={<Tours />} />
+          <Route path="/google/callback" element={<GoogleCallback />} />
+        </Routes>
 
           <Footer />
 

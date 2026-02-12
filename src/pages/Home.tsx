@@ -1,4 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
+import type { Swiper as SwiperType } from 'swiper';
 import { useEffect, useRef } from 'react';
 import 'swiper/css';
 
@@ -23,13 +24,13 @@ const repeatedSlides = [
 ];
 
 const Home = () => {
-  const swiperRef = useRef(null);
+  const swiperRef = useRef<SwiperType | null>(null);
 
   useEffect(() => {
     if (!swiperRef.current) return;
 
     const swiper = swiperRef.current;
-    let rafId;
+    let rafId: number | null = null;
     const SPEED = 1; // px per frame
 
     // Wait for swiper to be fully initialized

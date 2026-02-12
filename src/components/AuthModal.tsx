@@ -1,5 +1,9 @@
-import React, { useState } from "react";
-import { X, Eye, EyeOff, User, Mail, Lock } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { X, Eye, EyeOff, User, Mail, Lock, Loader2, AlertCircle } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { validateSignUpForm, validateSignInForm } from '../utils/validation';
+import { ApiClientError } from '../services/apiClient';
+import { authService } from '../services/authService';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -7,13 +11,25 @@ interface AuthModalProps {
 }
 
 const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
+  const { signUp, signIn } = useAuth();
   const [isSignUp, setIsSignUp] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string>('');
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     password: '',
   });
+
+  // Reset form when modal opens/closes or mode changes
+  useEffect(() => {
+    if (!isOpen) {
+      setFormData({ fullName: '', email: '', password: '' });
+      setError('');
+      setIsLoading(false);
+    }
+  }, [isOpen]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -21,11 +37,95 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       ...prev,
       [name]: value
     }));
+    // Clear error when user starts typing
+    if (error) setError('');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    setError('');
+    setIsLoading(true);
+
+    try {
+      if (isSignUp) {
+        // Validate sign up form
+        const validation = validateSignUpForm(
+          formData.email,
+          formData.password,
+          formData.fullName
+        );
+        
+        if (!validation.isValid) {
+          setError(validation.error || 'Validation failed');
+          setIsLoading(false);
+          return;
+        }
+
+        // Sign up
+        await signUp({
+          email: formData.email,
+          password: formData.password,
+          fullName: formData.fullName || undefined,
+        });
+
+        // Success - close modal
+        onClose();
+      } else {
+        // Validate sign in form
+        const validation = validateSignInForm(
+          formData.email,
+          formData.password
+        );
+        
+        if (!validation.isValid) {
+          setError(validation.error || 'Validation failed');
+          setIsLoading(false);
+          return;
+        }
+
+        // Sign in
+        await signIn({
+          email: formData.email,
+          password: formData.password,
+        });
+
+        // Success - close modal
+        onClose();
+      }
+    } catch (err) {
+      if (err instanceof ApiClientError) {
+        setError(err.message);
+      } else if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An unexpected error occurred. Please try again.');
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleAuth = async () => {
+    setError('');
+    setIsLoading(true);
+
+    try {
+      // Store return URL for after authentication
+      sessionStorage.setItem('google_auth_return', window.location.href);
+      
+      // Get Google OAuth URL from backend and redirect
+      const authUrl = await authService.getGoogleAuthUrl();
+      
+      // Full page redirect to Google OAuth
+      window.location.href = authUrl;
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Failed to initiate Google sign in');
+      }
+      setIsLoading(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -91,7 +191,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           <div className="flex gap-3 mb-6">
             <button
               type="button"
-              className="flex-1 h-[38px] flex items-center justify-center gap-2 bg-white border border-[#ddd] rounded-md hover:bg-gray-100 transition-colors text-sm text-gray-700"
+              onClick={handleGoogleAuth}
+              disabled={isLoading}
+              className="flex-1 h-[38px] flex items-center justify-center gap-2 bg-white border border-[#ddd] rounded-md hover:bg-gray-50 transition-colors text-sm text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24">
                 <path
@@ -111,17 +213,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                 />
               </svg>
-              <span>Sign Up With Google</span>
-            </button>
-
-            <button
-              type="button"
-              className="flex-1 h-[38px] flex items-center justify-center gap-2 bg-white border border-[#ddd] rounded-md hover:bg-gray-100 transition-colors text-sm text-gray-700"
-            >
-              <svg className="w-4 h-4 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-              </svg>
-              <span>Sign Up With Facebook</span>
+              <span>{isSignUp ? 'Sign Up' : 'Sign In'} With Google</span>
             </button>
           </div>
 
@@ -129,6 +221,14 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           <div className="text-center mb-6">
             <span className="text-xs text-gray-400">- OR -</span>
           </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md flex items-start gap-2">
+              <AlertCircle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
+              <p className="text-sm text-red-800">{error}</p>
+            </div>
+          )}
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -142,7 +242,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   value={formData.fullName}
                   onChange={handleChange}
                   placeholder="Full Name"
-                  className="w-full h-[44px] pl-10 pr-4 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 text-sm"
+                  disabled={isLoading}
+                  className="w-full h-[44px] pl-10 pr-4 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2b1b14] focus:border-transparent text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  required
                 />
               </div>
             )}
@@ -155,8 +257,10 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="Address Email"
-                className="w-full h-[44px] pl-10 pr-4 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 text-sm"
+                placeholder="Email Address"
+                disabled={isLoading}
+                className="w-full h-[44px] pl-10 pr-4 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2b1b14] focus:border-transparent text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                required
               />
             </div>
 
@@ -169,12 +273,15 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Password"
-                className="w-full h-[44px] pl-10 pr-10 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 text-sm"
+                disabled={isLoading}
+                className="w-full h-[44px] pl-10 pr-10 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2b1b14] focus:border-transparent text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                disabled={isLoading}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 disabled:opacity-50"
               >
                 {showPassword ? (
                   <EyeOff className="w-4 h-4" />
@@ -184,12 +291,21 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               </button>
             </div>
 
+            {/* Password Requirements Hint for Sign Up */}
+            {isSignUp && (
+              <p className="text-xs text-gray-500 -mt-2">
+                Min. 8 characters with uppercase, lowercase, and number
+              </p>
+            )}
+
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full h-[44px] bg-[#2b1b14] hover:bg-[#3a261e] text-white font-medium rounded-md transition-colors text-sm mt-4"
+              disabled={isLoading}
+              className="w-full h-[44px] bg-[#2b1b14] hover:bg-[#3a261e] text-white font-medium rounded-md transition-colors text-sm mt-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {isSignUp ? 'Create Account' : 'Sign In'}
+              {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
+              {isLoading ? 'Please wait...' : (isSignUp ? 'Create Account' : 'Sign In')}
             </button>
           </form>
 
@@ -206,8 +322,10 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     email: '',
                     password: '',
                   });
+                  setError('');
                 }}
-                className="text-gray-800 hover:underline cursor-pointer"
+                disabled={isLoading}
+                className="text-gray-800 hover:underline cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSignUp ? 'Log in' : 'Create Account'}
               </button>

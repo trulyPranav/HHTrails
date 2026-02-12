@@ -2,7 +2,7 @@ const HimalayanTours = () => {
   const places = ["Ladakh", "Spiti", "Zanskar", "Himachal", "Sikkim"];
 
   return (
-    <div className="w-full bg-[#281910] border-b text-center px-4 py-10 sm:py-12 lg:py-16">
+    <div className="w-full bg-[#281910] border-b text-center px-4 py-10 sm:py-12 lg:py-15">
 
       {/* Title */}
       <p className="font-sans text-sm sm:text-base mb-3 text-[#F3F4F1]">

@@ -14,7 +14,7 @@ const MapSection = () => {
       "
     >
       <img
-        src="/map-placeholder.png"
+        src="assets/image 86.svg"
         alt="Himalayan Regions Map"
         className="w-full h-full object-cover"
       />

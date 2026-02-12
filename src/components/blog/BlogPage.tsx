@@ -1,4 +1,4 @@
-import { Compass, Landmark, Lightbulb, Leaf, Camera } from 'lucide-react';
+import { Compass, Landmark, Lightbulb, Leaf, Camera,BookOpen } from 'lucide-react';
 
 const BlogPage = () => {
 
@@ -28,6 +28,30 @@ const BlogPage = () => {
       image: "assets/ImageWithFallback.svg"
     }
   ];
+
+   const books = [
+    {
+      id: 1,
+      image: "placeholder-book-1.jpg",
+      title: "Perspectives on Climate Change, Adaptation, and Belief Systems in Ladakh: A Case Study of Nubra",
+      author: "Author(s): Dr. Sonam Wangchok"
+    },
+    {
+      id: 2,
+      image: "placeholder-book-2.jpg",
+      title: "WALKS IN NUBRA",
+      volume: "Volume 1: Rongto to Kyagar",
+      author: "Author(s): Dr. Sonam Wangchok"
+    },
+    {
+      id: 3,
+      image: "placeholder-book-3.jpg",
+      title: "Walks in Nubra",
+      volume: "Volume 1: Photoksar to Phukpoche",
+      author: "Author(s): Dr. Sonam Wangchok"
+    }
+  ];
+
   return (
     <div>
       {/* Hero Banner Section */}
@@ -248,6 +272,106 @@ const BlogPage = () => {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+
+           <div className="w-full bg-[#f5f5f5] py-1">
+            <div className="max-w-6xl mx-auto px-6">
+              {/* Section Header */}
+              <div className="text-center mb-14">
+                {/* Decorative Icon */}
+                <div className="flex justify-center mb-3">
+                  <BookOpen className="w-6 h-6 text-[#f4a62a]" />
+                </div>
+                
+                {/* Title */}
+                <h2 className="text-2xl font-semibold text-[#2b2b2b] mb-2">
+                  Traveler's Library
+                </h2>
+                
+                {/* Subtitle */}
+                <p className="text-sm text-gray-500">
+                  Curated reading for mountain lovers and adventure seekers
+                </p>
+              </div>
+
+              {/* Card Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                {books.map((book) => (
+                  <div 
+                    key={book.id}
+                    className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow"
+                  >
+                    {/* Image Section */}
+                    <div className="relative h-[200px] bg-[#2b1b14]">
+                      <img 
+                        src={book.image} 
+                        alt={book.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
+                    {/* Card Body */}
+                    <div className="p-5">
+                      {/* Title */}
+                      <h3 className="text-sm font-medium text-[#2b2b2b] leading-snug mb-3">
+                        {book.title}
+                      </h3>
+
+                      {/* Volume (if exists) */}
+                      {book.volume && (
+                        <p className="text-xs text-gray-500 mb-1">
+                          {book.volume}
+                        </p>
+                      )}
+
+                      {/* Author */}
+                      <p className="text-xs text-gray-500">
+                        {book.author}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full bg-[#281910] py-20 mt-16 -mb-16">
+            <div className="max-w-4xl mx-auto px-6 text-white">
+              {/* Top Icon */}
+              <div className="flex justify-center mb-6">
+                <BookOpen className="w-10 h-10 text-white" strokeWidth={1.5} />
+              </div>
+
+              {/* Section Title */}
+              <h2 className="text-2xl font-semibold text-center mb-4">
+                Join Our Heritage Community
+              </h2>
+
+              {/* Subtitle */}
+              <p className="text-sm text-gray-300 text-center max-w-xl mx-auto leading-relaxed mb-8">
+                Receive cultural research updates, heritage stories, and insights from our field team documenting Little Tibet's living traditions.
+              </p>
+
+              {/* Email Input + Button Row */}
+              <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-6">
+                {/* Input Field */}
+                <input
+                  type="email"
+                  placeholder="Your email address"
+                  className="w-full md:w-80 h-[42px] bg-transparent border border-gray-400 rounded-md px-4 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-white transition-colors"
+                />
+
+                {/* Subscribe Button */}
+                <button className="w-full md:w-auto h-[42px] px-6 bg-transparent border border-gray-400 text-white text-sm rounded-md hover:bg-white hover:text-[#2b1408] transition-all">
+                  Subscribe
+                </button>
+              </div>
+
+              {/* Footnote Text */}
+              <p className="text-xs text-gray-400 text-center mt-6">
+                No spam. Only meaningful cultural narratives and research insights.
+              </p>
             </div>
           </div>
         </div>

@@ -6,9 +6,9 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import Tours from './pages/Tours';
+import Blog from './pages/Blog';
 import GoogleCallback from './pages/GoogleCallback';
 import AuthModal from './components/AuthModal'; 
-import { BlogPage } from "./components/blog";
 
 function App() {
   const [isAuthOpen, setIsAuthOpen] = useState(false); 
@@ -26,7 +26,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/tours" element={<Tours />} />
           <Route path="/google/callback" element={<GoogleCallback />} />
-          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog" element={<Blog />} />
 
         </Routes>
 

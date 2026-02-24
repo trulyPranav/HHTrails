@@ -30,15 +30,21 @@ const FilterSidebar = () => {
   return (
       <aside
         className="
-          self-start
-          w-[320px]
-          p-[26px]
-          rounded-[10px]
-          border-2
-          bg-white
-          space-y-6
-          shrink-0
-        "
+    sticky
+    top-0
+    self-start
+    w-[320px]
+    p-[26px]
+    rounded-[10px]
+    border-2
+    bg-white
+    space-y-6
+    shrink-0
+    /* side scroll bar */
+    max-h-screen
+    overflow-y-auto
+    scroll-smooth
+  "
       >
       {/* HEADER */}
       <div className="flex items-center gap-2">

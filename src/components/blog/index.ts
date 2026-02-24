@@ -1,4 +1,4 @@
-export { default as BlogPage } from "./BlogPage";export { default as BlogHeroSection } from './BlogHeroSection';
+export { default as BlogHeroSection } from './BlogHeroSection';
 export { default as BlogCategoryFilter } from './BlogCategoryFilter';
 export { default as BlogFeaturedSection } from './BlogFeaturedSection';
 export { default as BlogLatestArticles } from './BlogLatestArticles';

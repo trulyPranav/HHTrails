@@ -1,5 +1,6 @@
 import type { Tour } from "../../types/tour";
 import { useNavigate } from "react-router-dom";
+import WindowOverlay from "../public/Vector.svg";
 
 interface TourCardProps {
   tour: Tour;
@@ -11,36 +12,40 @@ const TourCard = ({ tour }: TourCardProps) => {
     <div className="w-[360px] m-3 bg-white rounded-xl shadow-md overflow-hidden">
 
       {/* IMAGE SECTION */}
-      <div className="relative h-[180px] bg-[#2b140c]">
+     <div className="relative h-[200px] overflow-hidden rounded-t-xl">
 
-        {/* top dark shape */}
-        <div className="absolute top-0 left-0 w-full h-16 bg-[#2b140c] rounded-b-[60px]" />
+  {/* Main Image */}
+  <img
+    src={tour.photoUrl}
+    alt={tour.title}
+    className="w-full h-full object-cover"
+  />
 
-        {/* image */}
-        <img
-          src={tour.photoUrl}
-          alt={tour.title}
-          className="w-full h-full object-cover"
-        />
+  {/* Top Brown Overlay Shape */}
+  <img
+    src="/Vector.svg"  // your overlay svg
+    alt="overlay-shape"
+    className="absolute top-0 left-0 w-full h-[90px] object-cover z-10 pointer-events-none  bg-no-repeat bg-top bg-cover"
+  />
 
-        {/* recommended badge */}
-        <span className="absolute top-3 left-3 bg-orange-400 text-white text-xs px-3 py-1 rounded-full">
-          {tour.isCustom ? "Custom" : "Recommended"}
-        </span>
+  {/* Recommended Badge */}
+  <span className="absolute top-4 left-4 bg-orange-400 text-white text-xs px-4 py-1 rounded-full z-20">
+    {tour.isCustom ? "Custom" : "Recommended"}
+  </span>
 
-        {/* bookmark */}
-        <div className="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow">
-          🔖
-        </div>
+  {/* Bookmark */}
+  <div className="absolute top-4 right-4 w-9 h-9 bg-white rounded-full flex items-center justify-center shadow z-20">
+    🔖
+  </div>
 
-        {/* bottom info */}
-        <div className="absolute bottom-2 left-3 right-3 flex justify-between text-white text-xs">
-          <span>📍 {tour.region}</span>
-          <span>
-            📅 {tour.durationNights}N / {tour.durationDays}D
-          </span>
-        </div>
-      </div>
+  {/* Bottom Info */}
+  <div className="absolute bottom-3 left-4 right-4 flex justify-between text-white text-sm z-20">
+    <span>📍 {tour.region}</span>
+    <span>
+      📅 {tour.durationNights}N / {tour.durationDays}D
+    </span>
+  </div>
+</div>
 
       {/* CONTENT */}
       <div className="p-5 space-y-3">

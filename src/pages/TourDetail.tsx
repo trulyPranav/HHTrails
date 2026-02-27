@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { MapPin, CalendarDays, Mountain, Sun,Send,Bookmark,Check, Download} from "lucide-react";
+import { MapPin, CalendarDays, Mountain, Sun,Send,Bookmark,Check, Download, Calendar,ChevronLeft, ChevronRight,ArrowRight,TrendingUp} from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
-
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // TOUR DATA
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -24,7 +23,7 @@ const tour = {
     "Interact with local village communities",
     "Experience Ladakhi culture, food, and traditions",
     "Learn about trade history and Himalayan heritage",
-    "Photograph dramatic Himalayan vistas and desert valleys",
+    
   ],
 
   inclusions: [
@@ -220,7 +219,7 @@ const COLOR = {
 };
 
 const FONT = {
-  body: "'Inter',sans,sans-serif"
+  body: "'Inter',berlin sans fb,sans-serif"
 };
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // GLOBAL STYLES
@@ -233,7 +232,7 @@ const GLOBAL_CSS = `
   .hero-overlay {
     background: linear-gradient(
       to top,
-      rgba(0,0,0,0.80) 0%,
+      rgba(0,0,0,0.0) 90%,
       rgba(0,0,0,0.40) 0%,
       rgba(0,0,0,0.10) 00%
     );
@@ -524,14 +523,14 @@ const HeroSection = ({ tourData, bookmarked, onBookmark }) => {
       <div className="hero-overlay" style={{ position: "absolute", inset: 0 }} />
 
       {/* Content */}
-      <div style={{ position: "relative", zIndex: 10, width: "100%", padding: "0 70px 52px" }}>
+      <div style={{ position: "relative", zIndex: 10, width: "100%", padding: "0 80px 32px" }}>
         <h1
           className="hero-title"
           style={{
             color: "white",
             fontSize: "clamp(1.75rem, 3.2vw, 3rem)",
             fontWeight: 400,
-            fontFamily: FONT.body,
+            fontFamily: "Berlin Sans FB",
             letterSpacing: "-0.02em",
             lineHeight: 1.15,
             marginBottom: 16,
@@ -547,7 +546,7 @@ const HeroSection = ({ tourData, bookmarked, onBookmark }) => {
             <span
               key={tag}
               className="tag-pill"
-              style={{ color: "white", fontSize: "0.70rem", fontWeight:500, padding: "4px 13px", borderRadius: 999, cursor: "default", letterSpacing: "0.03em" }}
+              style={{ color: "white", fontSize: "0.70rem", fontWeight:300, fontFamily: FONT.body, padding: "8px 13px", borderRadius: 999, cursor: "default", letterSpacing: "0.03em" }}
             >
               {tag}
             </span>
@@ -561,6 +560,7 @@ const HeroSection = ({ tourData, bookmarked, onBookmark }) => {
     flexWrap: "wrap",
     gap: "6px 22px",
     marginBottom: 28,
+    fontFamily: FONT.body,
   }}
 >
   <InfoItem icon={MapPin} label={location} />
@@ -654,24 +654,25 @@ const OverviewSection = ({ overview }) => (
     <h2
       className="
         font-display
-        font-bold
+        
         text-[clamp(1.6rem,2.5vw,2rem)]
         text-[#1a1a1a]
         mb-3
         tracking-tight
-      "
+      "style={{ color: "black",  fontFamily: "Berlin Sans FB", letterSpacing: "-0.01em" }}
+            
     >
       Overview
     </h2>
 
     <p
       className="
-        max-w-[850px]
+        max-w-[890px]
         text-[0.95rem]
         text-gray-500
-        leading-[1.95]
+        leading-[1.65]
         font-body
-      "
+      "style={{fontFamily: FONT.body,}}
     >
       {overview}
     </p>
@@ -682,25 +683,24 @@ const OverviewSection = ({ overview }) => (
 
 /* ── 3. HIGHLIGHTS ────────────────────────────────────── */
 const HighlightsSection = ({ highlights }) => (
-  <section className="bg-[#f5f2ee] py-[56px]">
+  <section className="bg-[#F3F4F1] py-[56px]">
   <div className="max-w-[980px] mx-auto px-10">
 
     {/* Heading */}
     <h2
       className="
         font-display
-        font-semibold
-        text-[clamp(0.5rem,2.5vw,2.9rem)]
+        text-[clamp(1.5rem,2.5vw,2.9rem)]
         text-[#1a1a1a]
-        mb-8
+        mb-4
         tracking-tight
-      "
+      "style={{ color: "black",  fontFamily: "Berlin Sans FB", letterSpacing: "-0.01em" }}
     >
       Highlights
     </h2>
 
     {/* Grid */}
-    <div className="grid grid-cols-2 gap-y-6 gap-x-16">
+    <div className="grid grid-cols-2 gap-y-2 gap-x-16">
 
       {highlights.map((item, i) => (
         <div key={i} className="flex items-start gap-3">
@@ -714,7 +714,7 @@ const HighlightsSection = ({ highlights }) => (
               text-[0.9rem]
               text-[#4a5565]
               leading-[1.65]
-            "
+            "style={{fontFamily: FONT.body,}}
           >
             {item}
           </span>
@@ -729,20 +729,19 @@ const HighlightsSection = ({ highlights }) => (
 
 /* ── 4. ITINERARY ─────────────────────────────────────── */
 const ItinerarySection = ({ itinerary }) => (
-  <section className="bg-[#fffdfb] py-[76px] border-t border-[#ece8e3] font-sans">
+  <section className="bg-[#ffffff] py-[46px] border-t border-[#ece8e3] font-sans">
   <div className="max-w-[900px] mx-auto px-10">
 
     {/* Display Heading */}
               <h2
                 className="
                   text-center
-                  font-display
-                  font-bold
-                  text-[clamp(1.8rem,2vw,2.3rem)]
+                  font-display                
+                  text-[clamp(1.9rem,2vw,2.3rem)]
                   text-[#2a0f06]
                   mb-14
                   tracking-[-0.01em]
-                "
+                "style={{ color: "black",  fontFamily: "Berlin Sans FB", letterSpacing: "0.02em" }}
               >
                 Walk Through the Experience
               </h2>
@@ -847,7 +846,7 @@ const ItinerarySection = ({ itinerary }) => (
                 <TimelineImage item={item} />
               </div>
             ) : (
-              <div className="w-[220px] text-right">
+              <div className="w-[220px] text-left">
                 <TimelineText item={item} />
               </div>
             )}
@@ -896,17 +895,17 @@ const ItinerarySection = ({ itinerary }) => (
 
 /* ── 5. INCLUSIONS & EXCLUSIONS ───────────────────────── */
 const InclusionsSection = ({ inclusions, exclusions }) => (
-  <section style={{ background: COLOR.bgMid, padding: "68px 0" }}>
+  <section style={{ backgroundColor: "#f3f4f1", padding: "68px 0" }}>
     <div
       style={{ maxWidth: 900, margin: "0 auto", padding: "0 40px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px 64px" }}
       className="inc-exc-grid"
     >
       {/* Inclusions */}
       <div>
-        <h2 style={{ fontSize: "clamp(1.3rem, 2.5vw, 1.7rem)", fontWeight: 700, color: COLOR.textPrimary, marginBottom: 26, fontFamily: FONT.body }}>
+        <h2 style={{ fontSize: "clamp(1.9rem, 2.5vw, 1.7rem)", fontWeight: 200, color: COLOR.textPrimary, marginBottom: 26, fontFamily: "Berlin Sans FB" }}>
           Inclusions
         </h2>
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <div style={{ display: "flex", flexDirection: "column",fontFamily: FONT.body, gap: 16 }}>
           {inclusions.map((item, i) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <div style={{ flexShrink: 0, width: 20, height: 20, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -922,10 +921,10 @@ const InclusionsSection = ({ inclusions, exclusions }) => (
 
       {/* Exclusions */}
       <div>
-        <h2 style={{ fontSize: "clamp(1.3rem, 2.5vw, 1.7rem)", fontWeight: 700, color: COLOR.textPrimary, marginBottom: 26, fontFamily: FONT.body }}>
+        <h2 style={{ fontSize: "clamp(1.9rem, 2.5vw, 1.7rem)", fontWeight: 200, color: COLOR.textPrimary, marginBottom: 26, fontFamily: "Berlin Sans FB" }}>
           Exclusions
         </h2>
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <div style={{ display: "flex", flexDirection: "column",fontFamily: FONT.body, gap: 16 }}>
           {exclusions.map((item, i) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <div style={{ flexShrink: 0, width: 20, height: 20, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -944,146 +943,320 @@ const InclusionsSection = ({ inclusions, exclusions }) => (
 
 /* ── 6. ACCOMMODATION ─────────────────────────────────── */
 const AccommodationSection = ({ accommodation }) => (
-  <section style={{ background: "white", padding: "68px 0" }}>
-    <div
-      style={{ maxWidth: 900, margin: "0 auto", padding: "0 40px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 64px", alignItems: "center" }}
-      className="accom-grid"
-    >
-      {/* Image */}
-      <div style={{ overflow: "hidden", borderRadius: 10 }}>
-        {accommodation.image ? (
-          <img
-            src={accommodation.image}
-            alt={accommodation.title || "Accommodation"}
-            style={{ width: "100%", aspectRatio: "4/3", objectFit: "cover", borderRadius: 10, display: "block" }}
-          />
-        ) : (
-          <ImgPlaceholder aspectRatio="4/3" size={40} />
-        )}
-      </div>
+  <section
+          key={accommodation.id}
+          style={{ background: "white", padding: "40px 0" }}
+        >
+          <div
+            style={{
+              maxWidth: 900,
+              margin: "0 auto",
+              padding: "0,20px",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "0 64px",
+             
+            }}
+            className="accom-grid"
+          >
+            {/* Image */}
+            <div style={{ overflow: "hidden", borderRadius: 10 }}>
+              {accommodation.image ? (
+                <img
+                  src={accommodation.image}
+                  alt={accommodation.title}
+                  style={{
+                    width: "100%",
+                    aspectRatio: "4/3",
+                    objectFit: "cover",
+                    borderRadius: 10,
+                    display: "block"
+                  }}
+                />
+              ) : (
+                <ImgPlaceholder aspectRatio="4/3" size={10} />
+              )}
+            </div>
 
-      {/* Text */}
-      <div>
-        <h2 style={{ fontSize: "clamp(1.4rem, 2.5vw, 1.9rem)", fontWeight: 700, color: COLOR.textPrimary, marginBottom: 20, fontFamily: FONT.body }}>
-          {accommodation.title || "Accommodation"}
-        </h2>
-        <p style={{ fontSize: "0.91rem", color: COLOR.textMuted, lineHeight: 1.9, maxWidth: 420 }}>
-          {accommodation.description}
-        </p>
-      </div>
-    </div>
-  </section>
+            {/* Text */}
+            <div>
+              <h2
+                style={{
+                  fontSize: "clamp(2.0rem, 2.5vw, 1.9rem)",
+                  fontWeight: 400,
+                  color: COLOR.textPrimary,
+                  marginBottom:20,
+                  fontFamily: "Berlin Sans FB"
+                }}
+              >
+                {accommodation.title}
+              </h2>
+
+              <p
+                style={{
+                  fontSize: "0.97rem",
+                  color: COLOR.textMuted,
+                  lineHeight: 1.6,
+                  maxWidth: 900
+                }}
+              >
+                {accommodation.description}
+              </p>
+            </div>
+          </div>
+        </section>
 );
 
 /* ── 7. VIDEO ─────────────────────────────────────────── */
 const VideoSection = ({ videoSection }) => (
-  <section style={{ background: "#111", padding: "68px 0" }}>
+  <section
+  style={{
+    background: "#1F150F",
+    padding: "68px 0",
+  }}
+>
+  <div
+    className="video-grid"
+    style={{
+      maxWidth: 900,
+      margin: "0 auto",
+      padding: "0 10px",
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "0 64px",
+      
+    }}
+  >
+    {/* Video embed or placeholder */}
     <div
-      style={{ maxWidth: 900, margin: "0 auto", padding: "0 40px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 64px", alignItems: "center" }}
-      className="video-grid"
+      style={{
+        position: "relative",
+        width: "100%",
+        aspectRatio: "4/3",
+        borderRadius: 10,
+        overflow: "hidden",
+        border: "1.5px solid rgba(255,255,255,0.1)",
+      }}
     >
-      {/* Video embed or placeholder */}
-      <div style={{ position: "relative", width: "100%", aspectRatio: "16/10", borderRadius: 10, overflow: "hidden", border: "1.5px solid rgba(255,255,255,0.1)" }}>
-        {videoSection.videoUrl ? (
-          <iframe
-            src={videoSection.videoUrl}
-            title={videoSection.title || "Tour Video"}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            style={{ width: "100%", height: "100%", border: "none", display: "block" }}
-          />
-        ) : (
-          <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 16 }}>
-            <div style={{ width: 58, height: 58, borderRadius: "50%", background: "#c0392b", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 20px rgba(192,57,43,0.55)" }}>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M6 4l12 6-12 6V4z" fill="white" />
-              </svg>
-            </div>
-            <span style={{ fontSize: "0.64rem", color: "rgba(255,255,255,0.32)", letterSpacing: "0.12em", textTransform: "uppercase" }}>
-              Paste video URL to embed
-            </span>
+      {videoSection.videoUrl ? (
+        <iframe
+          src={videoSection.videoUrl}
+          title={videoSection.title || "Tour Video"}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          style={{
+            width: "100%",
+            height: "100%",
+            border: "none",
+            display: "block",
+          }}
+        />
+      ) : (
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            background:
+              "linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 16,
+          }}
+        >
+          <div
+            style={{
+              width: 58,
+              height: 58,
+              borderRadius: "50%",
+              background: "#c0392b",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 20px rgba(192,57,43,0.55)",
+            }}
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+            >
+              <path d="M6 4l12 6-12 6V4z" fill="white" />
+            </svg>
           </div>
-        )}
-      </div>
 
-      {/* Text */}
-      <div>
-        <h2 style={{ fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 700, color: "white", marginBottom: 20, fontFamily: FONT.body, lineHeight: 1.25 }}>
-          {videoSection.title || "Glimpse of Nomadic Life"}
-        </h2>
-        <p style={{ fontSize: "0.875rem", color: "rgba(255,255,255,0.58)", lineHeight: 1.9, fontWeight: 300, maxWidth: 380 }}>
-          {videoSection.description}
-        </p>
-        {!videoSection.videoUrl && (
-          <p style={{ marginTop: 20, fontSize: "0.71rem", color: "rgba(255,255,255,0.22)", fontStyle: "italic" }}>
-            Set{" "}
-            <code style={{ background: "rgba(255,255,255,0.08)", padding: "1px 6px", borderRadius: 4, fontStyle: "normal" }}>
-              videoSection.videoUrl
-            </code>{" "}
-            in tour data to embed a video.
-          </p>
-        )}
-      </div>
+          <span
+            style={{
+              fontSize: "0.64rem",
+              color: "rgba(255,255,255,0.32)",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+            }}
+          >
+            Paste video URL to embed
+          </span>
+        </div>
+      )}
     </div>
-  </section>
+
+    {/* Text */}
+    <div>
+      <h2
+        style={{
+          fontSize: "clamp(2.3rem, 2.5vw, 1.8rem)",
+          fontWeight: 400,
+          color: "white",
+          marginBottom: 10, 
+          lineHeight: 1.25,
+          fontFamily: "Berlin Sans FB",
+        }}
+      >
+        {videoSection.title || "Glimpse of Nomadic Life"}
+      </h2>
+
+      <p
+        style={{
+          fontSize: "0.875rem",
+          color: "rgba(255,255,255,0.58)",
+          lineHeight: 1.9,
+          fontWeight: 300,
+          maxWidth: 380,
+        }}
+      >
+        {videoSection.description}
+      </p>
+
+      {/* {!videoSection.videoUrl && (
+        <p
+          style={{
+            marginTop: 20,
+            fontSize: "0.71rem",
+            color: "rgba(255,255,255,0.22)",
+            fontStyle: "italic",
+          }}
+        >
+          Set{" "}
+          <code
+            style={{
+              background: "rgba(255,255,255,0.08)",
+              padding: "1px 6px",
+              borderRadius: 4,
+              fontStyle: "normal",
+            }}
+          >
+            videoSection.videoUrl
+          </code>{" "}
+          in tour data to embed a video.
+        </p>
+      )} */}
+    </div>
+  </div>
+</section>
 );
 
 /* ── 8. MAP ───────────────────────────────────────────── */
 const MapSection = ({ mapSection }) => (
-  <section style={{ background: COLOR.bgLight, padding: "76px 0" }}>
-    <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 40px" }}>
-      <h2 style={{ textAlign: "center", fontSize: "clamp(1.4rem, 3vw, 1.9rem)", fontWeight: 700, color: COLOR.textPrimary, marginBottom: 14, fontFamily: FONT.body }}>
-        {mapSection.title || "Route & Region Map"}
-      </h2>
-      <p style={{ textAlign: "center", fontSize: "0.875rem", color: COLOR.textMuted, lineHeight: 1.8, maxWidth: 620, margin: "0 auto 34px" }}>
+  <section
+  style={{
+    background: "#F4F4F4", // soft warm grey like reference
+    padding: "90px 0",
+  }}
+>
+  <div
+    style={{
+      maxWidth: 1050,
+      margin: "0 auto",
+      padding: "0 24px",
+    }}
+  >
+    {/* Title */}
+    <h2
+      style={{
+        textAlign: "center",
+        fontSize: "clamp(1.8rem, 3vw, 2.4rem)",
+        fontWeight: 400,
+        color: "#2b1b14",
+        marginBottom: 20,
+        letterSpacing: "-0.02em",
+        fontFamily: "Berlin Sans FB",
+      }}
+    >
+      {mapSection.title || "Route & Region Map"}
+    </h2>
+
+    {/* Outer Card Container */}
+    <div
+      style={{
+        background: "#ffffff",
+        borderRadius: 18,
+        padding: "40px 40px 46px",
+        boxShadow: "0 10px 40px rgba(0,0,0,0.06)",
+      }}
+    >
+      {/* Description */}
+      <p
+        style={{
+          textAlign: "center",
+          fontSize: "1rem",
+          color: "#4A5565",
+          lineHeight: 1.8,
+          maxWidth: 760,
+          margin: "0 auto 32px",
+        }}
+      >
         {mapSection.description}
       </p>
 
-      {/* Map container */}
-      <div style={{ borderRadius: 14, overflow: "hidden", border: `1px solid #e5e0d8`, boxShadow: "0 2px 20px rgba(0,0,0,0.07)" }}>
-        {mapSection.googleMapsEmbedUrl ? (
-          <iframe
-            src={mapSection.googleMapsEmbedUrl}
-            title="Route & Region Map"
-            width="100%"
-            height="430"
-            style={{ border: "none", display: "block" }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        ) : (
-          <div style={{ width: "100%", height: 430, background: "linear-gradient(135deg, #ddd8ce 0%, #c8c0b4 50%, #b8b0a4 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 14 }}>
-            {/* Map pin SVG */}
-            <div style={{ width: 48, height: 48, borderRadius: "50% 50% 50% 0", background: "#e53e3e", transform: "rotate(-45deg)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 14px rgba(229,62,62,0.45)" }}>
-              <div style={{ width: 16, height: 16, borderRadius: "50%", background: "white", transform: "rotate(45deg)" }} />
+      {/* NEW: Inner Map Wrapper */}
+      <div
+        style={{
+          background: "#ffffff",
+          borderRadius: 14,
+          padding: 16,
+         
+        }}
+      >
+        {/* Map Container */}
+        <div
+          style={{
+            borderRadius: 12,
+            overflow: "hidden",
+          }}
+        >
+          {mapSection.googleMapsEmbedUrl ? (
+            <iframe
+              src={mapSection.googleMapsEmbedUrl}
+              title="Route & Region Map"
+              width="100%"
+              height="420"
+              style={{ border: "none", display: "block" }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                height: 420,
+                background: "#dcd8d2",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#8a8178",
+                fontSize: "0.9rem",
+              }}
+            >
+              Google Map Placeholder
             </div>
-            <div style={{ textAlign: "center" }}>
-              <p style={{ fontSize: "0.78rem", color: "#3b2a1a", opacity: 0.6, fontWeight: 700, letterSpacing: "0.07em", textTransform: "uppercase", marginBottom: 6 }}>
-                Google Map Placeholder
-              </p>
-              <p style={{ fontSize: "0.69rem", color: "#3b2a1a", opacity: 0.45, maxWidth: 300, lineHeight: 1.65 }}>
-                Set{" "}
-                <code style={{ background: "rgba(0,0,0,0.08)", padding: "1px 5px", borderRadius: 3 }}>
-                  mapSection.googleMapsEmbedUrl
-                </code>{" "}
-                in tour data to embed your Google Map.
-              </p>
-              <p style={{ fontSize: "0.63rem", color: "#3b2a1a", opacity: 0.35, marginTop: 8, lineHeight: 1.6 }}>
-                Google Maps → Share → Embed a map → Copy iframe src
-              </p>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-
-      {!mapSection.googleMapsEmbedUrl && (
-        <p style={{ textAlign: "center", marginTop: 14, fontSize: "0.71rem", color: "#aaa", fontStyle: "italic" }}>
-          Centered on Leh, Ladakh ({mapSection.centerLat}°N, {mapSection.centerLng}°E)
-        </p>
-      )}
     </div>
-  </section>
+  </div>
+</section>
 );
 
 /* ── 9. REVIEWS ───────────────────────────────────────── */
@@ -1093,7 +1266,7 @@ const ReviewsSection = ({ reviews }) => (
       {/* Section header */}
       <div style={{ textAlign: "center", marginBottom: 44 }}>
         <p style={{ fontSize: "1.2rem", color: "#bbb", letterSpacing: "0.18em", marginBottom: 6 }}>···</p>
-        <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 700, color: COLOR.textPrimary, fontFamily: FONT.body }}>
+        <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 400, color: COLOR.textPrimary, fontFamily: "Berlin Sans FB",}}>
           Traveler Stories
         </h2>
       </div>
@@ -1108,11 +1281,11 @@ const ReviewsSection = ({ reviews }) => (
               borderRadius: 14,
               padding: "26px 30px",
               border: `1px solid ${COLOR.border}`,
-              boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
+              boxShadow: "0 22px 22px rgba(0,0,0,0.04)",
             }}
           >
             {/* Header row */}
-            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 16, gap: 12 }}>
+            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 16, gap: 12, }}>
               <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
                 {/* Avatar */}
                 {r.avatar ? (
@@ -1128,20 +1301,21 @@ const ReviewsSection = ({ reviews }) => (
                       alignItems: "center",
                       justifyContent: "center",
                       flexShrink: 0,
-                      color: "white",
+                      color: "#fff",
                       fontSize: "1.1rem",
                       fontWeight: 700,
-                      fontFamily: FONT.body,
+                      fontFamily:"sans-serif",
+                      
                     }}
                   >
                     {r.name.charAt(0)}
                   </div>
                 )}
                 <div>
-                  <p style={{ fontSize: "0.9rem", fontWeight: 700, color: COLOR.textPrimary, marginBottom: 3, fontFamily: FONT.body }}>
+                  <p style={{ fontSize: "0.9rem", fontWeight: 700, color:"#09525E", marginBottom: 3, fontFamily:"sans-serif" }}>
                     {r.name}
                   </p>
-                  <p style={{ fontSize: "0.74rem", color: COLOR.textFaint }}>
+                  <p style={{ fontSize: "0.74rem", color:"#09525E" }}>
                     {r.origin} · {r.date}
                   </p>
                 </div>
@@ -1158,7 +1332,7 @@ const ReviewsSection = ({ reviews }) => (
             </div>
 
             {/* Review body */}
-            <p style={{ fontSize: "0.875rem", color: "#4b5563", lineHeight: 1.8 }}>
+            <p style={{ fontSize: "0.875rem", color: "#09525E", lineHeight: 1.8 }}>
               {r.review}
             </p>
           </div>
@@ -1170,133 +1344,198 @@ const ReviewsSection = ({ reviews }) => (
 
 /* ── 10. RECOMMENDED TOURS ────────────────────────────── */
 const RecommendedSection = ({ recommendedTours, currentTitle }) => (
-  <section style={{ background: "#f5f5f5", padding: "72px 0" }}>
-    <div style={{ maxWidth: 960, margin: "0 auto", padding: "0 40px" }}>
+  <section style={{ background: "#F4F4F4", padding: "50px 0", marginBottom: -76 }}>
+  <div style={{ maxWidth: 1040, margin: "0 auto", padding: "0 32px" }}>
 
-      {/* Header */}
-      <div style={{ marginBottom: 8 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M3 14l4-5 3 3 3-4 4 5" stroke="#2b2b2b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <h2 style={{ fontSize: "clamp(1.4rem, 3vw, 1.85rem)", fontWeight: 700, color: "#2b2b2b", fontFamily: FONT.body }}>
-            Recommended for You
-          </h2>
-        </div>
-        <p style={{ fontSize: "0.84rem", color: "#4A5565" }}>
-          Because you viewed{" "}
-          <span style={{ color: "#2b2b2b", fontWeight: 600 }}>{currentTitle}</span>
-        </p>
+    {/* Header */}
+    <div style={{ marginBottom: 24 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
+       <TrendingUp size={22} strokeWidth={2} color="#2b2b2b" />
+        <h2
+          style={{
+            fontSize: "clamp(2.6rem, 3vw, 2rem)",
+            fontWeight: 400,
+            color: "#2b1b14",
+            letterSpacing: "-0.02em",
+            fontFamily: "Berlin Sans FB",
+          }}
+        >
+          Recommended for You
+        </h2>
       </div>
 
-      {/* Card grid */}
-      <div
-        id="rec-grid"
-        style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24, marginTop: 32 }}
-      >
-        <style>{`
-          @media (min-width: 768px)  { #rec-grid { grid-template-columns: repeat(2, 1fr) !important; } }
-          @media (min-width: 1024px) { #rec-grid { grid-template-columns: repeat(3, 1fr) !important; } }
-        `}</style>
+      <p style={{ fontSize: "0.95rem", fontFamily: "sans-serif", color: "#6b7280" }}>
+        Because you viewed{" "}
+        <span style={{ color: "#2b1b14", fontWeight: 400 }}>
+          {currentTitle}
+        </span>
+      </p>
+    </div>
 
-        {recommendedTours.map((t) => (
+    {/* Card Grid */}
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+        gap: 28,
+        marginTop: 36,
+      }}
+    >
+      {recommendedTours.map((t) => (
+        <div
+          key={t.id}
+          style={{
+            background: "white",
+            borderRadius: 16,
+            overflow: "hidden",
+            border: "1px solid #e7e5e4",
+            display: "flex",
+            flexDirection: "column",
+            transition: "all 0.3s ease",
+          }}
+        >
+          {/* Image */}
+          {/* Image */}
           <div
-            key={t.id}
-            className="rec-card"
-            style={{ background: "white", borderRadius: 14, overflow: "hidden", border: `1px solid #e5e7eb`, display: "flex", flexDirection: "column" }}
+            style={{
+              position: "relative",
+              aspectRatio: "4/3",
+              overflow: "hidden",
+              borderTopLeftRadius: 16,
+              borderTopRightRadius: 16,
+            }}
           >
-            {/* Card image */}
-            <div style={{ position: "relative", width: "100%", aspectRatio: "4/3", overflow: "hidden", background: "#2d2d2d", flexShrink: 0 }}>
-              {t.image ? (
-                <img
-                  className="rec-card-img"
-                  src={t.image}
-                  alt={t.title}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.4s ease" }}
-                />
-              ) : (
-                <div className="rec-card-img" style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", transition: "transform 0.4s ease" }}>
-                  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" opacity="0.25">
-                    <rect x="2" y="6" width="32" height="23" rx="3" stroke="white" strokeWidth="2" fill="none" />
-                    <circle cx="11" cy="15" r="3.5" stroke="white" strokeWidth="1.8" fill="none" />
-                    <path d="M2 27l9-8 7 7 5-5 11 9" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                  </svg>
-                </div>
-              )}
-              {/* Badge */}
-              <div style={{ position: "absolute", top: 12, left: 12, background: COLOR.amber, color: "white", fontSize: "0.67rem", fontWeight: 700, padding: "4px 12px", borderRadius: 999 }}>
-                Recommended
-              </div>
-            </div>
+            {/* Main Image */}
+            <img
+              src={t.image}
+              alt={t.title}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                transition: "transform 0.4s ease",
+              }}
+            />
 
-            {/* Card body */}
-            <div style={{ padding: "18px 18px 0", flex: 1 }}>
-              <h3 style={{ fontSize: "0.96rem", fontWeight: 700, color: COLOR.textPrimary, marginBottom: 8, lineHeight: 1.35, fontFamily: FONT.body }}>
-                {t.title}
-              </h3>
+            {/* 🔥 Curved Overlay (Gap-Free Version) */}
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "90px", // adjust if needed
+                backgroundImage: "url('/Vector.svg')",
+                backgroundSize: "cover",
+                backgroundPosition: "top",
+                backgroundRepeat: "no-repeat",
+                pointerEvents: "none",
+                zIndex: 1,
+              }}
+            />
 
-              {/* Location */}
-              <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 10 }}>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M6 1a3.5 3.5 0 013.5 3.5C9.5 7.5 6 11 6 11S2.5 7.5 2.5 4.5A3.5 3.5 0 016 1z" stroke={COLOR.textFaint} strokeWidth="1.2" fill="none" />
-                  <circle cx="6" cy="4.5" r="1.2" fill={COLOR.textFaint} />
-                </svg>
-                <span style={{ fontSize: "0.78rem", color: COLOR.textFaint }}>{t.location}</span>
-              </div>
-
-              {/* Tags */}
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 10 }}>
-                {t.tags.map((tag) => (
-                  <span key={tag} style={{ background: COLOR.amber, color: "white", fontSize: "0.64rem", fontWeight: 700, padding: "3px 10px", borderRadius: 999 }}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* Duration */}
-              <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <rect x="1" y="2" width="10" height="9" rx="1.5" stroke={COLOR.textFaint} strokeWidth="1.2" fill="none" />
-                  <path d="M1 5h10M4 1v2M8 1v2" stroke={COLOR.textFaint} strokeWidth="1.2" strokeLinecap="round" />
-                </svg>
-                <span style={{ fontSize: "0.78rem", color: COLOR.textMuted }}>{t.duration}</span>
-              </div>
-            </div>
-
-            {/* View Details button */}
-            <div style={{ padding: 18 }}>
-              <button
-                className="rec-view-btn"
-                style={{ width: "100%", background: COLOR.textPrimary, color: "white", border: "none", borderRadius: 8, padding: "12px 16px", fontSize: "0.82rem", fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "background 0.3s ease", fontFamily: FONT.body }}
-              >
-                View Details
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M2 7h10M8 3l4 4-4 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
+            {/* Badge */}
+            <div
+              style={{
+                position: "absolute",
+                top: 12,
+                left: 16,
+                background: "#f4a62a",
+                color: "white",
+                fontSize: "0.72rem",
+                fontWeight: 400,
+                padding: "6px 14px",
+                borderRadius: 999,
+                zIndex: 2,
+                fontFamily: "sans-serif",
+              }}
+            >
+              Recommended
             </div>
           </div>
-        ))}
-      </div>
 
-      {/* Pagination controls */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, marginTop: 44 }}>
-        <button className="rec-nav-btn" style={{ background: "#e5e7eb", border: "none", borderRadius: "50%", width: 38, height: 38, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "background 0.3s ease" }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <button className="rec-nav-btn" style={{ background: "#e5e7eb", border: "none", borderRadius: "50%", width: 38, height: 38, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "background 0.3s ease" }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-        <button className="rec-see-all" style={{ background: "white", border: "1px solid #d1d5db", borderRadius: 8, padding: "9px 18px", fontSize: "0.875rem", color: "#374151", cursor: "pointer", transition: "background 0.3s ease", fontFamily: FONT.body }}>
-          See All Tours →
-        </button>
-      </div>
+          {/* Body */}
+          <div style={{ padding: "20px 20px 0", flex: 1 }}>
+            <h3
+              style={{
+                fontSize: "1.3rem",
+                fontWeight:400,
+                color: "#2b1b14",
+                marginBottom: 12,
+                lineHeight: 1.4,
+                fontFamily: "Berlin Sans FB",
+              }}
+            >
+              {t.title}
+            </h3>
+
+            {/* Location */}
+            <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10 }}>
+              <MapPin size={14} color="#9ca3af" />
+              <span style={{ fontSize: "0.85rem", color: "#6b7280" }}>
+                {t.location}
+              </span>
+            </div>
+
+            {/* Tags */}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 12 }}>
+              {t.tags.map((tag) => (
+                <span
+                  key={tag}
+                  style={{
+                    background: "#f4a62a",
+                    color: "white",
+                    fontSize: "0.7rem",
+                    fontWeight: 100,
+                    padding: "4px 12px",
+                    borderRadius: 999,
+                    fontFamily: "barlin sans fb",
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            {/* Duration */}
+            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <Calendar size={14} color="#9ca3af" />
+              <span style={{ fontSize: "0.85rem", color: "#6b7280" }}>
+                {t.duration}
+              </span>
+            </div>
+          </div>
+
+          {/* Button */}
+          <div style={{ padding: 20 }}>
+           <button
+            className="
+              w-full
+              flex items-center justify-center gap-2
+              px-6 py-3
+              rounded-xl
+              bg-[#2b1b14]
+              text-white
+              font-md
+              text-sm
+              transition-all duration-300
+              hover:bg-yellow-500
+              hover:text-black
+            "style={{fontFamily: "Berlin Sans FB",fontWeight: 100,letterSpacing: "0.02em",}}
+          >
+            View Details
+            <ArrowRight
+              size={16}
+              strokeWidth={2}
+              className="transition-colors duration-300"
+            />
+          </button>
+          </div>
+        </div>
+      ))}
     </div>
-  </section>
+  </div>
+</section>
 );
 
 /* ── 11. FIXED BOTTOM CTA BAR ─────────────────────────── */
@@ -1319,7 +1558,7 @@ const FixedCTABar = () => (
     }}
   >
     <div>
-      <p style={{ color: "white", fontSize: "0.9rem", fontWeight: 600, margin: 0 }}>
+      <p style={{ color: "white", fontSize: "1.0rem", fontWeight: 300, fontFamily: "Berlin Sans FB", margin: 0 }}>
         Ready to explore the Silk Route?
       </p>
       <p style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.74rem", fontWeight: 300, margin: "3px 0 0" }}>
@@ -1328,20 +1567,44 @@ const FixedCTABar = () => (
     </div>
     <div style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
       <button
-        className="btn-cta-white"
-        style={{ color: "#1a1a1a", fontSize: "0.85rem", fontWeight: 600, padding: "10px 22px", borderRadius: 8, border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 7, background: "white", fontFamily: FONT.body }}
-      >
-        <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
-          <path d="M1 1l12 6-12 6V8.5l8-1.5-8-1.5V1z" fill="#1a1a1a" />
-        </svg>
-        Enquire Now
-      </button>
-      <button
-        className="btn-cta-outline"
-        style={{ color: "white", fontSize: "0.85rem", fontWeight: 600, padding: "10px 22px", borderRadius: 8, border: "1.5px solid rgba(255,255,255,0.6)", background: "transparent", cursor: "pointer", fontFamily: FONT.body }}
-      >
-        Customize Tour
-      </button>
+              className="
+                flex items-center gap-2
+                px-6 py-2
+                rounded-xl
+                bg-[#1a0903]
+                text-white
+                font-sans
+                text-md
+                transition-all duration-300
+                hover:bg-yellow-500
+                hover:text-black
+                border border-white/70
+              "
+            >
+              <Send
+                size={16}
+                strokeWidth={2}
+                className="transition-colors duration-300"
+              />
+              Enquire Now
+            </button>
+          <button
+              className="
+                px-6 py-2
+                rounded-xl
+                border border-white/70
+                text-white
+                font-sans
+                text-[15px]
+                tracking-tight
+                transition-all duration-300
+                hover:bg-yellow-500
+                hover:text-black
+                hover:border-yellow-500
+              "
+            >
+              Customize Tour
+            </button>
     </div>
   </div>
 );

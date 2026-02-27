@@ -53,12 +53,24 @@ const BlogLibrarySection = () => {
               className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow"
             >
               {/* Image Section */}
-              <div className="relative h-[200px] bg-[#2b1b14]">
+             {/* Image Section */}
+              <div className="relative h-[200px] overflow-hidden rounded-t-xl">
+
+                {/* Main Image */}
                 <img 
                   src={book.image} 
                   alt={book.title}
                   className="w-full h-full object-cover"
                 />
+
+                {/* Top Curved Overlay (Gap-Free) */}
+                <div
+                  className="absolute top-0 left-0 w-full h-[90px] bg-no-repeat bg-top bg-cover z-10 pointer-events-none"
+                  style={{
+                    backgroundImage: "url('/Vector.svg')",
+                  }}
+                />
+
               </div>
 
               {/* Card Body */}

@@ -9,13 +9,25 @@ const TourCard = ({ image, title, duration, location }: TourCardProps) => {
   return (
     <div className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-all duration-300 hover:-translate-y-1">
       {/* Image Placeholder */}
-      <div className="relative h-[250px] overflow-hidden">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover"
-        />
-      </div>
+      {/* Image Section */}
+<div className="relative h-[250px] overflow-hidden rounded-t-xl">
+
+  {/* Main Image */}
+  <img
+    src={image}
+    alt={title}
+    className="w-full h-full object-cover"
+  />
+
+  {/* Top Curved Overlay (Gap-Free) */}
+  <div
+    className="absolute top-0 left-0 w-full h-[80px] bg-no-repeat bg-top bg-cover z-10 pointer-events-none"
+    style={{
+      backgroundImage: "url('/Vector.svg')",
+    }}
+  />
+
+</div>
 
       {/* Card Body */}
       <div className="p-5">

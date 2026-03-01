@@ -1,8 +1,9 @@
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 
 const containerStyle = {
-  width: "100%",
+  width: "90%",
   height: "100%",
+
 };
 
 const center = {
@@ -34,7 +35,7 @@ const MapSection = () => {
   }
 
   return (
-    <div className="w-full h-[350px] rounded-lg overflow-hidden">
+    <div className="w-full h-[350px] pl-8 rounded-2xl overflow-hidden">
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}

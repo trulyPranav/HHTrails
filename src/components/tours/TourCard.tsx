@@ -1,9 +1,8 @@
 import type { Tour } from "../../types/tour";
 import { useNavigate } from "react-router-dom";
-import { Bookmark } from "lucide-react";
 import { useSavedTours } from "../../contexts/SavedToursContext";
 import { useAuth } from "../../hooks/useAuth";
-
+import { Bookmark, MapPin, Calendar } from "lucide-react";
 interface TourCardProps {
   tour: Tour;
 }
@@ -21,7 +20,7 @@ const TourCard = ({ tour }: TourCardProps) => {
   };
 
   return (
-    <div className="w-[360px] m-3 bg-white rounded-xl shadow-md overflow-hidden">
+    <div className="w-[360px] m-6 bg-white rounded-xl shadow-md overflow-hidden">
 
       {/* IMAGE SECTION */}
      <div className="relative h-[200px] overflow-hidden rounded-t-xl">
@@ -41,7 +40,7 @@ const TourCard = ({ tour }: TourCardProps) => {
   />
 
   {/* Recommended Badge */}
-  <span className="absolute top-4 left-4 bg-orange-400 text-white text-xs px-4 py-1 rounded-full z-20">
+  <span className="absolute top-4 left-4 bg-[#FBAF27] text-white text-xs px-4 py-1 rounded-full z-20">
     {tour.isCustom ? "Custom" : "Recommended"}
   </span>
 
@@ -50,7 +49,7 @@ const TourCard = ({ tour }: TourCardProps) => {
     onClick={handleBookmark}
     title={saved ? "Remove from saved" : "Save tour"}
     className={`absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center shadow z-20 transition-colors ${
-      saved ? "bg-amber-400 hover:bg-amber-500" : "bg-white hover:bg-amber-50"
+      saved ? "bg-[#FBAF27] hover:bg-amber-500" : "bg-white hover:bg-amber-50"
     }`}
   >
     <Bookmark
@@ -60,18 +59,23 @@ const TourCard = ({ tour }: TourCardProps) => {
   </button>
 
   {/* Bottom Info */}
-  <div className="absolute bottom-3 left-4 right-4 flex justify-between text-white text-sm z-20">
-    <span>📍 {tour.region}</span>
-    <span>
-      📅 {tour.durationNights}N / {tour.durationDays}D
-    </span>
-  </div>
+  {/* Bottom Info */}
+<div className="absolute bottom-3 left-4 right-4 flex justify-between text-white text-sm z-20">
+  <span className="flex items-center gap-1">
+    <MapPin className="w-3.5 h-3.5" strokeWidth={2} />
+    {tour.region}
+  </span>
+  <span className="flex items-center gap-1">
+    <Calendar className="w-3.5 h-3.5" strokeWidth={2} />
+    {tour.durationNights}N / {tour.durationDays}D
+  </span>
+</div>
 </div>
 
       {/* CONTENT */}
-      <div className="p-5 space-y-3">
+      <div className="p-4 space-y-3">
 
-        <h3 className="text-lg font-semibold text-[#2b140c]">
+        <h3 className="text-xl font-sm text-[#2b140c]">
           {tour.title}
         </h3>
 
@@ -80,14 +84,14 @@ const TourCard = ({ tour }: TourCardProps) => {
           {tour.types.slice(0, 3).map((type) => (
             <span
               key={type}
-              className="bg-orange-400 text-white text-xs px-3 py-1 rounded-full"
+              className="bg-[#FBAF27] text-white text-sm px-4 py-1 rounded-full"
             >
               {type}
             </span>
           ))}
         </div>
 
-        <p className="text-sm text-gray-500 line-clamp-2">
+        <p className="text-md text-[#AAAAAA] line-clamp-6 py-3 whitespace-pre-line max-w-[390px] ">
           {tour.description || "Journey through the Himalayas with HHTrails."}
         </p>
 

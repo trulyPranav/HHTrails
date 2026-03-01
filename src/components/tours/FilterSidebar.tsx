@@ -77,16 +77,18 @@ const FilterSidebar = ({
     top-0
     self-start
     w-[320px]
-    p-[26px]
+    p-[36px]
+      ml-16
     rounded-[10px]
     border-2
-    bg-white
+    bg-[#F3F4F1]
     space-y-6
     shrink-0
     /* side scroll bar */
     max-h-screen
     overflow-y-auto
     scroll-smooth
+    boxShadow: 0 8px 8px rgba(0,0,0,2.2),
   "
       >
       {/* HEADER */}

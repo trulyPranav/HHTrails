@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import { AuthProvider } from './contexts/AuthContext';
+import { SavedToursProvider } from './contexts/SavedToursContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -9,6 +10,7 @@ import Tours from './pages/Tours';
 import TourDetail from './pages/TourDetail';
 import Blog from './pages/Blog';
 import BlogDetail from './pages/BlogDetail';
+import SavedTours from './pages/SavedTours';
 import GoogleCallback from './pages/GoogleCallback';
 import Admin from './pages/Admin';
 import AuthModal from './components/AuthModal'; 
@@ -18,6 +20,7 @@ function App() {
 
   return (
     <AuthProvider>
+      <SavedToursProvider>
       <Router>
         <div className="min-h-screen bg-white flex flex-col">
           
@@ -32,6 +35,7 @@ function App() {
           <Route path="/google/callback" element={<GoogleCallback />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:id" element={<BlogDetail />} />
+          <Route path="/saved-tours" element={<SavedTours />} />
           <Route path="/admin" element={<Admin />} />
 
         </Routes>
@@ -45,6 +49,7 @@ function App() {
           />
         </div>
       </Router>
+      </SavedToursProvider>
     </AuthProvider>
   );
 }

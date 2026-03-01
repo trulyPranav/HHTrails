@@ -1,6 +1,8 @@
 import type { Tour } from "../../types/tour";
 import { useNavigate } from "react-router-dom";
-import WindowOverlay from "../public/Vector.svg";
+import { Bookmark } from "lucide-react";
+import { useSavedTours } from "../../contexts/SavedToursContext";
+import { useAuth } from "../../hooks/useAuth";
 
 interface TourCardProps {
   tour: Tour;
@@ -8,6 +10,16 @@ interface TourCardProps {
 
 const TourCard = ({ tour }: TourCardProps) => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  const { isSaved, toggleSave } = useSavedTours();
+  const saved = isSaved(tour.id);
+
+  const handleBookmark = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!isAuthenticated) return; // requires login — silently ignore
+    await toggleSave(tour.id);
+  };
+
   return (
     <div className="w-[360px] m-3 bg-white rounded-xl shadow-md overflow-hidden">
 
@@ -34,9 +46,18 @@ const TourCard = ({ tour }: TourCardProps) => {
   </span>
 
   {/* Bookmark */}
-  <div className="absolute top-4 right-4 w-9 h-9 bg-white rounded-full flex items-center justify-center shadow z-20">
-    🔖
-  </div>
+  <button
+    onClick={handleBookmark}
+    title={saved ? "Remove from saved" : "Save tour"}
+    className={`absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center shadow z-20 transition-colors ${
+      saved ? "bg-amber-400 hover:bg-amber-500" : "bg-white hover:bg-amber-50"
+    }`}
+  >
+    <Bookmark
+      className={`w-4 h-4 transition-colors ${saved ? "fill-white text-white" : "text-[#2b1b14]"}`}
+      strokeWidth={1.8}
+    />
+  </button>
 
   {/* Bottom Info */}
   <div className="absolute bottom-3 left-4 right-4 flex justify-between text-white text-sm z-20">

@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, Menu, X, LogOut, ChevronDown } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
+import { useSavedTours } from '../contexts/SavedToursContext';
 import AuthModal from './AuthModal';
 
 export default function Header() {
@@ -9,6 +10,8 @@ export default function Header() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const { user, isAuthenticated, signOut } = useAuth();
+  const { savedIds } = useSavedTours();
+  const navigate = useNavigate();
   const profileRef = useRef<HTMLDivElement>(null);
 
   const navLinks = [
@@ -135,8 +138,8 @@ export default function Header() {
 
             {/* Saved Button */}
             <button
-              onClick={() => { /* your saved/bookmarks handler */ }}
-              className="flex flex-col items-center gap-1 px-3 py-2 rounded transition-all duration-300"
+              onClick={() => navigate('/saved-tours')}
+              className="relative flex flex-col items-center gap-1 px-3 py-2 rounded transition-all duration-300"
               style={{ color: primaryColor, backgroundColor: 'transparent', border: 'none' }}
               onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f0ede5'; }}
               onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
@@ -155,6 +158,11 @@ export default function Header() {
                 {/* Bookmark icon */}
                 <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z" />
               </svg>
+              {savedIds.size > 0 && (
+                <span className="absolute -top-1 right-1 w-4 h-4 rounded-full bg-amber-400 text-white text-[9px] font-bold flex items-center justify-center">
+                  {savedIds.size > 9 ? '9+' : savedIds.size}
+                </span>
+              )}
               <span style={{ fontSize: '11px', fontWeight: 500, color: primaryColor }}>Saved</span>
             </button>
 

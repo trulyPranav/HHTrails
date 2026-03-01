@@ -5,6 +5,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { GoogleMap, OverlayViewF, useJsApiLoader } from "@react-google-maps/api";
 import { toursService } from "../services/toursService";
 import type { TourDetails, ItineraryDay } from "../types/tour";
+import { useSavedTours } from "../contexts/SavedToursContext";
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // TOUR DATA
@@ -1631,8 +1632,19 @@ const FixedCTABar = () => (
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // ROOT PAGE COMPONENT
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-function TourPageUI({ tourData = tour, itinerary = defaultItinerary }: { tourData?: typeof tour; itinerary?: typeof defaultItinerary }) {
-  const [bookmarked, setBookmarked] = useState(false);
+function TourPageUI({
+  tourData = tour,
+  itinerary = defaultItinerary,
+  bookmarked: bookmarkedProp,
+  onBookmark: onBookmarkProp,
+}: {
+  tourData?: typeof tour;
+  itinerary?: typeof defaultItinerary;
+  bookmarked?: boolean;
+  onBookmark?: () => void;
+}) {
+  const [localBookmarked, setLocalBookmarked] = useState(false);
+  const bookmarked = bookmarkedProp !== undefined ? bookmarkedProp : localBookmarked;
 
   const {
     title,
@@ -1663,7 +1675,7 @@ function TourPageUI({ tourData = tour, itinerary = defaultItinerary }: { tourDat
       <HeroSection
         tourData={tourData}
         bookmarked={bookmarked}
-        onBookmark={() => setBookmarked((b) => !b)}
+        onBookmark={onBookmarkProp ?? (() => setLocalBookmarked((b) => !b))}
       />
       <OverviewSection overview={overview} />
       <HighlightsSection highlights={highlights} />
@@ -1686,6 +1698,7 @@ function TourPageUI({ tourData = tour, itinerary = defaultItinerary }: { tourDat
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 export default function TourDetail() {
   const { id } = useParams<{ id: string }>();
+  const { isSaved, toggleSave } = useSavedTours();
   const [apiTourData, setApiTourData] = useState<any>(null);
   const [apiItinerary, setApiItinerary] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -1805,5 +1818,12 @@ export default function TourDetail() {
     );
   }
 
-  return <TourPageUI tourData={apiTourData} itinerary={apiItinerary ?? defaultItinerary} />;
+  return (
+    <TourPageUI
+      tourData={apiTourData}
+      itinerary={apiItinerary ?? defaultItinerary}
+      bookmarked={id ? isSaved(id) : false}
+      onBookmark={id ? () => void toggleSave(id) : undefined}
+    />
+  );
 }

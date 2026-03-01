@@ -1,7 +1,10 @@
-import { useState } from "react";
-import { MapPin, CalendarDays, Mountain,Bed , Sun,Send,Bookmark,Check, Download, Calendar,ChevronLeft, ChevronRight,ArrowRight,TrendingUp} from "lucide-react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { MapPin, CalendarDays, Mountain,Bed , Sun,Send,Bookmark,Check, Download, Calendar,ArrowRight,TrendingUp} from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { GoogleMap, OverlayViewF, useJsApiLoader } from "@react-google-maps/api";
+import { toursService } from "../services/toursService";
+import type { TourDetails, ItineraryDay } from "../types/tour";
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // TOUR DATA
@@ -349,7 +352,7 @@ const GLOBAL_CSS = `
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 /** One meta-info chip in the hero bar */
-const InfoItem = ({ icon: Icon, label }) => (
+const InfoItem = ({ icon: Icon, label }: any) => (
   <div
     style={{
       display: "flex",
@@ -361,27 +364,6 @@ const InfoItem = ({ icon: Icon, label }) => (
   >
     <Icon size={15} strokeWidth={1.6} color="rgba(255,255,255,0.9)" />
     <span>{label}</span>
-  </div>
-);
-
-/** Green check circle used in Highlights & Inclusions */
-const GreenCheck = () => (
-  <div
-    style={{
-      flexShrink:0,
-      width: 20,
-      height: 20,
-      borderRadius: "50%",
-      background: COLOR.green,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 2,
-    }}
-  >
-    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-      <path d="M2 5l2.5 2.5 3.5-4" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
   </div>
 );
 
@@ -411,7 +393,7 @@ const HeroPlaceholder = () => (
 );
 
 /** Fallback tile inside timeline cards */
-const TimelineImgPlaceholder = ({ day }) => (
+const TimelineImgPlaceholder = ({ day }: any) => (
   <div
     style={{
       width: "100%",
@@ -438,7 +420,7 @@ const TimelineImgPlaceholder = ({ day }) => (
 );
 
 /** Single itinerary card (image + day label + title + description) */
-const TimelineCard = ({ item }) => (
+const TimelineCard = ({ item }: any) => (
   <div style={{ display: "flex", flexDirection: "column", gap: 6, width: "100%" }}>
     <div className="timeline-img-wrap">
       {item.image ? (
@@ -491,20 +473,12 @@ const ImgPlaceholder = ({ aspectRatio = "4/3", size = 40 }) => (
   </div>
 );
 
-/** Download / send SVG icon */
-const DownloadIcon = () => (
-  <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-    <path d="M6.5 1v8M3 6l3.5 3.5L10 6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M1.5 11.5h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-  </svg>
-);
-
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // SECTION COMPONENTS
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 /* ── 1. HERO ──────────────────────────────────────────── */
-const HeroSection = ({ tourData, bookmarked, onBookmark }) => {
+const HeroSection = ({ tourData, bookmarked, onBookmark }: any) => {
   const { title, tags, location, duration, difficulty, bestSeason, heroImage } = tourData;
   return (
     <section style={{ position: "relative", width: "100%", height: "82vh", minHeight: 480, display: "flex", alignItems: "flex-end" }}>
@@ -544,7 +518,7 @@ const HeroSection = ({ tourData, bookmarked, onBookmark }) => {
 
         {/* Tags */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 18 }}>
-          {tags.map((tag) => (
+          {tags.map((tag: any) => (
             <span
               key={tag}
               className="tag-pill"
@@ -649,7 +623,7 @@ const HeroSection = ({ tourData, bookmarked, onBookmark }) => {
 };
 
 /* ── 2. OVERVIEW ──────────────────────────────────────── */
-const OverviewSection = ({ overview }) => (
+const OverviewSection = ({ overview }: any) => (
   <section className="bg-white py-[50px]">
   <div className="max-w-[900px] mx-auto px-1">
 
@@ -684,7 +658,7 @@ const OverviewSection = ({ overview }) => (
 );
 
 /* ── 3. HIGHLIGHTS ────────────────────────────────────── */
-const HighlightsSection = ({ highlights }) => (
+const HighlightsSection = ({ highlights }: any) => (
   <section className="bg-[#F3F4F1] py-[56px]">
   <div className="max-w-[980px] mx-auto px-10">
 
@@ -704,7 +678,7 @@ const HighlightsSection = ({ highlights }) => (
     {/* Grid */}
     <div className="grid grid-cols-2 gap-y-2 gap-x-16">
 
-      {highlights.map((item, i) => (
+      {highlights.map((item: any, i: any) => (
         <div key={i} className="flex items-start gap-3">
           <div className="flex items-center justify-center w-6 h-6 rounded-full bg-[#140804] shrink-0 mt-0.5">
             <Check size={14} strokeWidth={3} className="text-white" />
@@ -730,7 +704,7 @@ const HighlightsSection = ({ highlights }) => (
 );
 
 /* ── 4. ITINERARY ─────────────────────────────────────── */
-const ItinerarySection = ({ itinerary }) => (
+const ItinerarySection = ({ itinerary }: any) => (
   <section className="bg-[#ffffff] py-[46px] border-t border-[#ece8e3] font-sans">
   <div className="max-w-[900px] mx-auto px-10">
 
@@ -811,9 +785,9 @@ const ItinerarySection = ({ itinerary }) => (
 
   <div className="flex flex-col">
 
-    {itinerary.map((item, idx) => {
+    {itinerary.map((item: any, idx: any) => {
       const isLeft = idx % 2 === 0;
-      const TimelineImage = ({ item }) => (
+      const TimelineImage = ({ item }: any) => (
         <div className="rounded-md overflow-hidden shadow-md bg-[#2a0f06]">
           <img
             src={item.image}
@@ -825,7 +799,7 @@ const ItinerarySection = ({ itinerary }) => (
           </div>
         </div>
       );
-      const TimelineText = ({ item }) => (
+      const TimelineText = ({ item }: any) => (
         <div className="font-sans">
           <p className="text-[16px] font-semibold text-[#2a0f06] mb-1">
             Day {item.day}
@@ -882,7 +856,7 @@ const ItinerarySection = ({ itinerary }) => (
       {/* ── Mobile single-column timeline ── */}
       <div className="timeline-mobile" style={{ display: "none", flexDirection: "column", position: "relative", paddingLeft: 28 }}>
         <div style={{ position: "absolute", left: 6, top: 0, bottom: 0, width: 2, background: COLOR.darkBrown }} />
-        {itinerary.map((item, idx) => (
+        {itinerary.map((item: any, idx: any) => (
           <div key={item.day} style={{ display: "flex", marginBottom: idx < itinerary.length - 1 ? 42 : 0, position: "relative" }}>
             <div style={{ position: "absolute", left: -28, top: 10, width: 12, height: 12, borderRadius: "50%", background: COLOR.darkBrown, border: `2px solid ${COLOR.bgLight}`, outline: `1.5px solid ${COLOR.darkBrown}` }} />
             <div style={{ width: 160 }}>
@@ -896,7 +870,7 @@ const ItinerarySection = ({ itinerary }) => (
 );
 
 /* ── 5. INCLUSIONS & EXCLUSIONS ───────────────────────── */
-const InclusionsSection = ({ inclusions, exclusions }) => (
+const InclusionsSection = ({ inclusions, exclusions }: any) => (
   <section style={{ backgroundColor: "#f3f4f1", padding: "68px 0" }}>
     <div
       style={{ maxWidth: 900, margin: "0 auto", padding: "0 40px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px 64px" }}
@@ -908,7 +882,7 @@ const InclusionsSection = ({ inclusions, exclusions }) => (
           Inclusions
         </h2>
         <div style={{ display: "flex", flexDirection: "column",fontFamily: FONT.body, gap: 16 }}>
-          {inclusions.map((item, i) => (
+          {inclusions.map((item: any, i: any) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <div style={{ flexShrink: 0, width: 20, height: 20, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -927,7 +901,7 @@ const InclusionsSection = ({ inclusions, exclusions }) => (
           Exclusions
         </h2>
         <div style={{ display: "flex", flexDirection: "column",fontFamily: FONT.body, gap: 16 }}>
-          {exclusions.map((item, i) => (
+          {exclusions.map((item: any, i: any) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <div style={{ flexShrink: 0, width: 20, height: 20, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -944,7 +918,7 @@ const InclusionsSection = ({ inclusions, exclusions }) => (
 );
 
 /* ── 6. ACCOMMODATION ─────────────────────────────────── */
-const AccommodationSection = ({ accommodation }) => (
+const AccommodationSection = ({ accommodation }: any) => (
   <section
           key={accommodation.id}
           style={{ background: "white", padding: "40px 0" }}
@@ -1010,7 +984,7 @@ const AccommodationSection = ({ accommodation }) => (
 );
 
 /* ── 7. VIDEO ─────────────────────────────────────────── */
-const VideoSection = ({ videoSection }) => (
+const VideoSection = ({ videoSection }: any) => (
   <section
   style={{
     background: "#1F150F",
@@ -1289,7 +1263,7 @@ const MapSection = ({ mapSection }: { mapSection: any }) => {
   );
 };
 /* ── 9. REVIEWS ───────────────────────────────────────── */
-const ReviewsSection = ({ reviews }) => (
+const ReviewsSection = ({ reviews }: any) => (
   <section style={{ background: COLOR.bgMid, padding: "76px 0" }}>
     <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 40px" }}>
       {/* Section header */}
@@ -1302,7 +1276,7 @@ const ReviewsSection = ({ reviews }) => (
 
       {/* Review cards */}
       <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
-        {reviews.map((r, i) => (
+        {reviews.map((r: any, i: any) => (
           <div
             key={i}
             style={{
@@ -1372,7 +1346,7 @@ const ReviewsSection = ({ reviews }) => (
 );
 
 /* ── 10. RECOMMENDED TOURS ────────────────────────────── */
-const RecommendedSection = ({ recommendedTours, currentTitle }) => (
+const RecommendedSection = ({ recommendedTours, currentTitle }: any) => (
   <section style={{ background: "#F4F4F4", padding: "50px 0", marginBottom: -76 }}>
   <div style={{ maxWidth: 1040, margin: "0 auto", padding: "0 32px" }}>
 
@@ -1410,7 +1384,7 @@ const RecommendedSection = ({ recommendedTours, currentTitle }) => (
         marginTop: 36,
       }}
     >
-      {recommendedTours.map((t) => (
+      {recommendedTours.map((t: any) => (
         <div
           key={t.id}
           style={{
@@ -1508,7 +1482,7 @@ const RecommendedSection = ({ recommendedTours, currentTitle }) => (
 
             {/* Tags */}
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 12 }}>
-              {t.tags.map((tag) => (
+              {t.tags.map((tag: any) => (
                 <span
                   key={tag}
                   style={{
@@ -1641,7 +1615,7 @@ const FixedCTABar = () => (
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // ROOT PAGE COMPONENT
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-export default function TourPage({ tourData = tour, itinerary = defaultItinerary }) {
+function TourPageUI({ tourData = tour, itinerary = defaultItinerary }: { tourData?: typeof tour; itinerary?: typeof defaultItinerary }) {
   const [bookmarked, setBookmarked] = useState(false);
 
   const {
@@ -1689,4 +1663,131 @@ export default function TourPage({ tourData = tour, itinerary = defaultItinerary
       <FixedCTABar />
     </div>
   );
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// DATA-FETCHING WRAPPER (default export — used by router)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export default function TourDetail() {
+  const { id } = useParams<{ id: string }>();
+  const [apiTourData, setApiTourData] = useState<any>(null);
+  const [apiItinerary, setApiItinerary] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!id) return;
+
+    const load = async () => {
+      try {
+        setLoading(true);
+        setFetchError(null);
+
+        // Fetch tour, details, and itinerary in parallel; details/itinerary may 404 (not yet filled)
+        const [apiTour, apiDetails, apiItin] = await Promise.allSettled([
+          toursService.getTour(id),
+          toursService.getDetails(id),
+          toursService.getItinerary(id),
+        ]);
+
+        const tourData = apiTour.status === 'fulfilled' ? apiTour.value : null;
+        if (!tourData) {
+          setFetchError('Tour not found');
+          return;
+        }
+
+        const details: TourDetails | null =
+          apiDetails.status === 'fulfilled' ? apiDetails.value : null;
+
+        const itinDays: ItineraryDay[] =
+          apiItin.status === 'fulfilled' ? apiItin.value : [];
+
+        // Map API tour + details → TourPageUI's expected tourData shape
+        const mapped: any = {
+          title: tourData.title,
+          tags: tourData.types,
+          location: tourData.region,
+          duration: `${tourData.durationNights}N / ${tourData.durationDays}D`,
+          difficulty: 'Moderate',
+          bestSeason: tourData.season,
+          heroImage: tourData.photoUrl,
+
+          overview: details?.overview ?? tour.overview,
+          highlights: details?.highlights ?? tour.highlights,
+          inclusions: details?.inclusions ?? tour.inclusions,
+          exclusions: details?.exclusions ?? tour.exclusions,
+
+          accommodation: {
+            title: 'Accommodation',
+            description: details?.accommodationDescription ?? tour.accommodation.description,
+            image: details?.accommodationMediaUrl ?? tour.accommodation.image,
+          },
+
+          videoSection: {
+            title: 'Feature',
+            description: details?.featureDescription ?? tour.videoSection.description,
+            videoUrl: details?.featureMediaUrl ?? tour.videoSection.videoUrl,
+          },
+
+          mapSection: {
+            title: 'Route & Region Map',
+            description: details?.routeDescription ?? tour.mapSection.description,
+            googleMapsEmbedUrl: details?.routePhotoUrl ?? tour.mapSection.googleMapsEmbedUrl,
+            centerLat: tour.mapSection.centerLat,
+            centerLng: tour.mapSection.centerLng,
+          },
+
+          reviews: tour.reviews,
+          recommendedTours: tour.recommendedTours,
+        };
+
+        // Map API itinerary → TourPageUI's itinerary shape
+        const mappedItin =
+          itinDays.length > 0
+            ? itinDays.map((d) => ({
+                day: d.dayNumber,
+                title: `Day ${d.dayNumber}`,
+                description: d.description,
+                image: d.imageUrl || null,
+              }))
+            : defaultItinerary;
+
+        setApiTourData(mapped);
+        setApiItinerary(mappedItin);
+      } catch (err) {
+        console.error(err);
+        setFetchError('Failed to load tour');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    void load();
+  }, [id]);
+
+  if (!id) {
+    return (
+      <div className="flex-grow pt-[72px] min-h-screen bg-[#F7F6F2] flex items-center justify-center">
+        <p className="text-gray-500 text-sm">Invalid tour.</p>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="flex-grow pt-[72px] min-h-screen bg-[#F7F6F2] flex items-center justify-center">
+        <p className="text-gray-400 text-sm">Loading tour…</p>
+      </div>
+    );
+  }
+
+  if (fetchError || !apiTourData) {
+    return (
+      <div className="flex-grow pt-[72px] min-h-screen bg-[#F7F6F2] flex items-center justify-center">
+        <p className="text-red-500 text-sm">{fetchError ?? 'Tour not found.'}</p>
+      </div>
+    );
+  }
+
+  return <TourPageUI tourData={apiTourData} itinerary={apiItinerary ?? defaultItinerary} />;
 }

@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { MapPin, CalendarDays, Mountain, Sun,Send,Bookmark,Check, Download, Calendar,ChevronLeft, ChevronRight,ArrowRight,TrendingUp} from "lucide-react";
+import { MapPin, CalendarDays, Mountain,Bed , Sun,Send,Bookmark,Check, Download, Calendar,ChevronLeft, ChevronRight,ArrowRight,TrendingUp} from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
+import { GoogleMap, OverlayViewF, useJsApiLoader } from "@react-google-maps/api";
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // TOUR DATA
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1157,108 +1159,135 @@ const VideoSection = ({ videoSection }) => (
 );
 
 /* ── 8. MAP ───────────────────────────────────────────── */
-const MapSection = ({ mapSection }) => (
-  <section
-  style={{
-    background: "#F4F4F4", // soft warm grey like reference
-    padding: "90px 0",
-  }}
->
-  <div
-    style={{
-      maxWidth: 1050,
-      margin: "0 auto",
-      padding: "0 24px",
-    }}
-  >
-    {/* Title */}
-    <h2
-      style={{
-        textAlign: "center",
-        fontSize: "clamp(1.8rem, 3vw, 2.4rem)",
-        fontWeight: 400,
-        color: "#2b1b14",
-        marginBottom: 20,
-        letterSpacing: "-0.02em",
-        fontFamily: "Berlin Sans FB",
-      }}
-    >
-      {mapSection.title || "Route & Region Map"}
-    </h2>
+const containerStyle = {
+  width: "100%",
+  height: "100%",
+};
 
-    {/* Outer Card Container */}
-    <div
-      style={{
-        background: "#ffffff",
-        borderRadius: 18,
-        padding: "40px 40px 46px",
-        boxShadow: "0 10px 40px rgba(0,0,0,0.06)",
-      }}
-    >
-      {/* Description */}
-      <p
-        style={{
-          textAlign: "center",
-          fontSize: "1rem",
-          color: "#4A5565",
-          lineHeight: 1.8,
-          maxWidth: 760,
-          margin: "0 auto 32px",
-        }}
-      >
-        {mapSection.description}
-      </p>
+const fallbackLocations = [
+  { lat: 34.6307, lng: 77.6100 }, // Lchang Nang Retreat
+  { lat: 34.6276, lng: 77.6099 }, // The Kyagar
+  { lat: 34.5835, lng: 77.4730 }, // The Nubra Valley Resort
+  { lat: 34.6053, lng: 77.6188 }, // Nubra Ecolodge
+  { lat: 34.5871, lng: 77.4747 }, // Rumi homestay
+  { lat: 34.5986, lng: 77.4590 }, // Classic Cottage
+  { lat: 34.6193, lng: 77.6212 }, // Hotel Namgyal Villa
+  { lat: 34.6182, lng: 77.6139 }, // AO guest house
+  { lat: 34.5476, lng: 77.5556 }, // Himalayan Regal House
+  { lat: 34.5736, lng: 77.4811 }, // Himalayan desert villa Hunder
+  { lat: 34.5885, lng: 77.4803 }, // The Hunder Eco Villa
+  { lat: 34.5847, lng: 77.4621 }, // Wachan Guest House
+  { lat: 34.5886, lng: 77.4706 }, // B2 Retreat
+];
 
-      {/* NEW: Inner Map Wrapper */}
-      <div
-        style={{
-          background: "#ffffff",
-          borderRadius: 14,
-          padding: 16,
-         
-        }}
-      >
-        {/* Map Container */}
-        <div
+const MapSection = ({ mapSection }: { mapSection: any }) => {
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || "",
+  });
+
+  const locations = mapSection?.locations || fallbackLocations;
+  const center = locations.length > 0 ? locations[0] : { lat: 34.1526, lng: 77.5771 };
+
+  return (
+    <section style={{ background: "#F4F4F4", padding: "90px 0" }}>
+      <div style={{ maxWidth: 1050, margin: "0 auto", padding: "0 24px" }}>
+        <h2
           style={{
-            borderRadius: 12,
-            overflow: "hidden",
+            textAlign: "center",
+            fontSize: "clamp(1.8rem, 3vw, 2.4rem)",
+            fontWeight: 400,
+            color: "#2b1b14",
+            marginBottom: 20,
+            letterSpacing: "-0.02em",
+            fontFamily: "Berlin Sans FB",
           }}
         >
-          {mapSection.googleMapsEmbedUrl ? (
-            <iframe
-              src={mapSection.googleMapsEmbedUrl}
-              title="Route & Region Map"
-              width="100%"
-              height="420"
-              style={{ border: "none", display: "block" }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          ) : (
+          {mapSection?.title || "Route & Region Map"}
+        </h2>
+
+        <div
+          style={{
+            background: "#ffffff",
+            borderRadius: 18,
+            padding: "40px 40px 46px",
+            boxShadow: "0 10px 40px rgba(0,0,0,0.06)",
+          }}
+        >
+          <p
+            style={{
+              textAlign: "center",
+              fontSize: "1rem",
+              color: "#4A5565",
+              lineHeight: 1.8,
+              maxWidth: 760,
+              margin: "0 auto 32px",
+            }}
+          >
+            {mapSection?.description || 
+             "The route follows sections of the ancient Silk Route through Leh, Sham Valley, Lamayuru, Nubra Valley, and surrounding regions."}
+          </p>
+
+          <div style={{ background: "#ffffff", borderRadius: 14, padding: 16 }}>
             <div
               style={{
-                width: "100%",
+                borderRadius: 12,
+                overflow: "hidden",
                 height: 420,
-                background: "#dcd8d2",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "#8a8178",
-                fontSize: "0.9rem",
+                background: "#e5e3df",
               }}
             >
-              Google Map Placeholder
+              {!isLoaded ? (
+                <div style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: "#8a8178" }}>
+                  Loading Map...
+                </div>
+              ) : (
+                <GoogleMap
+                  mapContainerStyle={containerStyle}
+                  center={center}
+                  zoom={10} // Bumped this slightly so the pins aren't right on top of each other
+                  options={{
+                    mapTypeControl: false,
+                    streetViewControl: false,
+                  }}
+                >
+                  {locations.map((loc: any, index: number) => (
+                    <OverlayViewF
+                      key={index}
+                      position={loc}
+                      // Hardcoded string prevents undefined variable crashes on initial render
+                      mapPaneName="overlayMouseTarget" 
+                    >
+                      {/* CRITICAL: position: "absolute" is required here */}
+                      <div
+                        style={{
+                          position: "absolute",
+                          transform: "translate(-50%, -50%)",
+                          width: 32,
+                          height: 32,
+                          backgroundColor: "#d9381e",
+                          borderRadius: "50%",
+                          border: "2px solid #ffffff",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <Bed color="white" size={16} />
+                      </div>
+                    </OverlayViewF>
+                  ))}
+                </GoogleMap>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-);
-
+    </section>
+  );
+};
 /* ── 9. REVIEWS ───────────────────────────────────────── */
 const ReviewsSection = ({ reviews }) => (
   <section style={{ background: COLOR.bgMid, padding: "76px 0" }}>

@@ -117,20 +117,20 @@ export default function About() {
             </p>
           </div>
 
-          {/* Founder Content - 2 Column Layout */}
-          <div className="flex items-stretch gap-7 ml-5 mr-5">
+          {/* Founder Content - Responsive 2 Column Layout */}
+          <div className="flex flex-col md:flex-row items-start gap-7 px-5">
             
             {/* Left Column - Image */}
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 w-full md:w-auto">
               <img
                 src="/imagewithfallback.png"
                 alt="Dr. Sonam Wangchok"
-                className="w-72 h-72 object-cover rounded-2xl shadow-lg"
+                className="w-full h-56 md:w-72 md:h-72 object-cover rounded-2xl shadow-lg"
               />
             </div>
 
             {/* Right Column */}
-            <div className="flex flex-col justify-between h-72 flex-1">
+            <div className="flex flex-col gap-5 flex-1">
 
               {/* Paragraph */}
               <p

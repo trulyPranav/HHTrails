@@ -5,6 +5,7 @@ import AvailableToursHeader from "./AvailableToursHeader";
 import TourCard from "./TourCard";
 import { toursService } from "../../services/toursService";
 import type { Tour } from "../../types/tour";
+import { SlidersHorizontal } from "lucide-react";
 
 const TourLayout = () => {
   const [tours, setTours] = useState<Tour[]>([]);
@@ -15,6 +16,7 @@ const TourLayout = () => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedSeasons, setSelectedSeasons] = useState<string[]>([]);
   const [duration, setDuration] = useState<number>(0);
+  const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -64,7 +66,23 @@ const TourLayout = () => {
 
   return (
     <div className="w-full py-8">
-      <div className="px-4 max-w-[1400px] mx-auto flex gap-8">
+      {/* Mobile: filter toggle button */}
+      <div className="lg:hidden px-4 mb-4">
+        <button
+          onClick={() => setMobileFilterOpen(true)}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-[#2b140c] text-white text-sm rounded-lg hover:bg-[#3d1f10] transition-colors"
+        >
+          <SlidersHorizontal className="w-4 h-4" />
+          Filters
+          {(selectedRegions.length + selectedTypes.length + selectedSeasons.length) > 0 && (
+            <span className="bg-amber-400 text-black text-xs rounded-full px-1.5 py-0.5 leading-none">
+              {selectedRegions.length + selectedTypes.length + selectedSeasons.length}
+            </span>
+          )}
+        </button>
+      </div>
+
+      <div className="px-4 max-w-[1400px] mx-auto lg:flex gap-8">
         <FilterSidebar
           selectedRegions={selectedRegions}
           onRegionsChange={setSelectedRegions}
@@ -74,9 +92,11 @@ const TourLayout = () => {
           onSeasonsChange={setSelectedSeasons}
           duration={duration}
           onDurationChange={setDuration}
+          mobileOpen={mobileFilterOpen}
+          onCloseMobile={() => setMobileFilterOpen(false)}
         />
 
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <MapSection />
           <AvailableToursHeader />
 

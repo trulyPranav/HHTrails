@@ -1,13 +1,13 @@
 const AvailableToursHeader = () => {
   return (
-    <div className="w-full bg-white mt-6 px-7 py-6 rounded-lg">
+    <div className="w-full bg-white mt-6 px-5 py-6 rounded-lg">
 
       {/* container */}
-      <div className="flex items-center justify-between ">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
 
         {/* LEFT TEXT */}
         <div>
-          <h2 className="text-4xl font-md  font-berlin text-[#2b140c]">
+          <h2 className="text-2xl sm:text-4xl font-md font-berlin text-[#2b140c]">
             Available Tours
           </h2>
 

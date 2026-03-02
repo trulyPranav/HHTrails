@@ -500,7 +500,7 @@ const HeroSection = ({ tourData, bookmarked, onBookmark }: any) => {
       <div className="hero-overlay" style={{ position: "absolute", inset: 0 }} />
 
       {/* Content */}
-      <div style={{ position: "relative", zIndex: 10, width: "100%", padding: "0 80px 32px" }}>
+      <div style={{ position: "relative", zIndex: 10, width: "100%", padding: "0 clamp(1.25rem, 5vw, 5rem) 2rem" }}>
         <h1
           className="hero-title"
           style={{
@@ -1560,71 +1560,27 @@ const RecommendedSection = ({ recommendedTours, currentTitle }: any) => (
 
 /* ── 11. FIXED BOTTOM CTA BAR ─────────────────────────── */
 const FixedCTABar = () => (
-  <div
-    style={{
-      position: "fixed",
-      bottom: 0,
-      left: 0,
-      right: 0,
-      zIndex: 999,
-      background: COLOR.dark,
-      padding: "14px 40px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      gap: 16,
-      boxShadow: "0 -2px 18px rgba(0,0,0,0.4)",
-      fontFamily: FONT.body,
-    }}
-  >
+  <div className="fixed bottom-0 left-0 right-0 z-[999] bg-[#1a0e04] px-4 sm:px-10 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3" style={{ boxShadow: "0 -2px 18px rgba(0,0,0,0.4)", fontFamily: FONT.body }}>
     <div>
-      <p style={{ color: "white", fontSize: "1.0rem", fontWeight: 300, fontFamily: "Berlin Sans FB", margin: 0 }}>
+      <p className="text-white text-sm sm:text-base font-light m-0" style={{ fontFamily: "Berlin Sans FB" }}>
         Ready to explore the Silk Route?
       </p>
-      <p style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.74rem", fontWeight: 300, margin: "3px 0 0" }}>
+      <p className="text-white/50 text-xs font-light mt-0.5 m-0">
         Connect with us to plan your journey
       </p>
     </div>
-    <div style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
+    <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
       <button
-              className="
-                flex items-center gap-2
-                px-6 py-2
-                rounded-xl
-                bg-[#1a0903]
-                text-white
-                font-sans
-                text-md
-                transition-all duration-300
-                hover:bg-yellow-500
-                hover:text-black
-                border border-white/70
-              "
-            >
-              <Send
-                size={16}
-                strokeWidth={2}
-                className="transition-colors duration-300"
-              />
-              Enquire Now
-            </button>
-          <button
-              className="
-                px-6 py-2
-                rounded-xl
-                border border-white/70
-                text-white
-                font-sans
-                text-[15px]
-                tracking-tight
-                transition-all duration-300
-                hover:bg-yellow-500
-                hover:text-black
-                hover:border-yellow-500
-              "
-            >
-              Customize Tour
-            </button>
+        className="flex items-center gap-2 px-4 sm:px-6 py-2 rounded-xl bg-[#1a0903] text-white font-sans text-sm transition-all duration-300 hover:bg-yellow-500 hover:text-black border border-white/70"
+      >
+        <Send size={16} strokeWidth={2} className="transition-colors duration-300" />
+        Enquire Now
+      </button>
+      <button
+        className="px-4 sm:px-6 py-2 rounded-xl border border-white/70 text-white font-sans text-sm tracking-tight transition-all duration-300 hover:bg-yellow-500 hover:text-black hover:border-yellow-500"
+      >
+        Customize Tour
+      </button>
     </div>
   </div>
 );

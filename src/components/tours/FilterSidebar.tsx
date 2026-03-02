@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { X } from "lucide-react";
 
 interface FilterSidebarProps {
   selectedRegions: string[];
@@ -9,6 +10,10 @@ interface FilterSidebarProps {
   onSeasonsChange: (seasons: string[]) => void;
   duration: number;
   onDurationChange: (duration: number) => void;
+  /** Mobile-only: controls whether the drawer is open */
+  mobileOpen?: boolean;
+  /** Mobile-only: called when the drawer should close */
+  onCloseMobile?: () => void;
 }
 
 const FilterSidebar = ({
@@ -20,6 +25,8 @@ const FilterSidebar = ({
   onSeasonsChange,
   duration,
   onDurationChange,
+  mobileOpen = false,
+  onCloseMobile,
 }: FilterSidebarProps) => {
   const [showAllRegions, setShowAllRegions] = useState(false);
   const [showAllTypes, setShowAllTypes] = useState(false);
@@ -71,39 +78,53 @@ const FilterSidebar = ({
   };
 
   return (
+    <>
+      {/* ── Mobile backdrop ── */}
+      <div
+        className={`fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 lg:hidden ${
+          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={onCloseMobile}
+      />
+
+      {/* ── Sidebar (drawer on mobile, sticky on desktop) ── */}
       <aside
-        className="
-    sticky
-    top-0
-    self-start
-    w-[320px]
-    p-[36px]
-      ml-16
-    rounded-[10px]
-    border-2
-    bg-[#F3F4F1]
-    space-y-6
-    shrink-0
-    /* side scroll bar */
-    max-h-screen
-    overflow-y-auto
-    scroll-smooth
-    boxShadow: 0 8px 8px rgba(0,0,0,2.2),
-  "
+        className={`
+          max-lg:fixed max-lg:top-0 max-lg:left-0 max-lg:h-full max-lg:z-50 max-lg:overflow-y-auto
+          transition-transform duration-300
+          ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
+          lg:translate-x-0 lg:sticky lg:self-start
+          w-[300px] lg:w-[320px]
+          p-6 lg:p-[36px]
+          pt-14 lg:pt-[36px]
+          lg:ml-16
+          lg:rounded-[10px] lg:border-2
+          bg-[#F3F4F1]
+          space-y-6 lg:shrink-0
+          lg:max-h-screen lg:scroll-smooth
+        `}
       >
       {/* HEADER */}
-      <div className="flex items-center gap-2">
-        {/* filter icon */}
-        <svg
-          className="w-5 h-5 text-gray-700"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <svg
+            className="w-5 h-5 text-gray-700"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+              d="M4 6h16M7 12h10M10 18h4" />
+          </svg>
+          <h2 className="font-semibold text-gray-800">Filters</h2>
+        </div>
+        {/* Close button — mobile only */}
+        <button
+          onClick={onCloseMobile}
+          className="lg:hidden w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200 text-gray-600"
         >
-          <path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-            d="M4 6h16M7 12h10M10 18h4" />
-        </svg>
-        <h2 className="font-semibold text-gray-800">Filters</h2>
+          <X className="w-4 h-4" />
+        </button>
       </div>
 
       {/* REGION */}
@@ -263,6 +284,7 @@ const FilterSidebar = ({
         </div>
       </div>
     </aside>
+    </>
   );
 };
 

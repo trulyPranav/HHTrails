@@ -48,7 +48,7 @@ export default function BlogDetail() {
     <div className="flex-grow pt-[72px] min-h-screen bg-white">
       {/* Hero image */}
       {blog.coverImageUrl && (
-        <div className="w-full h-[420px] overflow-hidden">
+        <div className="w-full h-48 sm:h-[420px] overflow-hidden">
           <img src={blog.coverImageUrl} alt={blog.title} className="w-full h-full object-cover" />
         </div>
       )}

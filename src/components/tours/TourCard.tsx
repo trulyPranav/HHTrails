@@ -20,7 +20,7 @@ const TourCard = ({ tour }: TourCardProps) => {
   };
 
   return (
-    <div className="w-[360px] m-6 bg-white rounded-xl shadow-md overflow-hidden">
+    <div className="w-full bg-white rounded-xl shadow-md overflow-hidden">
 
       {/* IMAGE SECTION */}
      <div className="relative h-[200px] overflow-hidden rounded-t-xl">
@@ -91,7 +91,7 @@ const TourCard = ({ tour }: TourCardProps) => {
           ))}
         </div>
 
-        <p className="text-md text-[#AAAAAA] line-clamp-6 py-3 whitespace-pre-line max-w-[390px] ">
+        <p className="text-sm text-[#AAAAAA] line-clamp-3 py-2 whitespace-pre-line">
           {tour.description || "Journey through the Himalayas with HHTrails."}
         </p>
 

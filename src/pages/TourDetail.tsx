@@ -342,71 +342,178 @@ const HighlightsSection = ({ highlights }: any) => (
 
 /* ── 4. ITINERARY ── */
 const ItinerarySection = ({ itinerary }: any) => (
-  <section className="bg-[#ffffff] border-t border-[#ece8e3] font-sans" style={{ padding: "46px clamp(1rem, 4vw, 2.5rem)" }}>
+  <section
+    className="bg-[#ffffff] border-t border-[#ece8e3] font-sans"
+    style={{ padding: "46px clamp(1rem, 4vw, 2.5rem)" }}
+  >
     <div style={{ maxWidth: 900, margin: "0 auto" }}>
 
       <h2
         className="text-center"
-        style={{ fontSize: "clamp(1.9rem, 2vw, 2.3rem)", color: "black", fontFamily: "Berlin Sans FB", letterSpacing: "0.02em", marginBottom: 40 }}
+        style={{
+          fontSize: "clamp(1.9rem, 2vw, 2.3rem)",
+          color: "black",
+          fontFamily: "Berlin Sans FB",
+          letterSpacing: "0.02em",
+          marginBottom: 40
+        }}
       >
         Walk Through the Experience
       </h2>
 
-      {/* itin-btn-row class is targeted in index.css for mobile */}
-      <div className="itin-btn-row" style={{ display: "flex", justifyContent: "center", gap: 12, marginBottom: 40, flexWrap: "wrap" }}>
-        <button
-          className="group flex items-center gap-2 font-semibold px-4 py-2 text-[13px] border border-gray-300 rounded-md text-gray-700 bg-white transition-all duration-300 hover:bg-[#2a0f06] hover:text-white hover:border-[#2a0f06]"
-        >
-          <FaWhatsapp size={14} className="transition-colors duration-300 group-hover:text-white" />
+      {/* Buttons */}
+      <div
+        className="itin-btn-row"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: 12,
+          marginBottom: 40,
+          flexWrap: "wrap"
+        }}
+      >
+        <button className="group flex items-center gap-2 font-semibold px-4 py-2 text-[13px] border border-gray-300 rounded-md text-gray-700 bg-white transition-all duration-300 hover:bg-[#2a0f06] hover:text-white hover:border-[#2a0f06]">
+          <FaWhatsapp size={14} />
           Send Itinerary
         </button>
-        <button
-          className="group flex items-center gap-2 px-4 py-2 text-[13px] font-semibold border border-gray-300 rounded-md text-gray-700 bg-white transition-all duration-300 hover:bg-[#2a0f06] hover:text-white hover:border-[#2a0f06]"
-        >
-          <Download size={14} strokeWidth={1.8} className="transition-colors duration-300 group-hover:text-white" />
+
+        <button className="group flex items-center gap-2 px-4 py-2 text-[13px] font-semibold border border-gray-300 rounded-md text-gray-700 bg-white transition-all duration-300 hover:bg-[#2a0f06] hover:text-white hover:border-[#2a0f06]">
+          <Download size={14} strokeWidth={1.8} />
           Download Itinerary
         </button>
       </div>
 
-      {/* ── Desktop zigzag timeline — hidden on mobile via index.css ── */}
+      {/* ================= DESKTOP TIMELINE ================= */}
       <div className="timeline-desktop" style={{ position: "relative" }}>
-        <div style={{ position: "absolute", left: "50%", top: 0, bottom: 0, width: 2, background: "#2a0f06", transform: "translateX(-50%)", zIndex: 0 }} />
+        <div
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: 0,
+            bottom: 0,
+            width: 2,
+            background: "#2a0f06",
+            transform: "translateX(-50%)",
+            zIndex: 0
+          }}
+        />
+
         <div style={{ display: "flex", flexDirection: "column" }}>
           {itinerary.map((item: any, idx: any) => {
             const isLeft = idx % 2 === 0;
 
+            /* ===== UPDATED IMAGE CARD ===== */
             const TimelineImage = ({ item }: any) => (
-              <div style={{ borderRadius: 6, overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.15)", background: "#2a0f06" }}>
+              <div
+                style={{
+                  borderRadius: 10,
+                  overflow: "hidden",
+                  boxShadow: "0 4px 14px rgba(0,0,0,0.15)",
+                  background: "#2a0f06",
+                  position: "relative"
+                }}
+              >
+                {/* Main Image */}
                 {item.image ? (
-                  <img src={item.image} alt={item.title} style={{ width: "100%", height: 130, objectFit: "cover" }} />
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    style={{
+                      width: "100%",
+                      height: 160,
+                      objectFit: "cover",
+                      display: "block"
+                    }}
+                  />
                 ) : (
                   <TimelineImgPlaceholder day={item.day} />
                 )}
-                <div style={{ fontSize: 11, color: "white", textAlign: "center", padding: "4px 0" }}>{item.title}</div>
+
+                {/* 🔥 Top Curved Overlay */}
+                <img
+                  src="/Vector.svg"
+                  alt="overlay"
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: 50,
+                    objectFit: "cover",
+                    pointerEvents: "none",
+                    zIndex: 2
+                  }}
+                />
+
+                {/* Bottom Title Bar */}
+                <div
+                  style={{
+                    background: "#2a0f06",
+                    color: "white",
+                    textAlign: "center",
+                    padding: "10px 8px",
+                    fontSize: 14,
+                    fontWeight: 500
+                  }}
+                >
+                  {item.title}
+                </div>
               </div>
             );
 
             const TimelineText = ({ item }: any) => (
-              <div style={{ fontFamily: "sans-serif" }}>
-                <p style={{ fontSize: 16, fontWeight: 600, color: "#2a0f06", marginBottom: 4 }}>Day {item.day}</p>
-                <p style={{ fontSize: 13, color: "#6b7280", lineHeight: 1.6 }}>{item.description}</p>
+              <div>
+                <p style={{
+                  fontSize: 16,
+                  fontWeight: 600,
+                  color: "#2a0f06",
+                  marginBottom: 4
+                }}>
+                  Day {item.day}
+                </p>
+                <p style={{
+                  fontSize: 13,
+                  color: "#6b7280",
+                  lineHeight: 1.6
+                }}>
+                  {item.description}
+                </p>
               </div>
             );
 
             return (
-              <div key={item.day} style={{ display: "grid", gridTemplateColumns: "1fr 40px 1fr", alignItems: "flex-start", position: "relative", zIndex: 10, marginBottom: 56 }}>
+              <div
+                key={item.day}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 40px 1fr",
+                  alignItems: "flex-start",
+                  position: "relative",
+                  zIndex: 10,
+                  marginBottom: 56
+                }}
+              >
                 <div style={{ display: "flex", justifyContent: "flex-end", paddingRight: 28 }}>
                   {isLeft
-                    ? <div style={{ width: 200 }}><TimelineImage item={item} /></div>
-                    : <div style={{ width: 220, textAlign: "left" }}><TimelineText item={item} /></div>}
+                    ? <div style={{ width: 240 }}><TimelineImage item={item} /></div>
+                    : <div style={{ width: 240 }}><TimelineText item={item} /></div>}
                 </div>
-                <div style={{ display: "flex", justifyContent: "center", paddingTop: 8 }}>
-                  <div style={{ width: 14, height: 14, borderRadius: "50%", background: "#2a0f06", border: "3px solid #f5f2ee", outline: "2px solid #2a0f06" }} />
+
+                <div style={{ display: "flex", justifyContent: "center", paddingTop: 10 }}>
+                  <div style={{
+                    width: 14,
+                    height: 14,
+                    borderRadius: "50%",
+                    background: "#2a0f06",
+                    border: "3px solid #f5f2ee",
+                    outline: "2px solid #2a0f06"
+                  }} />
                 </div>
+
                 <div style={{ paddingLeft: 28 }}>
                   {!isLeft
-                    ? <div style={{ width: 200 }}><TimelineImage item={item} /></div>
-                    : <div style={{ width: 220 }}><TimelineText item={item} /></div>}
+                    ? <div style={{ width: 240 }}><TimelineImage item={item} /></div>
+                    : <div style={{ width: 240 }}><TimelineText item={item} /></div>}
                 </div>
               </div>
             );
@@ -414,14 +521,106 @@ const ItinerarySection = ({ itinerary }: any) => (
         </div>
       </div>
 
-      {/* ── Mobile single-column timeline — shown on mobile via index.css ── */}
-      <div className="timeline-mobile" style={{ display: "none", flexDirection: "column", position: "relative", paddingLeft: 28 }}>
-        <div style={{ position: "absolute", left: 6, top: 0, bottom: 0, width: 2, background: COLOR.darkBrown }} />
+      {/* ================= MOBILE TIMELINE ================= */}
+      <div
+        className="timeline-mobile"
+        style={{
+          display: "none",
+          flexDirection: "column",
+          position: "relative",
+          paddingLeft: 28
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            left: 6,
+            top: 0,
+            bottom: 0,
+            width: 2,
+            background: "#2a0f06"
+          }}
+        />
+
         {itinerary.map((item: any, idx: any) => (
-          <div key={item.day} style={{ display: "flex", marginBottom: idx < itinerary.length - 1 ? 36 : 0, position: "relative" }}>
-            <div style={{ position: "absolute", left: -28, top: 10, width: 12, height: 12, borderRadius: "50%", background: COLOR.darkBrown, border: `2px solid ${COLOR.bgLight}`, outline: `1.5px solid ${COLOR.darkBrown}` }} />
+          <div
+            key={item.day}
+            style={{
+              display: "flex",
+              marginBottom: idx < itinerary.length - 1 ? 36 : 0,
+              position: "relative"
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                left: -28,
+                top: 14,
+                width: 12,
+                height: 12,
+                borderRadius: "50%",
+                background: "#2a0f06",
+                border: "2px solid #f5f2ee",
+                outline: "1.5px solid #2a0f06"
+              }}
+            />
+
+            {/* Mobile Card (Overlay Applied Here Too) */}
             <div style={{ width: "100%" }}>
-              <TimelineCard item={item} />
+              <div style={{
+                borderRadius: 10,
+                overflow: "hidden",
+                boxShadow: "0 4px 14px rgba(0,0,0,0.15)",
+                position: "relative"
+              }}>
+                {item.image ? (
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    style={{
+                      width: "100%",
+                      height: 180,
+                      objectFit: "cover"
+                    }}
+                  />
+                ) : (
+                  <TimelineImgPlaceholder day={item.day} />
+                )}
+
+                <img
+                  src="/Vector.svg"
+                  alt="overlay"
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: 50,
+                    objectFit: "cover",
+                    pointerEvents: "none"
+                  }}
+                />
+
+                <div style={{
+                  background: "#2a0f06",
+                  color: "white",
+                  textAlign: "center",
+                  padding: "10px 8px",
+                  fontSize: 14,
+                  fontWeight: 500
+                }}>
+                  {item.title}
+                </div>
+              </div>
+
+              <div style={{ marginTop: 10 }}>
+                <p style={{ fontWeight: 600, color: "#2a0f06" }}>
+                  Day {item.day}
+                </p>
+                <p style={{ fontSize: 13, color: "#6b7280" }}>
+                  {item.description}
+                </p>
+              </div>
             </div>
           </div>
         ))}

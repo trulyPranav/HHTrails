@@ -147,7 +147,7 @@ export default function Footer() {
         {/* Bottom Section */}
         <div className="mt-12 pt-8 border-t border-[#D4C9B5]">
           <div className="footer-bottom flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-[#5C5346]">
-            <p>© 2025 Himalayan Trails. All rights reserved.</p>
+            <p>© 2025 Heritage Himalayan Trails. All rights reserved.</p>
             <p className="flex items-center gap-2">
               Crafted with passion for mountain lovers
               <Mountain className="w-4 h-4" />

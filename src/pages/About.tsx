@@ -1,5 +1,5 @@
 import { Award, Eye, Users, MapPin, Heart, Leaf, Mountain, BookOpen, Building2, Clock,  UserCheck,Compass,Send} from 'lucide-react';
-
+import { Link } from "react-router-dom";
 export default function About() {
  
 
@@ -17,7 +17,7 @@ export default function About() {
       title: 'Official Recognition',
       subtitle: 'Department of Tourism, U.T. Ladakh',
       description: 'Heritage Himalaya Trails is a specialized travel company officially registered with the Department of Tourism, U.T. Ladakh, India. Our commitment to authentic, responsible tourism is recognized and supported by local authorities.',
-      image: 'container.png',
+      image: '/Container-removebg-preview.png',
       imageAlt: 'Department of Tourism Badge',
       align: 'left',
       imageType: 'badge'
@@ -25,8 +25,8 @@ export default function About() {
     {
       number: '02',
       title: 'Ladakh "Little Tibet"',
-      subtitle: 'Buddhist & Bön Heritage',
-      description: 'We focus particularly on Ladakh, celebrated for its vibrant Buddhist and Bön heritage. Known as "Little Tibet," this region forms the heart of our extended cultural tours, offering deep insight into ancient traditions and mountain communities.',
+      subtitle: 'Buddhist & Muslim Heritage',
+      description: 'We focus particularly on Ladakh, celebrated for its vibrant Buddhist and Muslim heritage deeply influenced by Bon tradition. Known as "Little Tibet," this region forms the heart of our extended cultural tours, offering deep insight into ancient traditions and mountain communities.',
       image: 'Container (1).png',
       imageAlt: 'Buddhist monks in Ladakh',
       align: 'right',
@@ -234,7 +234,15 @@ export default function About() {
                     margin: 0,
                   }}
                 >
-                  A leading authority on Ladakh's heritage with 15+ years dedicated to preserving and sharing the rich cultural tapestry of the Himalayas. Native to Staksmo village, Dr. Wangchok bridges academic expertise with lived cultural experience.
+                  A leading authority on Ladakh’s heritage,
+                   Dr. Wangchok has dedicated the past two 
+                   decades to preserving the rich cultural
+                  legacy of the Himalayas. A native of
+                  Khardong village in the Nubra Valley
+                   of Ladakh, he impeccably bridges academic 
+                  expertise with deep lived cultural experience,
+                   bringing scholarship and tradition together in
+                   meaningful ways.
                 </p>
 
                 {/* Cards Grid */}
@@ -253,7 +261,7 @@ export default function About() {
                     </div>
                     <div>
                       <h4 style={{ fontSize: '14px', fontWeight: 400, color: '#2B1E17', margin: '0 0 4px 0' }}>Heritage Expert</h4>
-                      <p style={{ fontSize: '16px', color: '#4A5565', margin: 0 }}>UNESCO &amp; government preservation projects</p>
+                      <p style={{ fontSize: '16px', color: '#4A5565', margin: 0 }}>Preservation projects, Publications and Heritage Education</p>
                     </div>
                   </div>
 
@@ -263,8 +271,8 @@ export default function About() {
                       <Award style={{ width: '20px', height: '20px', color: 'white' }} />
                     </div>
                     <div>
-                      <h4 style={{ fontSize: '14px', fontWeight: 500, color: '#2B1E17', margin: '0 0 4px 0' }}>Academic Background</h4>
-                      <p style={{ fontSize: '16px', color: '#4A5565', margin: 0 }}>Cultural anthropology &amp; heritage management</p>
+                      <h4 style={{ fontSize: '14px', fontWeight: 300, color: '#2B1E17', margin: '0 0 4px 0' }}>Academic Background</h4>
+                      <p style={{ fontSize: '16px', color: '#4A5565', margin: 0 }}>Buddhist Cultural Study &amp;  Social Philosophy</p>
                     </div>
                   </div>
 
@@ -275,7 +283,7 @@ export default function About() {
                     </div>
                     <div>
                       <h4 style={{ fontSize: '14px', fontWeight: 500, color: '#2B1E17', margin: '0 0 4px 0' }}>Specialization</h4>
-                      <p style={{ fontSize: '16px', color: '#4A5565', margin: 0 }}>Monastic traditions &amp; vernacular architecture</p>
+                      <p style={{ fontSize: '16px', color: '#4A5565', margin: 0 }}>Cultural  &amp; Natural heritage</p>
                     </div>
                   </div>
 
@@ -286,7 +294,7 @@ export default function About() {
                     </div>
                     <div>
                       <h4 style={{ fontSize: '14px', fontWeight: 500, color: '#2B1E17', margin: '0 0 4px 0' }}>Local Roots</h4>
-                      <p style={{ fontSize: '16px', color: '#4A5565', margin: 0 }}>Native Ladakhi from Staksmo village</p>
+                      <p style={{ fontSize: '16px', color: '#4A5565', margin: 0 }}>Native Ladakhi from Khardong Village</p>
                     </div>
                   </div>
                 </div>
@@ -501,7 +509,7 @@ export default function About() {
               className="text-sm max-w-2xl mx-auto leading-relaxed"
               style={{ color: '#4A5565', fontWeight: 400 }}
             >
-              Officially registered with the Department of Tourism, U.T. Ladakh - dedicated to preserving the cultural heritage and natural beauty of the Himalayas.
+             Officially registered with the Department of Tourism, U.T. Ladakh - dedicated to experiential and responsible tourism in the Himalayas.
             </p>
           </div>
 
@@ -552,18 +560,12 @@ export default function About() {
                     <div className="lg:col-span-5">
                       {step.imageType === 'badge' ? (
                         <div className="flex justify-center lg:justify-start">
-                          <div
-                            className="w-48 h-48 rounded-full flex items-center justify-center"
-                            style={{
-                              background: 'linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #138808 100%)',
-                              padding: '8px',
-                            }}
-                          >
-                            <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
+                          <div>
+                            <div className="w-full h-full  flex items-center justify-center">
                               <img
                                 src={step.image}
                                 alt={step.imageAlt}
-                                className="w-40 h-40 object-contain"
+                                className=" pb-1 object-contain"
                               />
                             </div>
                           </div>
@@ -834,7 +836,9 @@ export default function About() {
 
 
             {/* Secondary Button */}
+            <Link to="/Tours">
             <button
+            
               className="transition-all duration-200 ease-out"
               style={{
                 backgroundColor: "transparent",
@@ -861,6 +865,7 @@ export default function About() {
             >
               Explore Our Tours
             </button>
+            </Link>
           </div>
         </div>
       </section>

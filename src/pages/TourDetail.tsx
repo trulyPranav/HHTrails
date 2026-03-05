@@ -228,6 +228,20 @@ const ImgPlaceholder = ({ aspectRatio = "4/3", size = 40 }) => (
   </div>
 );
 
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// WHATSAPP REDIRECT FUNCTION
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+  const handleWhatsAppEnquiry = () => {
+  const phoneNumber = "919622992881"; 
+  const message = "Hello, I would like to enquire about your tours.";
+  const encodedMessage = encodeURIComponent(message);
+
+  window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, "_blank"); 
+  };
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // SECTION COMPONENTS
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -236,71 +250,153 @@ const ImgPlaceholder = ({ aspectRatio = "4/3", size = 40 }) => (
 const HeroSection = ({ tourData, bookmarked, onBookmark }: any) => {
   const { title, tags, location, duration, difficulty, bestSeason, heroImage } = tourData;
   return (
-    <section style={{ position: "relative", width: "100%", height: "82vh", minHeight: 480, display: "flex", alignItems: "flex-end" }}>
-      {heroImage ? (
-        <div style={{ position: "absolute", inset: 0, backgroundImage: `url(${heroImage})`, backgroundSize: "cover", backgroundPosition: "center" }} />
-      ) : (
-        <HeroPlaceholder />
-      )}
-      {/* overlay */}
-      <div
-        style={{
-          position: "absolute", inset: 0,
-          background: "linear-gradient(to top, rgba(0,0,0,0.0) 90%, rgba(0,0,0,0.40) 0%, rgba(0,0,0,0.10) 00%)",
-        }}
-      />
+ <section style={{ 
+  position: "relative", 
+  width: "100%", 
+  aspectRatio: "16 / 9",
+  minHeight: 320,
+  maxHeight: "82vh",
+  display: "flex", 
+  alignItems: "flex-end" 
+}}>
+  {heroImage ? (
+    <div style={{ 
+      position: "absolute", 
+      inset: 0, 
+      backgroundImage: `url(${heroImage})`, 
+      backgroundSize: "cover", 
+      backgroundPosition: "center top" 
+    }} />
+  ) : (
+    <HeroPlaceholder />
+  )}
 
-      <div style={{ position: "relative", zIndex: 10, width: "100%", padding: "0 clamp(1rem, 5vw, 5rem) 2rem" }}>
-        <h1
-          className="hero-title"
-          style={{ color: "white", fontSize: "clamp(1.4rem, 3.2vw, 3rem)", fontWeight: 400, fontFamily: "Berlin Sans FB", letterSpacing: "-0.02em", lineHeight: 1.15, marginBottom: 16, textShadow: "0 2px 12px rgba(0,0,0,0.4)" }}
+  {/* overlay — FIXED: restored correct gradient styles */}
+  <div
+    style={{
+      position: "absolute",
+      inset: 0,
+      background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0.35) 100%)",
+    }}
+  />
+
+  {/* Content */}
+  <div style={{ 
+    position: "relative", 
+    zIndex: 10, 
+    width: "100%", 
+    padding: "0 clamp(0.9rem, 5vw, 5rem) clamp(1rem, 3vw, 2rem)" 
+  }}>
+
+    <h1
+      className="hero-title"
+      style={{ 
+        color: "white", 
+        fontSize: "clamp(1.1rem, 4vw, 3rem)", 
+        fontWeight: 400, 
+        fontFamily: "Berlin Sans FB", 
+        letterSpacing: "-0.02em", 
+        lineHeight: 1.15, 
+        marginBottom: "clamp(8px, 2vw, 16px)", 
+        textShadow: "0 2px 12px rgba(0,0,0,0.4)" 
+      }}
+    >
+      {title}
+    </h1>
+
+    {/* Tags */}
+    <div style={{ 
+      display: "flex", 
+      flexWrap: "wrap", 
+      gap: "clamp(4px, 1.5vw, 8px)", 
+      marginBottom: "clamp(8px, 2.5vw, 18px)" 
+    }}>
+      {tags.map((tag: any) => (
+        <span
+          key={tag}
+          style={{ 
+            background: COLOR.amber, 
+            color: "white", 
+            fontSize: "clamp(0.58rem, 1.8vw, 0.70rem)", 
+            fontWeight: 300, 
+            fontFamily: FONT.body, 
+            padding: "clamp(4px, 1.2vw, 8px) clamp(8px, 2vw, 13px)", 
+            borderRadius: 999, 
+            cursor: "default", 
+            letterSpacing: "0.03em", 
+            transition: "background 0.3s",
+            whiteSpace: "nowrap",
+          }}
         >
-          {title}
-        </h1>
+          {tag}
+        </span>
+      ))}
+    </div>
 
-        {/* Tags */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 18 }}>
-          {tags.map((tag: any) => (
-            <span
-              key={tag}
-              style={{ background: COLOR.amber, color: "white", fontSize: "0.70rem", fontWeight: 300, fontFamily: FONT.body, padding: "8px 13px", borderRadius: 999, cursor: "default", letterSpacing: "0.03em", transition: "background 0.3s" }}
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+    {/* Meta info */}
+    <div style={{ 
+      display: "flex", 
+      flexWrap: "wrap", 
+      gap: "clamp(3px, 1.5vw, 6px) clamp(8px, 3vw, 22px)", 
+      marginBottom: "clamp(10px, 3.5vw, 28px)", 
+      fontFamily: FONT.body 
+    }}>
+      <InfoItem icon={MapPin} label={location} />
+      <InfoItem icon={CalendarDays} label={duration} />
+      <InfoItem icon={Mountain} label={difficulty} />
+      <InfoItem icon={Sun} label={`Best Season: ${bestSeason}`} />
+    </div>
 
-        {/* Meta info */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 22px", marginBottom: 28, fontFamily: FONT.body }}>
-          <InfoItem icon={MapPin} label={location} />
-          <InfoItem icon={CalendarDays} label={duration} />
-          <InfoItem icon={Mountain} label={difficulty} />
-          <InfoItem icon={Sun} label={`Best Season: ${bestSeason}`} />
-        </div>
+    {/* CTA buttons */}
+    <div style={{ 
+      display: "flex", 
+      flexWrap: "wrap", 
+      alignItems: "center", 
+      gap: "clamp(5px, 2vw, 10px)" 
+    }}>
+      <button
+        onClick={handleWhatsAppEnquiry}
+        className="flex items-center gap-2 rounded-xl bg-[#1a0903] text-white font-sans transition-all duration-300 hover:bg-yellow-500 hover:text-black"
+        style={{ 
+          padding: "clamp(5px, 1.5vw, 8px) clamp(12px, 3vw, 24px)", 
+          fontSize: "clamp(0.72rem, 2vw, 1rem)" 
+        }}
+      >
+        <Send size={13} strokeWidth={2} className="transition-colors duration-300" />
+        Enquire Now
+      </button>
 
-        {/* CTA buttons */}
-        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10 }}>
-          <button
-            className="flex items-center gap-2 px-6 py-2 rounded-xl bg-[#1a0903] text-white font-sans text-md transition-all duration-300 hover:bg-yellow-500 hover:text-black"
-          >
-            <Send size={16} strokeWidth={2} className="transition-colors duration-300" />
-            Enquire Now
-          </button>
-          <button
-            className="px-6 py-2 rounded-xl border border-white/70 text-white font-sans text-[15px] tracking-tight transition-all duration-300 hover:bg-yellow-500 hover:text-black hover:border-yellow-500"
-          >
-            Customize Tour
-          </button>
-          <button
-            onClick={onBookmark}
-            title={bookmarked ? "Saved" : "Save tour"}
-            className={`w-10 h-9 flex items-center justify-center rounded-lg border border-white/40 backdrop-blur-sm transition-all duration-300 ${bookmarked ? "bg-yellow-500 border-yellow-500" : "bg-white/10 hover:bg-yellow-500 hover:border-yellow-500"} hover:scale-105 active:scale-95`}
-          >
-            <Bookmark size={18} strokeWidth={1.8} className={`transition-colors duration-300 ${bookmarked ? "fill-black text-black" : "text-white"}`} />
-          </button>
-        </div>
-      </div>
-    </section>
+      <button
+        className="rounded-xl border border-white/70 text-white font-sans tracking-tight transition-all duration-300 hover:bg-yellow-500 hover:text-black hover:border-yellow-500"
+        style={{ 
+          padding: "clamp(5px, 1.5vw, 8px) clamp(12px, 3vw, 24px)", 
+          fontSize: "clamp(0.72rem, 2vw, 0.94rem)" 
+        }}
+      >
+        Customize Tour
+      </button>
+
+      <button
+        onClick={onBookmark}
+        title={bookmarked ? "Saved" : "Save tour"}
+        className={`flex items-center justify-center rounded-lg border border-white/40 backdrop-blur-sm transition-all duration-300 
+          ${bookmarked ? "bg-yellow-500 border-yellow-500" : "bg-white/10 hover:bg-yellow-500 hover:border-yellow-500"} 
+          hover:scale-105 active:scale-95`}
+        style={{ 
+          width: "clamp(30px, 5vw, 40px)", 
+          height: "clamp(28px, 4.5vw, 36px)",
+          flexShrink: 0,
+        }}
+      >
+        <Bookmark 
+          size={15} 
+          strokeWidth={1.8} 
+          className={`transition-colors duration-300 ${bookmarked ? "fill-black text-black" : "text-white"}`} 
+        />
+      </button>
+    </div>
+  </div>
+</section>
   );
 };
 
@@ -973,6 +1069,7 @@ const FixedCTABar = () => (
     <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
       {/* cta-btn class is targeted in index.css for mobile sizing */}
       <button
+        onClick={handleWhatsAppEnquiry}
         className="cta-btn flex items-center gap-2 rounded-xl bg-[#1a0903] text-white font-sans transition-all duration-300 hover:bg-yellow-500 hover:text-black border border-white/70"
         style={{ padding: "8px clamp(12px, 3vw, 24px)", fontSize: "clamp(0.75rem, 1.5vw, 0.875rem)" }}
       >

@@ -6,6 +6,16 @@ import { useSavedTours } from '../contexts/SavedToursContext';
 import AuthModal from './AuthModal';
 
 export default function Header() {
+
+  //whatsapp redirect function
+  const handleWhatsAppEnquiry = () => {
+  const phoneNumber = "919622992881"; 
+  const message = "Hello, I would like to enquire about your tours.";
+  const encodedMessage = encodeURIComponent(message);
+
+  window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, "_blank");
+};
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -90,6 +100,7 @@ export default function Header() {
         <div className="hidden md:flex items-center gap-3 flex-shrink-0">
           {/* Primary Button */}
           <button
+            onClick={handleWhatsAppEnquiry}
             className="flex items-center gap-2 px-5 py-3 rounded transition-all duration-300"
             style={{
               backgroundColor: primaryColor,
@@ -258,6 +269,7 @@ export default function Header() {
 
           <div className="flex flex-col gap-3 px-4 sm:px-6 py-4 border-t" style={{ borderColor: '#E8E4D8' }}>
             <button
+              onClick={handleWhatsAppEnquiry}
               className="flex items-center justify-center gap-2 px-5 py-3 rounded transition-all duration-300 w-full"
               style={{
                 backgroundColor: primaryColor,

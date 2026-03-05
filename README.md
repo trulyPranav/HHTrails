@@ -28,10 +28,10 @@
 - [ ] "View Details" redirection
 
 ### About Us Page
-- [ ] Heading Fonts
+- [X] Heading Fonts
 - [ ] New Data Entry
 - [ ] Mobile Responsiveness Final Check
-- [ ] Enquire Now: redirect to WhatsApp
+- [X] Enquire Now: redirect to WhatsApp
 - [ ] Explore Our Tours: redirect to Tours Page
 
 ### Blog Page

@@ -228,6 +228,20 @@ const ImgPlaceholder = ({ aspectRatio = "4/3", size = 40 }) => (
   </div>
 );
 
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// WHATSAPP REDIRECT FUNCTION
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+  const handleWhatsAppEnquiry = () => {
+  const phoneNumber = "919622992881"; 
+  const message = "Hello, I would like to enquire about your tours.";
+  const encodedMessage = encodeURIComponent(message);
+
+  window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, "_blank"); 
+  };
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // SECTION COMPONENTS
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -341,6 +355,7 @@ const HeroSection = ({ tourData, bookmarked, onBookmark }: any) => {
       gap: "clamp(5px, 2vw, 10px)" 
     }}>
       <button
+        onClick={handleWhatsAppEnquiry}
         className="flex items-center gap-2 rounded-xl bg-[#1a0903] text-white font-sans transition-all duration-300 hover:bg-yellow-500 hover:text-black"
         style={{ 
           padding: "clamp(5px, 1.5vw, 8px) clamp(12px, 3vw, 24px)", 
@@ -1054,6 +1069,7 @@ const FixedCTABar = () => (
     <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
       {/* cta-btn class is targeted in index.css for mobile sizing */}
       <button
+        onClick={handleWhatsAppEnquiry}
         className="cta-btn flex items-center gap-2 rounded-xl bg-[#1a0903] text-white font-sans transition-all duration-300 hover:bg-yellow-500 hover:text-black border border-white/70"
         style={{ padding: "8px clamp(12px, 3vw, 24px)", fontSize: "clamp(0.75rem, 1.5vw, 0.875rem)" }}
       >

@@ -410,15 +410,15 @@ export default function About() {
                 >
                   <Mountain className="w-7 h-7 text-white" />
                 </div>
-                <h3
-                  className="text-sm mb-5"
-                  style={{  color: '#FFFFFF', fontSize: '24px', fontWeight: 300  }}
+               <h3
+                  className="text-[24px] font-light text-white mb-5"
                 >
                   Sustainable Travel
                 </h3>
+
                 <p
-                  className="text-sm leading-relaxed"
-                  style={{ color: '#F3F4F1', fontWeight: 100, lineHeight: '1.6'  }}
+                  className="text-sm leading-relaxed max-w-[360px] text-[#F3F4F1]"
+                  style={{ textAlign: "justify", textAlignLast: "left" }}
                 >
                   Our commitment to responsible tourism ensures minimal environmental impact and maximum community benefit.
                 </p>
@@ -443,18 +443,17 @@ export default function About() {
                 >
                   <Leaf className="w-7 h-7 text-white" />
                 </div>
-                <h3
-                  className="text-lg mb-5"
-                  style={{ color: '#FFFFFF', fontSize: '23px', fontWeight: 200  }}
-                >
-                  Sustainably Responsible
-                </h3>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{ color: '#F3F4F1', fontWeight: 200, lineHeight: '1.6' }}
-                >
-                 Committed to preserving pristine environments and supporting mountain communities.
-                </p>
+               <h3
+                    className="mb-5 text-[23px] font-light text-white"
+                  >
+                    Sustainably Responsible
+                  </h3>
+
+                  <p
+                    className="text-sm leading-relaxed text-justify max-w-[320px] text-[#F3F4F1] font-light"
+                  >
+                    Committed to preserving pristine environments and supporting mountain communities.
+                  </p>
               </div>
             </div>
           </div>
@@ -488,8 +487,8 @@ export default function About() {
               Our Journey
             </h2>
             <p
-              className="text-xs max-w-2xl mx-auto leading-relaxed"
-              style={{ color: '#6B5E55', fontWeight: 400 }}
+              className="text-sm max-w-2xl mx-auto leading-relaxed"
+              style={{ color: '#4A5565', fontWeight: 400 }}
             >
               Officially registered with the Department of Tourism, U.T. Ladakh - dedicated to preserving the cultural heritage and natural beauty of the Himalayas.
             </p>

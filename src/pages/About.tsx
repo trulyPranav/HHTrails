@@ -104,7 +104,7 @@ export default function About() {
           >
             <div className="absolute inset-0 bg-black/25"></div>
             <div
-              className="relative z-10 text-center w-full mx-auto"
+              className="relative z-10 text-center  font-berlin w-full mx-auto"
               style={{
                 maxWidth: '760px',
                 padding: '0 clamp(12px, 4vw, 14px)',
@@ -117,7 +117,7 @@ export default function About() {
                   fontSize: 'clamp(24px, 6vw, 46px)',
                   marginBottom: 'clamp(10px, 2vw, 16px)',
                   lineHeight: 1.2,
-                  fontFamily: 'Berlin Sans FB',
+                 
                 }}
               >
                 About Us

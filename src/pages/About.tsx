@@ -142,17 +142,19 @@ export default function About() {
       <section className="bg-white" style={{ paddingTop: '50px', paddingBottom: '80px' }}>
         <div className="max-w-5xl mx-auto px-6">
           {/* Founder Header - Centered */}
-          <div className="text-center mb-12">
+          <div className="text-center   mb-12">
+            <div className="font-berlin">
             <h2
               style={{
                 color: '#2B1E17',
                 fontWeight: 300,
                 fontSize: 'clamp(24px, 4vw, 36px)',
-                 fontFamily: "Berlin Sans FB",
+               
               }}
             >
               Meet Our Founder
             </h2>
+            </div>
             <h3 className="text-lg mb-1" style={{ color: '#2B1E17', fontWeight: 500 }}>
               Dr. Sonam Wangchok
             </h3>
@@ -779,8 +781,8 @@ export default function About() {
 
           {/* Heading */}
           <h2
-            className="text-4xl mb-4"
-            style={{ color: '#2B1E17', fontWeight: 200, fontFamily: 'Berlin Sans FB' }}
+            className="text-4xl  font-berlin mb-4"
+            style={{ color: '#2B1E17', fontWeight: 200,  }}
           >
             Ready to Begin Your Journey?
           </h2>

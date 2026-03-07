@@ -44,6 +44,7 @@ export interface TourDetails {
   accommodationMediaUrl: string | null;
   featureDescription: string | null;
   featureMediaUrl: string | null;
+  featureTitle: string | null;
   featureIsVideo: boolean;
   routeDescription: string | null;
   routePhotoUrl: string | null;
@@ -57,6 +58,7 @@ export interface ItineraryDay {
   dayNumber: number;
   description: string;
   imageUrl: string;
+  imageTitle: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -82,6 +84,7 @@ export type CreateTourDetailsInput = {
   accommodationMediaUrl?: string | null;
   featureDescription?: string | null;
   featureMediaUrl?: string | null;
+  featureTitle?: string | null;
   featureIsVideo?: boolean;
   routeDescription?: string | null;
   routePhotoUrl?: string | null;
@@ -93,9 +96,11 @@ export type CreateItineraryDayInput = {
   dayNumber: number;
   description: string;
   imageUrl: string;
+  imageTitle?: string | null;
 };
 
 export type UpdateItineraryDayInput = {
   description?: string;
   imageUrl?: string;
+  imageTitle?: string | null;
 };

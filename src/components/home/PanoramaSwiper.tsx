@@ -16,7 +16,7 @@ const slides = [
 ];
 
 // 🔁 Duplicate slides to fake infinity
-const repeatedSlides = [...slides, ...slides, ...slides, ...slides];
+const repeatedSlides = [...slides, ...slides, ...slides, ...slides,];
 
 const PanoramaSwiper = () => {
   const swiperRef = useRef<SwiperType | null>(null);
@@ -26,7 +26,6 @@ const PanoramaSwiper = () => {
 
     const swiper = swiperRef.current;
     let rafId: number | null = null;
-    const SPEED = 5; // px per frame
 
     // Wait for swiper to be fully initialized
     setTimeout(() => {
@@ -34,7 +33,11 @@ const PanoramaSwiper = () => {
 
       const animate = () => {
         if (!swiper.destroyed) {
-          swiper.setTranslate(swiper.translate - SPEED);
+          // 👇 Dynamic speed calculation added here!
+          // If window is < 640px, speed is 2. Otherwise, speed is 5.
+          const currentSpeed = window.innerWidth < 640 ? 2 : 5; 
+          
+          swiper.setTranslate(swiper.translate - currentSpeed);
 
           // seamless reset
           if (Math.abs(swiper.translate) >= resetPoint) {
@@ -69,12 +72,24 @@ const PanoramaSwiper = () => {
             }}
           >
             {repeatedSlides.map((slide, index) => (
-              <SwiperSlide key={index} className="w-[22%] lg:w-[22%] md:w-[45%] sm:w-full flex-shrink-0 flex justify-center">
+              <SwiperSlide
+                key={index}
+                className="
+                  w-[calc((100%-120px)/4)]
+                  flex-shrink-0 
+                  flex 
+                  justify-center
+                "
+              >
                 <img
                   src={slide.image}
                   alt={slide.alt}
                   draggable={false}
-                  className="w-full h-full object-cover aspect-[2.5/4] will-change-transform [backface-visibility:hidden] [perspective:1000px]"
+                  className="w-full h-full object-cover 
+                    aspect-[2.5/5]
+                    will-change-transform 
+                    [backface-visibility:hidden] 
+                    [perspective:1000px]"
                 />
               </SwiperSlide>
             ))}

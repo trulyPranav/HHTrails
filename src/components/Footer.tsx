@@ -3,10 +3,48 @@ import { Mountain, Instagram, Youtube, MapPin, Phone, Mail } from 'lucide-react'
 export default function Footer() {
   return (
     <footer className="bg-[#F5F1E8] text-[#3D3226]">
+      <style>{`
+        @media (max-width: 767px) {
+          .footer-grid {
+            grid-template-columns: 1fr !important;
+            gap: 32px !important;
+          }
+          .footer-bottom {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 8px !important;
+          }
+          .footer-brand-col {
+            max-width: 100% !important;
+          }
+        }
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .footer-grid {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 32px !important;
+          }
+          .footer-brand-col {
+            grid-column: span 2 !important;
+          }
+        }
+        @media (min-width: 1024px) {
+          .footer-grid {
+            grid-template-columns: repeat(4, 1fr) !important;
+          }
+        }
+      `}</style>
+
       <div className="max-w-7xl mx-auto px-6 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+        <div
+          className="footer-grid"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '40px',
+          }}
+        >
           {/* Column 1: Brand */}
-          <div className="space-y-5">
+          <div className="footer-brand-col space-y-5">
             <div className="flex items-start">
               <img
                 src="/hht_final_logo_send.svg"
@@ -84,10 +122,10 @@ export default function Footer() {
               <li className="flex gap-3 text-sm text-[#5C5346]">
                 <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
                 <span>
-                 Heritage Himalaya Trails<br/>Tsangspa House,<br/>
-                  Near GurudwaraSingh Sabha, 
-                  Nawshar, <br/>
-                 Leh 194101, Ladakh, India
+                  Heritage Himalaya Trails<br />Tsangspa House,<br />
+                  Near GurudwaraSingh Sabha,
+                  Nawshar, <br />
+                  Leh 194101, Ladakh, India
                 </span>
               </li>
               <li className="flex gap-3 text-sm text-[#5C5346]">
@@ -99,7 +137,7 @@ export default function Footer() {
               <li className="flex gap-3 text-sm text-[#5C5346]">
                 <Mail className="w-4 h-4 mt-0.5 flex-shrink-0" />
                 <a href="mailto:info.hhtrails@gmail.com" className="hover:text-[#3D3226] transition-colors duration-200">
-                 info.hhtrails@gmail.com
+                  info.hhtrails@gmail.com
                 </a>
               </li>
             </ul>
@@ -108,8 +146,8 @@ export default function Footer() {
 
         {/* Bottom Section */}
         <div className="mt-12 pt-8 border-t border-[#D4C9B5]">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-[#5C5346]">
-            <p>© 2025 Himalayan Trails. All rights reserved.</p>
+          <div className="footer-bottom flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-[#5C5346]">
+            <p>© 2025 Heritage Himalayan Trails. All rights reserved.</p>
             <p className="flex items-center gap-2">
               Crafted with passion for mountain lovers
               <Mountain className="w-4 h-4" />

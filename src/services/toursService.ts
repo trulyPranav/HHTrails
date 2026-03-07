@@ -16,17 +16,10 @@ import type {
   UpdateItineraryDayInput,
 } from '../types/tour';
 
-const ADMIN_KEY = import.meta.env.VITE_ADMIN_KEY as string | undefined;
-const ADMIN_HEADER_KEY = 'x-admin-key';
-
 function getAdminHeaders(): Record<string, string> {
-  if (!ADMIN_KEY) {
-    return {};
-  }
-
-  return {
-    [ADMIN_HEADER_KEY]: ADMIN_KEY,
-  };
+  const token = sessionStorage.getItem('adminToken');
+  if (!token) return {};
+  return { 'x-admin-key': token };
 }
 
 export interface GetToursParams {

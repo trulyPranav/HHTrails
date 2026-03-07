@@ -2,10 +2,9 @@ import { apiClient } from './apiClient';
 import type { ApiResponse } from '../types/auth';
 import type { Blog, BlogsListData, CreateBlogInput, UpdateBlogInput } from '../types/blog';
 
-const ADMIN_KEY = import.meta.env.VITE_ADMIN_KEY as string | undefined;
-
 function getAdminHeaders(): Record<string, string> {
-  return ADMIN_KEY ? { 'x-admin-key': ADMIN_KEY } : {};
+  const token = sessionStorage.getItem('adminToken');
+  return token ? { 'x-admin-key': token } : {};
 }
 
 export interface GetBlogsParams {

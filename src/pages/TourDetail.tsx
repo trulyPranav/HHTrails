@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { MapPin, CalendarDays, Mountain,Bed , Sun,Send,Bookmark,Check, Download, Calendar,ArrowRight,TrendingUp} from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { GoogleMap, OverlayViewF, useJsApiLoader } from "@react-google-maps/api";
 import { toursService } from "../services/toursService";
+import { homeService } from "../services/homeService";
 import type { TourDetails, ItineraryDay } from "../types/tour";
+import type { HomeTour } from "../types/home";
 import { useSavedTours } from "../contexts/SavedToursContext";
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -197,23 +199,6 @@ const TimelineImgPlaceholder = ({ day }: any) => (
       <path d="M2 20l7-6 5 5 4-4 8 7" stroke="#3b2a1a" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
     </svg>
     <span style={{ fontSize: "0.58rem", color: "#3b2a1a", opacity: 0.45, letterSpacing: "0.1em", textTransform: "uppercase" }}>Day {day}</span>
-  </div>
-);
-
-const TimelineCard = ({ item }: any) => (
-  <div style={{ display: "flex", flexDirection: "column", gap: 6, width: "100%" }}>
-    <div className="timeline-img-wrap">
-      {item.image ? (
-        <img src={item.image} alt={item.title} style={{ width: "100%", aspectRatio: "16/10", objectFit: "cover", borderRadius: 8, display: "block", transition: "transform 0.35s ease" }} />
-      ) : (
-        <TimelineImgPlaceholder day={item.day} />
-      )}
-    </div>
-    <div style={{ paddingTop: 4 }}>
-      <p style={{ fontSize: "0.67rem", fontWeight: 700, color: "#3b1408", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 3 }}>Day {item.day}</p>
-      <p style={{ fontSize: "0.83rem", fontWeight: 600, color: COLOR.textPrimary, marginBottom: 5, lineHeight: 1.35 }}>{item.title}</p>
-      <p style={{ fontSize: "0.75rem", color: COLOR.textMuted, lineHeight: 1.7, fontWeight: 400 }}>{item.description}</p>
-    </div>
   </div>
 );
 
@@ -981,7 +966,9 @@ const ReviewsSection = ({ reviews }: any) => (
 );
 
 /* ── 10. RECOMMENDED TOURS ── */
-const RecommendedSection = ({ recommendedTours, currentTitle }: any) => (
+const RecommendedSection = ({ recommendedTours, currentTitle }: any) => {
+  const navigate = useNavigate();
+  return (
   <section style={{ background: "#F4F4F4", padding: "50px clamp(1rem, 4vw, 2rem)", marginBottom: -76 }}>
     <div style={{ maxWidth: 1040, margin: "0 auto" }}>
       <div style={{ marginBottom: 24 }}>
@@ -1036,6 +1023,7 @@ const RecommendedSection = ({ recommendedTours, currentTitle }: any) => (
 
             <div style={{ padding: 20 }}>
               <button
+                onClick={() => navigate(`/tours/${t.id}`)}
                 className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#2b1b14] text-white text-sm transition-all duration-300 hover:bg-yellow-500 hover:text-black"
                 style={{ fontFamily: "Berlin Sans FB", fontWeight: 100, letterSpacing: "0.02em" }}
               >
@@ -1048,7 +1036,8 @@ const RecommendedSection = ({ recommendedTours, currentTitle }: any) => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 /* ── 11. FIXED BOTTOM CTA BAR ── */
 const FixedCTABar = () => (
@@ -1152,10 +1141,11 @@ export default function TourDetail() {
         setLoading(true);
         setFetchError(null);
 
-        const [apiTour, apiDetails, apiItin] = await Promise.allSettled([
+        const [apiTour, apiDetails, apiItin, apiRec] = await Promise.allSettled([
           toursService.getTour(id),
           toursService.getDetails(id),
           toursService.getItinerary(id),
+          homeService.recommended(),
         ]);
 
         const tourData = apiTour.status === 'fulfilled' ? apiTour.value : null;
@@ -1163,6 +1153,7 @@ export default function TourDetail() {
 
         const details: TourDetails | null = apiDetails.status === 'fulfilled' ? apiDetails.value : null;
         const itinDays: ItineraryDay[] = apiItin.status === 'fulfilled' ? apiItin.value : [];
+        const recTours: HomeTour[] = apiRec.status === 'fulfilled' ? apiRec.value : [];
 
         const mapped: any = {
           title: tourData.title,
@@ -1194,7 +1185,17 @@ export default function TourDetail() {
             centerLng: tour.mapSection.centerLng,
           },
           reviews: tour.reviews,
-          recommendedTours: tour.recommendedTours,
+          recommendedTours: recTours
+            .filter((t) => t.id !== id)
+            .slice(0, 3)
+            .map((t) => ({
+              id: t.id,
+              title: t.title,
+              location: t.region,
+              tags: t.types,
+              duration: `${t.durationNights}N / ${t.durationDays}D`,
+              image: t.photoUrl,
+            })),
         };
 
         const mappedItin =

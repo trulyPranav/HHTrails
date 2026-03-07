@@ -3,6 +3,7 @@ import type React from 'react';
 import { toursService } from '../services/toursService';
 import { blogService } from '../services/blogService';
 import { storageService } from '../services/storageService';
+import { apiClient } from '../services/apiClient';
 import type { Tour, TourDetails, ItineraryDay } from '../types/tour';
 import type { Blog } from '../types/blog';
 
@@ -104,6 +105,39 @@ const BLOG_CATEGORIES = [
 ] as const;
 
 const AdminPage = () => {
+  // ── Auth ──
+  const [isLoggedIn, setIsLoggedIn] = useState(() => Boolean(sessionStorage.getItem('adminToken')));
+  const [loginUsername, setLoginUsername] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginLoading(true);
+    setLoginError(null);
+    try {
+      const res = await apiClient.post<{ success: boolean; data: { token: string; message: string } }>(
+        '/admin/login',
+        { username: loginUsername, password: loginPassword }
+      );
+      sessionStorage.setItem('adminToken', res.data.token);
+      setLoginUsername('');
+      setLoginPassword('');
+      setIsLoggedIn(true);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Login failed';
+      setLoginError(msg);
+    } finally {
+      setLoginLoading(false);
+    }
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('adminToken');
+    setIsLoggedIn(false);
+  };
+
   const [tours, setTours] = useState<Tour[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -161,9 +195,10 @@ const AdminPage = () => {
   };
 
   useEffect(() => {
+    if (!isLoggedIn) return;
     void loadTours();
     void loadBlogs();
-  }, []);
+  }, [isLoggedIn]);
 
   // ── Blog handlers ──────────────────────────────────────────────────────────
   const loadBlogs = async () => {
@@ -534,10 +569,66 @@ const AdminPage = () => {
     }
   };
 
+  if (!isLoggedIn) {
+    return (
+      <div className="flex-grow pt-[72px] min-h-screen bg-[#F7F6F2] flex items-center justify-center">
+        <div className="bg-white rounded-xl shadow-sm border p-8 w-full max-w-sm">
+          <h1 className="text-2xl font-semibold text-[#2B1E17] mb-1">Admin Login</h1>
+          <p className="text-sm text-gray-500 mb-6">Sign in to manage HHTrails content</p>
+          {loginError && (
+            <div className="mb-4 bg-red-50 border border-red-300 px-3 py-2 rounded text-sm text-red-700">
+              {loginError}
+            </div>
+          )}
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label className="block text-xs text-gray-500 mb-1">Username</label>
+              <input
+                type="text"
+                value={loginUsername}
+                onChange={(e) => setLoginUsername(e.target.value)}
+                required
+                autoFocus
+                className="w-full border p-2 rounded text-sm"
+                placeholder="admin"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-500 mb-1">Password</label>
+              <input
+                type="password"
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+                required
+                className="w-full border p-2 rounded text-sm"
+                placeholder="••••••••"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={loginLoading}
+              className="w-full py-2 bg-[#2B1E17] text-white rounded text-sm disabled:opacity-60"
+            >
+              {loginLoading ? 'Signing in…' : 'Sign In'}
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex-grow pt-[72px] min-h-screen bg-[#F7F6F2]">
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-semibold mb-4 text-[#2B1E17]">Admin</h1>
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-3xl font-semibold text-[#2B1E17]">Admin</h1>
+          <button
+            onClick={handleLogout}
+            className="text-xs text-gray-500 border rounded px-3 py-1.5 hover:bg-gray-50"
+          >
+            Sign Out
+          </button>
+        </div>
 
         {/* ── Section tabs ── */}
         <div className="flex gap-1 mb-6 border-b border-gray-200">

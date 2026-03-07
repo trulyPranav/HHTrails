@@ -1182,7 +1182,7 @@ export default function TourDetail() {
             image: details?.accommodationMediaUrl ?? tour.accommodation.image,
           },
           videoSection: {
-            title: 'Feature',
+            title: details?.featureTitle ?? 'Feature',
             description: details?.featureDescription ?? tour.videoSection.description,
             videoUrl: details?.featureMediaUrl ?? tour.videoSection.videoUrl,
           },
@@ -1199,7 +1199,7 @@ export default function TourDetail() {
 
         const mappedItin =
           itinDays.length > 0
-            ? itinDays.map((d) => ({ day: d.dayNumber, title: `Day ${d.dayNumber}`, description: d.description, image: d.imageUrl || null }))
+            ? itinDays.map((d) => ({ day: d.dayNumber, title: d.imageTitle ?? `Day ${d.dayNumber}`, description: d.description, image: d.imageUrl || null }))
             : defaultItinerary;
 
         setApiTourData(mapped);

@@ -43,6 +43,7 @@ interface DetailsFormState {
   accommodationDescription: string;
   accommodationMediaUrl: string;
   featureDescription: string;
+  featureTitle: string;
   featureMediaUrl: string;
   featureIsVideo: boolean;
   routeDescription: string;
@@ -57,14 +58,15 @@ const emptyDetailsForm: DetailsFormState = {
   accommodationDescription: '',
   accommodationMediaUrl: '',
   featureDescription: '',
+  featureTitle: '',
   featureMediaUrl: '',
   featureIsVideo: false,
   routeDescription: '',
   routePhotoUrl: '',
 };
 
-interface DayFormState { dayNumber: string; description: string; imageUrl: string; }
-const emptyDayForm: DayFormState = { dayNumber: '', description: '', imageUrl: '' };
+interface DayFormState { dayNumber: string; description: string; imageUrl: string; imageTitle: string; }
+const emptyDayForm: DayFormState = { dayNumber: '', description: '', imageUrl: '', imageTitle: '' };
 type AdminTab = 'basic' | 'details' | 'itinerary';
 type AdminSection = 'tours' | 'blogs';
 const splitLines = (s: string) => s.split('\n').map((l) => l.trim()).filter(Boolean);
@@ -318,6 +320,7 @@ const AdminPage = () => {
         accommodationDescription: d.accommodationDescription ?? '',
         accommodationMediaUrl: d.accommodationMediaUrl ?? '',
         featureDescription: d.featureDescription ?? '',
+        featureTitle: d.featureTitle ?? '',
         featureMediaUrl: d.featureMediaUrl ?? '',
         featureIsVideo: d.featureIsVideo,
         routeDescription: d.routeDescription ?? '',
@@ -449,6 +452,7 @@ const AdminPage = () => {
       accommodationDescription: detailsForm.accommodationDescription || null,
       accommodationMediaUrl: detailsForm.accommodationMediaUrl || null,
       featureDescription: detailsForm.featureDescription || null,
+      featureTitle: detailsForm.featureTitle || null,
       featureMediaUrl: detailsForm.featureMediaUrl || null,
       featureIsVideo: detailsForm.featureIsVideo,
       routeDescription: detailsForm.routeDescription || null,
@@ -481,7 +485,7 @@ const AdminPage = () => {
 
   const handleEditDay = (day: ItineraryDay) => {
     setEditingDayNumber(day.dayNumber);
-    setDayForm({ dayNumber: String(day.dayNumber), description: day.description, imageUrl: day.imageUrl });
+    setDayForm({ dayNumber: String(day.dayNumber), description: day.description, imageUrl: day.imageUrl, imageTitle: day.imageTitle ?? '' });
   };
 
   const handleDeleteDay = async (dayNumber: number) => {
@@ -508,6 +512,7 @@ const AdminPage = () => {
         const updated = await toursService.updateItineraryDay(form.id, editingDayNumber, {
           description: dayForm.description,
           imageUrl: dayForm.imageUrl || undefined,
+          imageTitle: dayForm.imageTitle || null,
         });
         setItinerary((prev) => prev.map((d) => (d.dayNumber === editingDayNumber ? updated : d)));
       } else {
@@ -515,6 +520,7 @@ const AdminPage = () => {
           dayNumber: Number(dayForm.dayNumber),
           description: dayForm.description,
           imageUrl: dayForm.imageUrl,
+          imageTitle: dayForm.imageTitle || null,
         });
         setItinerary((prev) => [...prev, added].sort((a, b) => a.dayNumber - b.dayNumber));
       }
@@ -698,6 +704,10 @@ const AdminPage = () => {
                         <input name="accommodationMediaUrl" value={detailsForm.accommodationMediaUrl} onChange={handleDetailsInput} type="url" className="w-full border p-2 rounded" placeholder="https://…" />
                       </div>
                       <div>
+                        <label className="block text-xs text-gray-500 mb-1">Feature Title</label>
+                        <input name="featureTitle" value={detailsForm.featureTitle} onChange={handleDetailsInput} type="text" className="w-full border p-2 rounded" placeholder="e.g. Why This Tour Stands Out" />
+                      </div>
+                      <div>
                         <label className="block text-xs text-gray-500 mb-1">Feature Description</label>
                         <textarea name="featureDescription" value={detailsForm.featureDescription} onChange={handleDetailsInput} rows={2} className="w-full border p-2 rounded" />
                       </div>
@@ -762,6 +772,7 @@ const AdminPage = () => {
                           <input name="dayNumber" type="number" min={1} value={dayForm.dayNumber} onChange={handleDayInput} placeholder="Day number *" required className="w-full border p-2 rounded text-sm" />
                         )}
                         <textarea name="description" value={dayForm.description} onChange={handleDayInput} rows={3} placeholder="Description *" required className="w-full border p-2 rounded text-sm" />
+                        <input name="imageTitle" type="text" value={dayForm.imageTitle} onChange={handleDayInput} placeholder="Image title (e.g. Arrival at Leh Airport)" className="w-full border p-2 rounded text-sm" />
                         <input name="imageUrl" type="url" value={dayForm.imageUrl} onChange={handleDayInput} placeholder={editingDayNumber !== null ? 'Image URL (leave blank to keep)' : 'Image URL *'} required={editingDayNumber === null} className="w-full border p-2 rounded text-sm" />
                         <div className="flex gap-2">
                           <button type="submit" disabled={daySubmitting} className="px-3 py-1.5 bg-[#2B1E17] text-white rounded text-sm disabled:opacity-60">

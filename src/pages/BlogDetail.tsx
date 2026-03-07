@@ -93,7 +93,6 @@ export default function BlogDetail() {
   const [blog, setBlog] = useState<Blog | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [imgLoaded, setImgLoaded] = useState(false);
   const articleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -128,22 +127,7 @@ export default function BlogDetail() {
         className="flex-grow pt-[72px] min-h-screen bg-[#FAFAF8] w-full overflow-x-hidden"
       >
 
-        {/* ── Hero image ──────────────────────────────────────────────── */}
-        {blog.coverImageUrl && (
-          <div className="relative w-full h-[300px] sm:h-[420px] md:h-[520px] overflow-hidden bg-gray-100">
-            <img
-              src={blog.coverImageUrl}
-              alt={blog.title}
-              onLoad={() => setImgLoaded(true)}
-              className={`w-full h-full object-cover object-top transition-opacity duration-700 ${
-                imgLoaded ? 'opacity-100' : 'opacity-0'
-              }`}
-            />
-            {/* Gradient veil for legibility */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
-          </div>
-        )}
-
+        
         {/* ── Article body ────────────────────────────────────────────── */}
         <div className="w-full max-w-[720px] mx-auto px-6 sm:px-10 lg:px-8">
 
@@ -152,13 +136,13 @@ export default function BlogDetail() {
 
             {/* Back + Category row */}
             <div className="flex items-center justify-between flex-wrap gap-3 mb-7">
-              <button
+              {/* <button
                 onClick={() => navigate('/blog')}
                 className="group inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400 hover:text-[#2b1b14] transition-colors"
               >
                 <span className="group-hover:-translate-x-0.5 transition-transform inline-block">←</span>
                 All Articles
-              </button>
+              </button> */}
 
               <span className="inline-flex items-center bg-[#FEF3DC] text-[#C47F0A] text-[11px] font-bold px-3.5 py-1 rounded-full uppercase tracking-wider border border-[#F4A62A]/30">
                 {blog.category}
@@ -204,26 +188,27 @@ export default function BlogDetail() {
             </blockquote>
           </div>
 
-          {/* ── Body ────────────────────────────────────────────────── */}
-          <div
-            className={[
-              'prose prose-base sm:prose-lg max-w-none',
-              'prose-headings:font-extrabold prose-headings:text-[#0f0f0f] prose-headings:tracking-tight prose-headings:leading-snug prose-headings:text-left',
-              'prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4',
-              'prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3',
-              'prose-p:text-[#3a3a3a] prose-p:leading-[1.85] prose-p:text-left',
-              'prose-a:text-[#C47F0A] prose-a:font-medium prose-a:no-underline hover:prose-a:underline',
-              'prose-strong:text-[#1a1a1a] prose-strong:font-bold',
-              'prose-blockquote:border-l-[#F4A62A] prose-blockquote:bg-[#FEF9F0] prose-blockquote:px-5 prose-blockquote:py-0.5 prose-blockquote:rounded-r-lg prose-blockquote:not-italic prose-blockquote:text-gray-600',
-              'prose-img:rounded-2xl prose-img:shadow-lg prose-img:my-10',
-              'prose-hr:border-gray-200 prose-hr:my-12',
-              'prose-ul:space-y-1 prose-ol:space-y-1',
-              'prose-li:text-[#3a3a3a] prose-li:leading-relaxed',
-              "prose-code:text-[#2b1b14] prose-code:bg-[#FBF7F0] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-[0.875em] prose-code:font-medium prose-code:before:content-[''] prose-code:after:content-['']",
-              'prose-pre:bg-[#1e1511] prose-pre:text-gray-100 prose-pre:rounded-2xl prose-pre:shadow-xl',
-            ].join(' ')}
-            dangerouslySetInnerHTML={{ __html: blog.content }}
-          />
+            {/* ── Body ────────────────────────────────────────────────── */}
+            <div
+              className={[
+                'prose-p:hyphens-auto',
+                'prose prose-base sm:prose-lg max-w-none',
+                'prose-headings:font-extrabold prose-headings:text-[#0f0f0f] prose-headings:tracking-tight prose-headings:leading-snug prose-headings:text-left',
+                'prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4',
+                'prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3',
+                'prose-p:text-[#3a3a3a] prose-p:leading-[1.85] prose-p:text-justify',
+                'prose-a:text-[#C47F0A] prose-a:font-medium prose-a:no-underline hover:prose-a:underline',
+                'prose-strong:text-[#1a1a1a] prose-strong:font-bold',
+                'prose-blockquote:border-l-[#F4A62A] prose-blockquote:bg-[#FEF9F0] prose-blockquote:px-5 prose-blockquote:py-0.5 prose-blockquote:rounded-r-lg prose-blockquote:not-italic prose-blockquote:text-gray-600',
+                'prose-img:rounded-2xl prose-img:shadow-lg prose-img:my-10',
+                'prose-hr:border-gray-200 prose-hr:my-12',
+                'prose-ul:space-y-1 prose-ol:space-y-1',
+                'prose-li:text-[#3a3a3a] prose-li:leading-relaxed',
+                "prose-code:text-[#2b1b14] prose-code:bg-[#FBF7F0] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-[0.875em] prose-code:font-medium prose-code:before:content-[''] prose-code:after:content-['']",
+                'prose-pre:bg-[#1e1511] prose-pre:text-gray-100 prose-pre:rounded-2xl prose-pre:shadow-xl',
+              ].join(' ')}
+              dangerouslySetInnerHTML={{ __html: blog.content }}
+            />
 
           {/* ── Footer ──────────────────────────────────────────────── */}
           <footer className="mt-16 pt-10 border-t border-gray-200 pb-16">

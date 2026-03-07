@@ -9,13 +9,13 @@ const BlogHeroSection = () => {
         }}
       />
       
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/50" />
+      {/* Dark Overlay (reduce this to decrease the background color )*/}
+      <div className="absolute inset-0 bg-black/25" />
       
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
         {/* Title */}
-        <h1 className="text-2xl md:text-3xl font-berlin font-semibold text-white mb-3 tracking-wide">
+        <h1 className="text-[#281910] text-2xl md:text-3xl font-berlin font-medium  mb-3 tracking-wide">
           Blog & Stories
         </h1>
         

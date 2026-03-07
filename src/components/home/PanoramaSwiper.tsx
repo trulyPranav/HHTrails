@@ -1,103 +1,85 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
-import type { Swiper as SwiperType } from 'swiper';
-import { useEffect, useRef } from 'react';
-import 'swiper/css';
+  import { Swiper, SwiperSlide } from "swiper/react";
+  import type { Swiper as SwiperType } from "swiper";
+  import { useEffect, useRef } from "react";
+  import "swiper/css";
 
-// Images from public/assets/img folder
-const slides = [
-  { id: 1, image: 'img/Rectangle 41.png', alt: 'Slide 1' },
-  { id: 2, image: 'img/Rectangle 42.png', alt: 'Slide 2' },
-  { id: 3, image: 'img/Rectangle 43.png', alt: 'Slide 3' },
-  { id: 4, image: 'img/Rectangle 44.png', alt: 'Slide 4' },
-  { id: 5, image: 'img/Rectangle 45.png', alt: 'Slide 5' },
-  { id: 6, image: 'img/Rectangle 46.png', alt: 'Slide 6' },
-  { id: 7, image: 'img/Rectangle 47.png', alt: 'Slide 7' },
-  { id: 8, image: 'img/Rectangle 48.png', alt: 'Slide 8' },
-];
+  const slides = [
+    { id: 1, image: "img/Rectangle 41.png", alt: "Slide 1" },
+    { id: 2, image: "img/Rectangle 42.png", alt: "Slide 2" },
+    { id: 3, image: "img/Rectangle 43.png", alt: "Slide 3" },
+    { id: 4, image: "img/Rectangle 44.png", alt: "Slide 4" },
+    { id: 5, image: "img/Rectangle 45.png", alt: "Slide 5" },
+    { id: 6, image: "img/Rectangle 46.png", alt: "Slide 6" },
+    { id: 7, image: "img/Rectangle 47.png", alt: "Slide 7" },
+    { id: 8, image: "img/Rectangle 48.png", alt: "Slide 8" },
+  ];
 
-// 🔁 Duplicate slides to fake infinity
-const repeatedSlides = [...slides, ...slides, ...slides, ...slides,];
+  // duplicate slides
+  const repeatedSlides = [ ...slides, ...slides, ...slides];
 
-const PanoramaSwiper = () => {
-  const swiperRef = useRef<SwiperType | null>(null);
+  const PanoramaSwiper = () => {
+    const swiperRef = useRef<SwiperType | null>(null);
 
-  useEffect(() => {
-    if (!swiperRef.current) return;
+    useEffect(() => {
+      const swiper = swiperRef.current;
+      if (!swiper) return;
 
-    const swiper = swiperRef.current;
-    let rafId: number | null = null;
-
-    // Wait for swiper to be fully initialized
-    setTimeout(() => {
-      const resetPoint = swiper.wrapperEl.scrollWidth / 2;
+      let rafId: number;
 
       const animate = () => {
         if (!swiper.destroyed) {
-          // 👇 Dynamic speed calculation added here!
-          // If window is < 640px, speed is 2. Otherwise, speed is 5.
-          const currentSpeed = window.innerWidth < 640 ? 2 : 5; 
-          
-          swiper.setTranslate(swiper.translate - currentSpeed);
 
-          // seamless reset
-          if (Math.abs(swiper.translate) >= resetPoint) {
-            swiper.setTranslate(0);
+        const speed =
+          window.innerWidth < 500 ? 2 :
+          window.innerWidth < 640 ? 4 : 6;
+
+          swiper.setTranslate(swiper.translate - speed);
+
+          const wrapperWidth = swiper.wrapperEl.scrollWidth;
+          const half = wrapperWidth / 3;
+
+          if (Math.abs(swiper.translate) >= half) {
+            swiper.setTranslate(swiper.translate + half);
           }
 
           rafId = requestAnimationFrame(animate);
         }
       };
 
-      animate();
-    }, 100);
+      rafId = requestAnimationFrame(animate);
 
-    return () => {
-      if (rafId) cancelAnimationFrame(rafId);
-    };
-  }, []);
+      return () => cancelAnimationFrame(rafId);
+    }, []);
 
-  return (
-    <section className="w-full relative z-10 -mt-16">
-      <div className="w-full relative">
-        <div className="panorama-mask overflow-x-clip relative z-[1] will-change-transform translate-z-0">
+    return (
+      <section className="w-full relative z-10 -mt-[60px] sm:-mt-[80px] md:-mt-[110px] lg:-mt-[160px]">
+        <div className="panorama-mask overflow-x-clip">
           <Swiper
             slidesPerView="auto"
-            spaceBetween={40}
+            spaceBetween={window.innerWidth < 550 ? 16 : 40}
             allowTouchMove={false}
+            speed={0}
             loop={false}
-            speed={1}
-            className="[&_.swiper-wrapper]:flex [&_.swiper-wrapper]:items-center [&_.swiper-wrapper]:justify-start [&_.swiper-wrapper]:!transition-timing-function-linear"
-            onSwiper={(swiper) => {
-              swiperRef.current = swiper;
-            }}
+            className="[&_.swiper-wrapper]:flex [&_.swiper-wrapper]:items-center"
+            onSwiper={(swiper) => (swiperRef.current = swiper)}
           >
-            {repeatedSlides.map((slide, index) => (
+            {repeatedSlides.map((slide, i) => (
               <SwiperSlide
-                key={index}
-                className="
-                  w-[calc((100%-120px)/4)]
-                  flex-shrink-0 
-                  flex 
-                  justify-center
-                "
+                key={i}
+                className="w-[calc((100%-32px)/3)] sm:w-[calc((100%-120px)/4)] flex-shrink-0 flex justify-center"
               >
                 <img
                   src={slide.image}
                   alt={slide.alt}
                   draggable={false}
-                  className="w-full h-full object-cover 
-                    aspect-[2.5/5]
-                    will-change-transform 
-                    [backface-visibility:hidden] 
-                    [perspective:1000px]"
+                  className="w-full h-[260px] sm:h-[350px] md:h-[370px] lg:h-[450px] object-cover transition-transform duration-500 hover:scale-105"
                 />
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
-      </div>
-    </section>
-  );
-};
+      </section>
+    );
+  };
 
-export default PanoramaSwiper;
+  export default PanoramaSwiper;

@@ -4,6 +4,9 @@ import { Compass, BookOpen, Gift, Heart, Shield, Award } from 'lucide-react';
 import { homeService } from '../../services/homeService';
 import type { HomeTour } from '../../types/home';
 
+import { useNavigate } from 'react-router-dom';
+
+
 const upcomingTours = [
   {
     id: 1,
@@ -31,36 +34,37 @@ const features = [
   {
     icon: Compass,
     title: 'Sharing Experience',
-    description: 'HHT reflects Dr Sonam Wangchok’s aspiration to share his experiences, research and knowledge of cultural and natural heritage of the Himalayas with the visiting guests. The tour programme and itinerary of HHT are being developed under his supervision and guidance.'
+    description: 'We are driven by our passion, rooted in South Rewryt\'s aspiration to share his culture with others. Our deep knowledge of cultural heritage, vibrant arts and sacred landscapes of the Himalayas is acquired through decades of supervision and guidance.'
   },
   {
     icon: BookOpen,
     title: 'Enriching Knowledge',
-    description: 'Believing in “travel is more than the seeing of sights” we always try to enrich visitors’ knowledge with storytelling of Himalayan heritage, recounting history, tradition wisdom, iconographies, mystic practices, local legends and discovering tangible sites.'
+    description: 'Education is "travel\'s more than just the feeling of \'going\'" we always try to enrich travelers\' knowledge with storytelling of Himalayan heritage, recounting history, tradition wisdom, iconographies, mystic practices, local legends and discovering tangible sites.'
   },
   {
     icon: Gift,
     title: 'More Rewarding',
-    description: 'Heritage Himalaya Trails always has something new to offer which you might not have expected. Each experience is thoughtfully crafted to reveal the soul of the Himalayas.'
+    description: 'Hospitable Himalayan life always has something nice to offer which you might not have expected. We assure that traveling with H&T always expect the unexpected.'
   },
   {
     icon: Heart,
     title: 'Travel for a Cause',
-    description: 'When you travel with HHT, your journey becomes a meaningful contribution—supporting local initiatives dedicated to preserving the rich cultural and natural heritage of mountain communities, helping them thrive for generations to come.'
+    description: 'When you travel with H&T, your journey becomes a force for good by uplifting every local supports encountered by village and mountain communities, sustaining Himalayan cultures, cherishing ancient traditions, serving teachers, and funds schools for generations to come.'
   },
   {
     icon: Shield,
     title: 'Ethical Hospitality',
-    description: 'We design your itinerary to match your interests, preference, schedule, and budget. Ensure it in a sense that combining experience, ethical journeys, respect for Himalayan eco-cultural diversity. Your satisfaction is our true goal!'
+    description: 'We design your itinerary to match your interests, preference, schedule, and budget. Ensure it in a sense that combining experience, ethical journeys, respect for Himalayan eco-cultural delivery. Your satisfaction is our true goal!'
   },
   {
     icon: Award,
     title: 'Licensed & Certified',
-    description: 'As an officially registered company with the Department of Tourism, UT Ladakh, we meet all safety standards and operate regulatory requirements, giving you confidence and peace of mind in every journey.'
+    description: 'As an officially registered company with the Department of Tourism, J&K, we meet all safety standards and operate regulatory requirements, giving you confidence and peace of mind in every journey.'
   }
 ];
 const UpcomingToursSection = () => {
   const [apiTours, setApiTours] = useState<HomeTour[] | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!import.meta.env.VITE_API_BASE_URL) return;
@@ -106,24 +110,29 @@ const UpcomingToursSection = () => {
           ))}
         </div>
 
+ 
         {/* Bottom Controls */}
         <div className="flex items-center justify-center gap-4 mt-10">
-          {/* Left Arrow Button */}
+          {/* Left Arrow Button
           <button className="bg-gray-200 hover:bg-gray-300 rounded-full p-2 transition-colors duration-300">
             <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-          </button>
+          </button> */}
 
           {/* Right Arrow Button */}
-          <button className="bg-gray-200 hover:bg-gray-300 rounded-full p-2 transition-colors duration-300">
+          {/* <button className="bg-gray-200 hover:bg-gray-300 rounded-full p-2 transition-colors duration-300">
             <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
-          </button>
+          </button> */}
+          
+
 
           {/* See All Tours Button */}
-          <button className="bg-white hover:bg-gray-50 border border-gray-300 rounded-md px-5 py-2 text-sm text-gray-700 transition-colors duration-300">
+          <button 
+            onClick={() => navigate('/tours')}
+            className="bg-white hover:bg-gray-50 border border-gray-300 rounded-md px-5 py-2 text-sm text-gray-700 transition-colors duration-300">
             See All Tours →
           </button>
         </div>
@@ -164,12 +173,12 @@ const UpcomingToursSection = () => {
                   </div>
 
                   {/* Card Title */}
-                  <h3 className="text-lg font-normal text-white mb-2">
+                  <h3 className="text-sm font-semibold text-white mb-2">
                     {feature.title}
                   </h3>
 
                   {/* Card Description */}
-                  <p className="text-sm text-gray-300 leading-relaxed">
+                  <p className="text-xs text-gray-300 leading-relaxed">
                     {feature.description}
                   </p>
                 </div>

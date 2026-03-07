@@ -443,7 +443,7 @@ const ItinerarySection = ({ itinerary }: any) => (
       </h2>
 
       {/* Buttons */}
-      <div
+      {/* <div
         className="itin-btn-row"
         style={{
           display: "flex",
@@ -462,7 +462,7 @@ const ItinerarySection = ({ itinerary }: any) => (
           <Download size={14} strokeWidth={1.8} />
           Download Itinerary
         </button>
-      </div>
+      </div> */}
 
       {/* ================= DESKTOP TIMELINE ================= */}
       <div className="timeline-desktop" style={{ position: "relative" }}>
@@ -519,7 +519,7 @@ const ItinerarySection = ({ itinerary }: any) => (
                     top: 0,
                     left: 0,
                     width: "100%",
-                    height: 50,
+                    height: 35,
                     objectFit: "cover",
                     pointerEvents: "none",
                     zIndex: 2

@@ -31,7 +31,7 @@ const SearchBar = ({ onSearch, onClear }: SearchBarProps) => {
   };
 
   return (
-    <div className="mb-6 px-2 mt-3 md:mt-8">
+    <div className="mb-6 px-2 mt-[40px] sm:mt-[30px] md:mt-[15px] lg:-mt-[35px]">
       <div className="max-w-4xl mx-auto bg-[#6A5F56] rounded-lg shadow-md p-2 md:p-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-1.5 md:gap-3">
 

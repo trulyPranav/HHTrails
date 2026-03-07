@@ -124,7 +124,7 @@ export default function BlogDetail() {
 
       <article
         ref={articleRef}
-        className="flex-grow pt-[72px] min-h-screen bg-[#FAFAF8] w-full overflow-x-hidden"
+        className="flex-grow pt-[52px] min-h-screen bg-[#FAFAF8] w-full overflow-x-hidden"
       >
 
         
@@ -136,13 +136,7 @@ export default function BlogDetail() {
 
             {/* Back + Category row */}
             <div className="flex items-center justify-between flex-wrap gap-3 mb-7">
-              {/* <button
-                onClick={() => navigate('/blog')}
-                className="group inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400 hover:text-[#2b1b14] transition-colors"
-              >
-                <span className="group-hover:-translate-x-0.5 transition-transform inline-block">←</span>
-                All Articles
-              </button> */}
+          
 
               <span className="inline-flex items-center bg-[#FEF3DC] text-[#C47F0A] text-[11px] font-bold px-3.5 py-1 rounded-full uppercase tracking-wider border border-[#F4A62A]/30">
                 {blog.category}
@@ -194,9 +188,11 @@ export default function BlogDetail() {
                 'prose-p:hyphens-auto',
                 'prose prose-base sm:prose-lg max-w-none',
                 'prose-headings:font-extrabold prose-headings:text-[#0f0f0f] prose-headings:tracking-tight prose-headings:leading-snug prose-headings:text-left',
-                'prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4',
-                'prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3',
-                'prose-p:text-[#3a3a3a] prose-p:leading-[1.85] prose-p:text-justify',
+                'prose-h1:text-4xl prose-h1:mt-16 prose-h1:mb-8',
+                'prose-h2:text-3xl prose-h2:mt-14 prose-h2:mb-6',
+                'prose-h3:text-3xl prose-h3:mt-12 prose-h3:mb-6',
+                'prose-h4:text-xl prose-h4:mt-8 prose-h4:mb-8',
+                'prose-p:text-[#3a3a3a] prose-p:leading-[1.9] prose-p:text-justify prose-p:mb-6',
                 'prose-a:text-[#C47F0A] prose-a:font-medium prose-a:no-underline hover:prose-a:underline',
                 'prose-strong:text-[#1a1a1a] prose-strong:font-bold',
                 'prose-blockquote:border-l-[#F4A62A] prose-blockquote:bg-[#FEF9F0] prose-blockquote:px-5 prose-blockquote:py-0.5 prose-blockquote:rounded-r-lg prose-blockquote:not-italic prose-blockquote:text-gray-600',

@@ -520,7 +520,7 @@ export default function About() {
             {timelineSteps.map((step, index) => (
               <div
                 key={index}
-                className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-start ${
+                className={`grid grid-cols-1 px-4 lg:grid-cols-12  gap-8 items-start ${
                   step.align === 'right' ? 'lg:flex-row-reverse' : ''
                 }`}
               >

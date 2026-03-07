@@ -4,10 +4,10 @@
 
 ### Header
 - [ ] NavBar Responsiveness & Centering
-- [ ] Enquire Now: redirect to WhatsApp
+- [X] Enquire Now: redirect to WhatsApp
 
 ### Home Page
-- [ ] Overlay removal & page addition
+- [X] Overlay removal & page addition
 - [ ] Swiper alignment and responsiveness
 - [ ] Routing of "See all tours" & "View Details"
 - [ ] Remove page switch in Upcoming tours. Only keep "See all tours"
@@ -18,31 +18,31 @@
 ### Tour Detail Page
 - [ ] Don't show saved when not logged in
 - [ ] CUSTOMIZE TOUR
-- [ ] Mobile Responsivess of Hero Component
+- [X] Mobile Responsivess of Hero Component
 - [ ] Image Clarity*
 - [ ] Send Itinerary -> Send to phone number via WhatsApp : Comment out for now
 - [ ] Download Itinerary -> PDF : Comment out for now
-- [ ] Itinerary Table Image Title Addition : DATABASE
-- [ ] Feature Title : DATABASE
-- [ ] Recommended API Integration
-- [ ] "View Details" redirection
+- [X] Itinerary Table Image Title Addition : DATABASE
+- [X] Feature Title : DATABASE
+- [X] Recommended API Integration
+- [X] "View Details" redirection
 
 ### About Us Page
 - [X] Heading Fonts
-- [ ] New Data Entry
+- [X] New Data Entry
 - [ ] Mobile Responsiveness Final Check
 - [X] Enquire Now: redirect to WhatsApp
-- [ ] Explore Our Tours: redirect to Tours Page
+- [X] Explore Our Tours: redirect to Tours Page
 
 ### Blog Page
 - [X] Heading Font
 - [ ] Travellers Library Integration
-- [ ] Latest Articles addition
-- [X] Filters Mobile Responsiveness
+- [X] Latest Articles addition
+- [ ] Filters Mobile Responsiveness
 
 ### Blog Detail Page
 - [X] Remove Image for Professionalism
-- [X] Content -> text-justify
+- [ ] Content -> text-justify
 - [ ] Content subheadings*
 
 ### Footer
@@ -51,6 +51,7 @@
 - [ ] PDFs for download as per resource
 
 ### Admin Panel
-- [ ] Feature Title
-- [ ] Day Title
+- [X] Auth
+- [X] Feature Title
+- [X] Day Title
 - [ ] Image Upload Feature wherever applicable

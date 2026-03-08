@@ -550,7 +550,8 @@ const ItinerarySection = ({ itinerary }: any) => (
                   color: "#2a0f06",
                   marginBottom: 4
                 }}>
-                  Day {item.day}
+                  Day {item.startDay ?? item.day}
+                  {item.endDay ? `–${item.endDay}` : ""}
                 </p>
                 <p style={{
                   fontSize: 13,
@@ -695,8 +696,9 @@ const ItinerarySection = ({ itinerary }: any) => (
               </div>
 
               <div style={{ marginTop: 10 }}>
-                <p style={{ fontWeight: 600, color: "#2a0f06" }}>
-                  Day {item.day}
+                <p style={{ fontWeight: 600, color: "#2a0f06" }}> 
+                  Day {item.startDay ?? item.day}
+                  {item.endDay ? `–${item.endDay}` : ""}
                 </p>
                 <p style={{ fontSize: 13, color: "#6b7280" }}>
                   {item.description}
@@ -1075,6 +1077,34 @@ const FixedCTABar = () => (
   </div>
 );
 
+
+
+//function for repeated count 
+function groupItineraryDays(days: any[]) {
+  if (!days.length) return [];
+
+  const grouped: any[] = [];
+  let current = { ...days[0], startDay: days[0].day };
+
+  for (let i = 1; i < days.length; i++) {
+    const prev = days[i - 1];
+    const curr = days[i];
+
+    const sameGroup =
+      curr.title === prev.title && curr.image === prev.image;
+
+    if (sameGroup) {
+      current.endDay = curr.day;
+    } else {
+      grouped.push(current);
+      current = { ...curr, startDay: curr.day };
+    }
+  }
+
+  grouped.push(current);
+  return grouped;
+}
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // ROOT PAGE COMPONENT
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1200,7 +1230,14 @@ export default function TourDetail() {
 
         const mappedItin =
           itinDays.length > 0
-            ? itinDays.map((d) => ({ day: d.dayNumber, title: d.imageTitle ?? `Day ${d.dayNumber}`, description: d.description, image: d.imageUrl || null }))
+            ? groupItineraryDays(
+                itinDays.map((d) => ({
+                  day: d.dayNumber,
+                  title: d.imageTitle ?? `Day ${d.dayNumber}`,
+                  description: d.description,
+                  image: d.imageUrl || null
+                }))
+              )
             : defaultItinerary;
 
         setApiTourData(mapped);

@@ -2,6 +2,11 @@ import { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { blogService } from '../services/blogService';
 import type { Blog } from '../types/blog';
+import { marked } from "marked";
+marked.setOptions({
+  gfm: true,
+  breaks: true
+});
 
 // ── Reading progress bar ──────────────────────────────────────────────────────
 function ReadingProgress() {
@@ -91,6 +96,9 @@ export default function BlogDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [blog, setBlog] = useState<Blog | null>(null);
+  const parsedContent = blog?.content
+  ? marked.parse(blog.content)
+  : "";
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const articleRef = useRef<HTMLDivElement>(null);
@@ -183,28 +191,60 @@ export default function BlogDetail() {
           </div>
 
             {/* ── Body ────────────────────────────────────────────────── */}
-            <div
-              className={[
-                'prose-p:hyphens-auto',
-                'prose prose-base sm:prose-lg max-w-none',
-                'prose-headings:font-extrabold prose-headings:text-[#0f0f0f] prose-headings:tracking-tight prose-headings:leading-snug prose-headings:text-left',
-                'prose-h1:text-4xl prose-h1:mt-16 prose-h1:mb-8',
-                'prose-h2:text-3xl prose-h2:mt-14 prose-h2:mb-6',
-                'prose-h3:text-3xl prose-h3:mt-12 prose-h3:mb-6',
-                'prose-h4:text-xl prose-h4:mt-8 prose-h4:mb-8',
-                'prose-p:text-[#3a3a3a] prose-p:leading-[1.9] prose-p:text-justify prose-p:mb-6',
-                'prose-a:text-[#C47F0A] prose-a:font-medium prose-a:no-underline hover:prose-a:underline',
-                'prose-strong:text-[#1a1a1a] prose-strong:font-bold',
-                'prose-blockquote:border-l-[#F4A62A] prose-blockquote:bg-[#FEF9F0] prose-blockquote:px-5 prose-blockquote:py-0.5 prose-blockquote:rounded-r-lg prose-blockquote:not-italic prose-blockquote:text-gray-600',
-                'prose-img:rounded-2xl prose-img:shadow-lg prose-img:my-10',
-                'prose-hr:border-gray-200 prose-hr:my-12',
-                'prose-ul:space-y-1 prose-ol:space-y-1',
-                'prose-li:text-[#3a3a3a] prose-li:leading-relaxed',
-                "prose-code:text-[#2b1b14] prose-code:bg-[#FBF7F0] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-[0.875em] prose-code:font-medium prose-code:before:content-[''] prose-code:after:content-['']",
-                'prose-pre:bg-[#1e1511] prose-pre:text-gray-100 prose-pre:rounded-2xl prose-pre:shadow-xl',
-              ].join(' ')}
-              dangerouslySetInnerHTML={{ __html: blog.content }}
-            />
+          <div
+            className={[
+              "prose max-w-none",
+              "prose-base sm:prose-lg",
+
+              // headings
+              "prose-headings:font-bold",
+              "prose-headings:text-[#0f0f0f]",
+              "prose-headings:tracking-tight",
+
+              "prose-h1:text-4xl",
+              "prose-h1:mt-16",
+              "prose-h1:mb-8",
+
+              "prose-h2:text-3xl",
+              "prose-h2:mt-14",
+              "prose-h2:mb-6",
+
+              "prose-h3:text-2xl",
+              "prose-h3:mt-10",
+              "prose-h3:mb-4",
+
+              "prose-h4:text-xl",
+              "prose-h4:mt-8",
+              "prose-h4:mb-3",
+
+              // paragraph
+              "prose-p:text-[#3a3a3a]",
+              "prose-p:leading-relaxed",
+              "prose-p:text-justify",
+
+              // links
+              "prose-a:text-[#C47F0A]",
+              "prose-a:no-underline",
+              "hover:prose-a:underline",
+
+              // lists
+              "prose-ul:pl-6",
+              "prose-ol:pl-6",
+
+              // blockquote
+              "prose-blockquote:border-l-4",
+              "prose-blockquote:border-[#F4A62A]",
+              "prose-blockquote:bg-[#FEF9F0]",
+              "prose-blockquote:px-6",
+              "prose-blockquote:py-3",
+
+              // images
+              "prose-img:rounded-xl",
+              "prose-img:shadow",
+
+            ].join(" ")}
+            dangerouslySetInnerHTML={{ __html: parsedContent }}
+          />
 
           {/* ── Footer ──────────────────────────────────────────────── */}
           <footer className="mt-16 pt-10 border-t border-gray-200 pb-16">

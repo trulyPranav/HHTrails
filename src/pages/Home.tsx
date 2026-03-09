@@ -31,6 +31,7 @@ import {
   HeroSection,
   PanoramaSwiper,
   SearchBar,
+  HeritageWalk,
   ExperiencesSection,
   UpcomingToursSection,
 } from '../components/home';
@@ -47,6 +48,8 @@ const Home = () => {
         onSearch={(tours) => setSearchResults(tours)}
         onClear={() => setSearchResults(null)}
       />
+      <HeritageWalk />
+     
     <ExperiencesSection tours={searchResults} />
       <UpcomingToursSection />
     </div>

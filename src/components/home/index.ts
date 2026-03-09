@@ -5,3 +5,4 @@ export { default as ExperienceCard } from './ExperienceCard';
 export { default as TourCard } from './TourCard';
 export { default as ExperiencesSection } from './ExperiencesSection';
 export { default as UpcomingToursSection } from './UpcomingToursSection';
+export { default as HeritageWalk } from './HeritageWalk';

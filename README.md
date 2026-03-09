@@ -27,9 +27,3 @@
 ### Footer
 - [ ] Link updations
 - [ ] PDFs for download as per resource
-
-### Admin Panel
-- [X] Auth
-- [X] Feature Title
-- [X] Day Title
-- [ ] Image Upload Feature wherever applicable

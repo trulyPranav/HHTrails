@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import jsPDF from "jspdf";
 import { MapPin, CalendarDays, Mountain,Bed , Sun,Send,Bookmark,Check, Download, Calendar,ArrowRight,TrendingUp} from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { GoogleMap, OverlayViewF, useJsApiLoader } from "@react-google-maps/api";
@@ -422,7 +423,166 @@ const HighlightsSection = ({ highlights }: any) => (
 );
 
 /* ── 4. ITINERARY ── */
-const ItinerarySection = ({ itinerary }: any) => (
+const loadSvgAsBase64 = async (src: string): Promise<string | null> => {
+  try {
+    const res = await fetch(src);
+    const svgText = await res.text();
+    const blob = new Blob([svgText], { type: "image/svg+xml" });
+    const url = URL.createObjectURL(blob);
+    return await new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.naturalWidth || 300;
+        canvas.height = img.naturalHeight || 100;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0);
+        URL.revokeObjectURL(url);
+        resolve(canvas.toDataURL("image/png"));
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); resolve(null); };
+      img.src = url;
+    });
+  } catch {
+    return null;
+  }
+};
+
+const downloadItineraryPDF = async (itinerary: any[], tourTitle = "Itinerary") => {
+  const logoBase64 = await loadSvgAsBase64("/hht_final_logo_send.svg");
+
+  const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+  const pageW = doc.internal.pageSize.getWidth();
+  const pageH = doc.internal.pageSize.getHeight();
+  const margin = 18;
+  const contentW = pageW - margin * 2;
+  const headerH = 34;
+
+  // ── Header bar ──
+  doc.setFillColor(42, 15, 6);
+  doc.rect(0, 0, pageW, headerH, "F");
+
+  // Logo on the right side of header
+  if (logoBase64) {
+    const logoH = 18;
+    const logoW = logoH * 3; // approximate aspect ratio
+    doc.addImage(logoBase64, "PNG", pageW - margin - logoW, (headerH - logoH) / 2, logoW, logoH);
+  }
+
+  // Title + subtitle on left
+  doc.setTextColor(255, 255, 255);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(14);
+  doc.text(tourTitle, margin, 14);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(8);
+  doc.setTextColor(220, 200, 190);
+  doc.text("Heritage Himalaya Trails  •  heritagehimalayatrails.com", margin, 22);
+
+  // ── "Day-by-Day Itinerary" subheading ──
+  const subY = headerH + 12;
+  doc.setTextColor(42, 15, 6);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(13);
+  doc.text("Day-by-Day Itinerary", margin, subY);
+
+  // ── Amber accent line under subheading ──
+  doc.setDrawColor(244, 163, 33);
+  doc.setLineWidth(0.8);
+  doc.line(margin, subY + 2.5, margin + 48, subY + 2.5);
+
+  // ── Full-width divider ──
+  doc.setDrawColor(220, 215, 210);
+  doc.setLineWidth(0.3);
+  doc.line(margin, subY + 6, pageW - margin, subY + 6);
+
+  let y = subY + 14;
+
+  itinerary.forEach((item: any, idx: number) => {
+    const dayLabel = `Day ${item.startDay ?? item.day}${item.endDay ? `–${item.endDay}` : ""}`;
+    const title: string = item.title ?? "";
+    const description: string = item.description ?? "";
+
+    const descLines: string[] = doc.splitTextToSize(description, contentW - 10);
+    const pillW = 24;
+    const pillH = 6.5;
+    const titleX = margin + pillW + 4;
+    const descX = margin + 4;
+    const descStartY = y + pillH + 4;
+    const blockH = pillH + 4 + descLines.length * 5 + 8;
+
+    // New page if needed
+    if (y + blockH > pageH - 22) {
+      doc.addPage();
+      y = 22;
+    }
+
+    // Day pill
+    doc.setFillColor(42, 15, 6);
+    doc.roundedRect(margin, y, pillW, pillH, 1.5, 1.5, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(7.5);
+    doc.text(dayLabel, margin + pillW / 2, y + 4.4, { align: "center" });
+
+    // Title (vertically centered with pill)
+    doc.setTextColor(25, 10, 4);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(10.5);
+    doc.text(title, titleX, y + 4.4);
+
+    // Description
+    doc.setTextColor(100, 100, 100);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(8.5);
+    doc.text(descLines, descX, descStartY, { lineHeightFactor: 1.5 });
+
+    y += blockH;
+
+    // Separator (skip last)
+    if (idx < itinerary.length - 1) {
+      doc.setDrawColor(235, 230, 225);
+      doc.setLineWidth(0.2);
+      doc.line(margin, y - 3, pageW - margin, y - 3);
+    }
+  });
+
+  // ── Footer on every page ──
+  const totalPages = (doc.internal as any).getNumberOfPages();
+  for (let i = 1; i <= totalPages; i++) {
+    doc.setPage(i);
+    // footer bar
+    doc.setFillColor(248, 246, 242);
+    doc.rect(0, pageH - 14, pageW, 14, "F");
+    doc.setTextColor(140, 120, 110);
+    doc.setFontSize(7.5);
+    doc.setFont("helvetica", "normal");
+    doc.text("Heritage Himalaya Trails", margin, pageH - 5.5);
+    doc.text(`Page ${i} of ${totalPages}`, pageW - margin, pageH - 5.5, { align: "right" });
+    // footer top border
+    doc.setDrawColor(220, 210, 200);
+    doc.setLineWidth(0.2);
+    doc.line(margin, pageH - 14, pageW - margin, pageH - 14);
+  }
+
+  doc.save(`${tourTitle.replace(/\s+/g, "_")}_Itinerary.pdf`);
+};
+
+const sendItineraryWhatsApp = (itinerary: any[], tourTitle = "Itinerary") => {
+  const lines: string[] = [`📋 *${tourTitle} — Itinerary*`, ""];
+  itinerary.forEach((item: any) => {
+    const dayLabel = `Day ${item.startDay ?? item.day}${item.endDay ? `–${item.endDay}` : ""}`;
+    lines.push(`*${dayLabel} – ${item.title ?? ""}*`);
+    if (item.description) lines.push(item.description);
+    lines.push("");
+  });
+  lines.push("— Heritage Himalaya Trails");
+  lines.push("heritagehimalayatrails.com");
+  const text = encodeURIComponent(lines.join("\n"));
+  window.open(`https://wa.me/?text=${text}`, "_blank", "noopener,noreferrer");
+};
+
+const ItinerarySection = ({ itinerary, tourTitle }: any) => (
   <section
     className="bg-[#ffffff] border-t border-[#ece8e3] font-sans"
     style={{ padding: "46px clamp(1rem, 4vw, 2.5rem)" }}
@@ -443,7 +603,7 @@ const ItinerarySection = ({ itinerary }: any) => (
       </h2>
 
       {/* Buttons */}
-      {/* <div
+      <div
         className="itin-btn-row"
         style={{
           display: "flex",
@@ -453,16 +613,22 @@ const ItinerarySection = ({ itinerary }: any) => (
           flexWrap: "wrap"
         }}
       >
-        <button className="group flex items-center gap-2 font-semibold px-4 py-2 text-[13px] border border-gray-300 rounded-md text-gray-700 bg-white transition-all duration-300 hover:bg-[#2a0f06] hover:text-white hover:border-[#2a0f06]">
+        <button
+          onClick={() => sendItineraryWhatsApp(itinerary, tourTitle)}
+          className="group flex items-center gap-2 font-semibold px-4 py-2 text-[13px] border border-gray-300 rounded-md text-gray-700 bg-white transition-all duration-300 hover:bg-[#2a0f06] hover:text-white hover:border-[#2a0f06]"
+        >
           <FaWhatsapp size={14} />
           Send Itinerary
         </button>
 
-        <button className="group flex items-center gap-2 px-4 py-2 text-[13px] font-semibold border border-gray-300 rounded-md text-gray-700 bg-white transition-all duration-300 hover:bg-[#2a0f06] hover:text-white hover:border-[#2a0f06]">
+        <button
+          onClick={() => { downloadItineraryPDF(itinerary, tourTitle); }}
+          className="group flex items-center gap-2 px-4 py-2 text-[13px] font-semibold border border-gray-300 rounded-md text-gray-700 bg-white transition-all duration-300 hover:bg-[#2a0f06] hover:text-white hover:border-[#2a0f06]"
+        >
           <Download size={14} strokeWidth={1.8} />
           Download Itinerary
         </button>
-      </div> */}
+      </div>
 
       {/* ================= DESKTOP TIMELINE ================= */}
       <div className="timeline-desktop" style={{ position: "relative" }}>
@@ -1140,7 +1306,7 @@ function TourPageUI({
       <HeroSection tourData={tourData} bookmarked={bookmarked} onBookmark={onBookmarkProp ?? (() => setLocalBookmarked((b) => !b))} />
       <OverviewSection overview={overview} />
       <HighlightsSection highlights={highlights} />
-      <ItinerarySection itinerary={itinerary} />
+      <ItinerarySection itinerary={itinerary} tourTitle={title} />
       <InclusionsSection inclusions={inclusions} exclusions={exclusions} />
       <AccommodationSection accommodation={accommodation} />
       <VideoSection videoSection={videoSection} />

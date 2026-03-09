@@ -68,10 +68,10 @@ export default function Footer() {
             </p>
 
             <div className="flex gap-4 pt-2">
-              <a href="#" className="hover:text-[#8B6F47] transition-colors duration-200">
+              <a href="https://www.instagram.com/heritage.himalaya.trails?igsh=MWFma2wyN3pxcmlqdA==" className="hover:text-[#8B6F47] transition-colors duration-200">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="hover:text-[#8B6F47] transition-colors duration-200">
+              <a href="https://youtube.com/@heritagehimalaya?si=x1IISEH2eVxEBLOX" className="hover:text-[#8B6F47] transition-colors duration-200">
                 <Youtube className="w-5 h-5" />
               </a>
             </div>

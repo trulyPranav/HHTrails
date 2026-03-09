@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Compass, Landmark, Lightbulb, Leaf, Camera, SlidersHorizontal, ChevronDown } from 'lucide-react';
+import { Book, Compass, Landmark, Lightbulb, Leaf, Camera, SlidersHorizontal, ChevronDown } from 'lucide-react';
 
 interface Props {
   selected: string;
@@ -7,7 +7,7 @@ interface Props {
 }
 
 const CATEGORIES = [
-  { label: 'All', value: '', icon: null },
+  { label: 'All', value: '', icon: Book },
   { label: 'Travel Stories', value: 'Travel Stories', icon: Compass },
   { label: 'Culture & Heritage', value: 'Culture & Heritage', icon: Landmark },
   { label: 'Tips & Guides', value: 'Tips & Guides', icon: Lightbulb },

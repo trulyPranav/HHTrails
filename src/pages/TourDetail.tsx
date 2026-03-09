@@ -449,7 +449,7 @@ const loadSvgAsBase64 = async (src: string): Promise<string | null> => {
 };
 
 const downloadItineraryPDF = async (itinerary: any[], tourTitle = "Itinerary") => {
-  const logoBase64 = await loadSvgAsBase64("/hht_final_logo_send.svg");
+  // const logoBase64 = await loadSvgAsBase64("/hht_final_logo_send.svg");
 
   const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
   const pageW = doc.internal.pageSize.getWidth();
@@ -463,11 +463,11 @@ const downloadItineraryPDF = async (itinerary: any[], tourTitle = "Itinerary") =
   doc.rect(0, 0, pageW, headerH, "F");
 
   // Logo on the right side of header
-  if (logoBase64) {
-    const logoH = 18;
-    const logoW = logoH * 3; // approximate aspect ratio
-    doc.addImage(logoBase64, "PNG", pageW - margin - logoW, (headerH - logoH) / 2, logoW, logoH);
-  }
+  // if (logoBase64) {
+  //   const logoH = 18;
+  //   const logoW = logoH * 3; // approximate aspect ratio
+  //   doc.addImage(logoBase64, "PNG", pageW - margin - logoW, (headerH - logoH) / 2, logoW, logoH);
+  // }
 
   // Title + subtitle on left
   doc.setTextColor(255, 255, 255);
@@ -577,7 +577,7 @@ const sendItineraryWhatsApp = (itinerary: any[], tourTitle = "Itinerary") => {
     lines.push("");
   });
   lines.push("— Heritage Himalaya Trails");
-  lines.push("heritagehimalayatrails.com");
+  lines.push("https://hhtrails.com");
   const text = encodeURIComponent(lines.join("\n"));
   window.open(`https://wa.me/?text=${text}`, "_blank", "noopener,noreferrer");
 };

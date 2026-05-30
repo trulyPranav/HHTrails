@@ -53,6 +53,9 @@ A modern, interactive travel platform designed to showcase curated tours and exp
 3. **Environment Setup:**
    Create a `.env` file in the root directory and configure the minimum required variables for external services:
    ```env
+   # For local development, point this at your local API server.
+   # For production builds and Cloudflare Pages, this must point to the
+   # public API host that is reachable from the build environment.
    VITE_API_BASE_URL=http://localhost:3000/api/v1
    VITE_SUPABASE_URL=your_supabase_project_url
    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key

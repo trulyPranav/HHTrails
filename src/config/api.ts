@@ -1,6 +1,18 @@
+function normalizeBaseUrl(value: string | undefined): string | undefined {
+  if (!value) return undefined;
+  const trimmed = value.trim().replace(/\/$/, '');
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  if (/^(localhost|127\.0\.0\.1|0\.0\.0\.0)(:\d+)?(\/|$)/i.test(trimmed)) {
+    return `http://${trimmed}`;
+  }
+  return `https://${trimmed}`;
+}
+
 // API Configuration
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api/v1',
+  BASE_URL:
+    normalizeBaseUrl(import.meta.env.VITE_API_BASE_URL) ||
+    'http://localhost:3000/api/v1',
   TIMEOUT: 30000, // 30 seconds
 } as const;
 

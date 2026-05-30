@@ -1,9 +1,19 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
+function normalizeHttpUrl(value) {
+  if (!value) return undefined;
+  const trimmed = value.toString().trim().replace(/\/$/, '');
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  if (/^(localhost|127\.0\.0\.1|0\.0\.0\.0)(:\d+)?(\/|$)/i.test(trimmed)) {
+    return `http://${trimmed}`;
+  }
+  return `https://${trimmed}`;
+}
+
 const SITE_URL =
-  readEnvValue('VITE_SITE_URL')?.replace(/\/$/, '') || 'https://hhtrails.com';
-const API_BASE_URL = readEnvValue('VITE_API_BASE_URL')?.replace(/\/$/, '');
+  normalizeHttpUrl(readEnvValue('VITE_SITE_URL')) || 'https://hhtrails.com';
+const API_BASE_URL = normalizeHttpUrl(readEnvValue('VITE_API_BASE_URL'));
 const SKIP_ARTICLE_PRERENDER =
   (readEnvValue('SKIP_ARTICLE_PRERENDER') || '')
     .toString()
@@ -25,6 +35,11 @@ const BLOG_META = {
 
 const distDir = path.resolve(process.cwd(), 'dist');
 const sourceHtmlPath = path.join(distDir, 'index.html');
+
+console.log('Prerender metadata environment:');
+console.log(`  SITE_URL=${SITE_URL}`);
+console.log(`  API_BASE_URL=${API_BASE_URL}`);
+console.log(`  SKIP_ARTICLE_PRERENDER=${SKIP_ARTICLE_PRERENDER}`);
 
 if (!existsSync(sourceHtmlPath)) {
   throw new Error(
@@ -293,13 +308,19 @@ function applySeoMetadata(sourceHtml, meta) {
   return html;
 }
 
-function writeRouteHtml(route, html) {
+function writeRouteHtml(route, html, writeAlternateHtml = false) {
   const normalizedRoute = ensureTrailingSlashPath(formatRoute(route));
   const routeWithoutLeadingSlash = normalizedRoute.replace(/^\//, '');
   const targetPath = path.join(distDir, routeWithoutLeadingSlash, 'index.html');
 
   mkdirSync(path.dirname(targetPath), { recursive: true });
   writeFileSync(targetPath, html, 'utf8');
+
+  if (writeAlternateHtml) {
+    const alternateRoute = routeWithoutLeadingSlash.replace(/\/$/, '');
+    const alternateTargetPath = path.join(distDir, `${alternateRoute}.html`);
+    writeFileSync(alternateTargetPath, html, 'utf8');
+  }
 
   return targetPath;
 }
@@ -366,12 +387,18 @@ async function fetchBlogsForPrerender() {
     const endpoint = `${baseUrl}/blogs?page=${page}&limit=${limit}`;
 
     try {
+      console.log(`Fetching blog list for prerender: ${endpoint}`);
       const response = await fetch(endpoint, {
         headers: { Accept: 'application/json' },
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+        const contentType = response.headers.get('content-type') || 'unknown';
+        const bodyText = await response.text();
+        const snippet = bodyText.slice(0, 300).replace(/\s+/g, ' ');
+        throw new Error(
+          `HTTP ${response.status} (${contentType}) - response body starts with: ${snippet}`,
+        );
       }
 
       const payload = await response.json();
@@ -441,9 +468,19 @@ async function main() {
 
   for (const blog of blogs) {
     const encodedId = encodeRouteSegment(blog?.id);
-    if (!encodedId || !blog?.title) continue;
+    if (!encodedId || !blog?.title) {
+      console.warn(
+        'Skipped prerendering a blog article because id or title is missing:',
+        { id: blog?.id, title: blog?.title, coverImageUrl: blog?.coverImageUrl },
+      );
+      continue;
+    }
 
     const route = `/blog/${encodedId}/`;
+    console.log(
+      `Prerendering blog article: id=${blog.id} title="${blog.title}" route=${route} image=${blog.coverImageUrl || BLOG_META.image}`,
+    );
+
     const publishedTime = normalizePublishedDate(blog.publishedDate);
     const articleMeta = toPageMeta({
       route,
@@ -456,7 +493,7 @@ async function main() {
     articleMeta.structuredData = buildArticleSchema(articleMeta, blog);
 
     const articleHtml = applySeoMetadata(sourceHtml, articleMeta);
-    writeRouteHtml(route, articleHtml);
+    writeRouteHtml(route, articleHtml, true);
     generatedCount += 1;
   }
 

@@ -4,6 +4,11 @@ import path from 'node:path';
 const SITE_URL =
   readEnvValue('VITE_SITE_URL')?.replace(/\/$/, '') || 'https://hhtrails.com';
 const API_BASE_URL = readEnvValue('VITE_API_BASE_URL')?.replace(/\/$/, '');
+const SKIP_ARTICLE_PRERENDER =
+  (readEnvValue('SKIP_ARTICLE_PRERENDER') || '')
+    .toString()
+    .toLowerCase() === 'true' ||
+  process.env.SKIP_ARTICLE_PRERENDER === 'true';
 
 const BLOG_ROUTE = '/blog/';
 const DEFAULT_OG_IMAGE_WIDTH = '1200';
@@ -328,12 +333,28 @@ function toPageMeta({
   };
 }
 
+function getApiBaseUrl() {
+  if (API_BASE_URL) {
+    return API_BASE_URL.replace(/\/$/, '');
+  }
+
+  return undefined;
+}
+
 async function fetchBlogsForPrerender() {
-  if (!API_BASE_URL) {
-    console.warn(
-      'Skipping article metadata prerender: VITE_API_BASE_URL is not configured.',
+  const baseUrl = getApiBaseUrl();
+  if (!baseUrl) {
+    const message =
+      'Skipping article metadata prerender: VITE_API_BASE_URL is not configured.';
+
+    if (SKIP_ARTICLE_PRERENDER) {
+      console.warn(message + ' SKIP_ARTICLE_PRERENDER is enabled.');
+      return [];
+    }
+
+    throw new Error(
+      `${message} Set VITE_API_BASE_URL to a working API endpoint or SKIP_ARTICLE_PRERENDER=true to skip article prerendering.`,
     );
-    return [];
   }
 
   const blogs = [];
@@ -342,7 +363,7 @@ async function fetchBlogsForPrerender() {
   let totalPages = 1;
 
   while (page <= totalPages) {
-    const endpoint = `${API_BASE_URL}/blogs?page=${page}&limit=${limit}`;
+    const endpoint = `${baseUrl}/blogs?page=${page}&limit=${limit}`;
 
     try {
       const response = await fetch(endpoint, {
@@ -369,10 +390,21 @@ async function fetchBlogsForPrerender() {
 
       page += 1;
     } catch (error) {
-      console.warn(
-        `Unable to fetch blog data for metadata prerender (${endpoint}): ${String(error)}`,
+      const message = `Unable to fetch blog data for metadata prerender (${endpoint}): ${String(error)}`;
+      console.error(message);
+
+      if (SKIP_ARTICLE_PRERENDER) {
+        console.warn(
+          message +
+            ' SKIP_ARTICLE_PRERENDER is enabled; article metadata prerendering will be skipped.',
+        );
+        return [];
+      }
+
+      throw new Error(
+        `${message}\n` +
+          'Blog metadata prerender failed. Ensure VITE_API_BASE_URL is configured to a working API endpoint during builds.',
       );
-      return [];
     }
   }
 
